@@ -181,6 +181,44 @@ void DecalGunshot( TraceResult *pTrace, int iBulletType, const vec3_t &origin, c
 			case BULLET_MONSTER_MP5:
 			case BULLET_PLAYER_BUCKSHOT:
 			case BULLET_PLAYER_357:
+			case BULLET_PLAYER_PM:
+			case BULLET_PLAYER_APS:
+			case BULLET_PLAYER_GURZA:
+			case BULLET_PLAYER_OC33:
+			case BULLET_PLAYER_R92:
+			case BULLET_PLAYER_PB:
+			case BULLET_PLAYER_P96:
+			case BULLET_PLAYER_PSM:
+			case BULLET_PLAYER_OC23:
+			case BULLET_PLAYER_OC27:
+			case BULLET_PLAYER_22LR:
+			case BULLET_PLAYER_P7:
+			case BULLET_PLAYER_VP70:
+			case BULLET_PLAYER_KS23:
+			case BULLET_PLAYER_BEKAS:
+			case BULLET_PLAYER_SAIGA:
+			case BULLET_PLAYER_VEPR:
+			case BULLET_PLAYER_MC255:
+			case BULLET_PLAYER_BIZON:
+			case BULLET_PLAYER_KEDR:
+			case BULLET_PLAYER_VERESK:
+			case BULLET_PLAYER_KIPARIS:
+			case BULLET_PLAYER_GEPARD:
+			case BULLET_PLAYER_AKSU:
+			case BULLET_PLAYER_AEK:
+			case BULLET_PLAYER_AN94:
+			case BULLET_PLAYER_VIHR:
+			case BULLET_PLAYER_AKM:
+			case BULLET_PLAYER_TKB0146:
+			case BULLET_PLAYER_FAL:
+			case BULLET_PLAYER_G3:
+			case BULLET_PLAYER_AUG:
+			case BULLET_PLAYER_SVD:
+			case BULLET_PLAYER_SVU:
+			case BULLET_PLAYER_VSK94:
+			case BULLET_PLAYER_PSG:
+			case BULLET_PLAYER_PK:
+
 			default:
 				// smoke and decal
 				UTIL_StudioDecalTrace(pTrace, DamageDecal(pTarget, DMG_BULLET));
@@ -357,6 +395,135 @@ void W_Precache(void)
 	// hornetgun
 	UTIL_PrecacheOtherWeapon( "weapon_hornetgun" );
 
+	UTIL_PrecacheOtherWeapon("weapon_pm");
+	UTIL_PrecacheOther("ammo_9x18");
+
+	UTIL_PrecacheOtherWeapon("weapon_aps");
+	UTIL_PrecacheOther("ammo_9x18");
+
+	UTIL_PrecacheOtherWeapon("weapon_gurza");
+	UTIL_PrecacheOther("ammo_9x21");
+
+	UTIL_PrecacheOtherWeapon("weapon_grach");
+	UTIL_PrecacheOther("ammo_9x19");
+
+	UTIL_PrecacheOtherWeapon("weapon_oc33");
+	UTIL_PrecacheOther("ammo_9x18");
+
+	UTIL_PrecacheOtherWeapon("weapon_r92");
+	UTIL_PrecacheOther("ammo_9x18");
+
+	UTIL_PrecacheOtherWeapon("weapon_flaregun");
+	UTIL_PrecacheOther("ammo_flare");
+
+	UTIL_PrecacheOtherWeapon("weapon_pb");
+	UTIL_PrecacheOther("ammo_9x18");
+
+	UTIL_PrecacheOtherWeapon("weapon_p96");
+	UTIL_PrecacheOther("ammo_9x19");
+
+	UTIL_PrecacheOtherWeapon("weapon_psm");
+	UTIL_PrecacheOther("ammo_545x18");
+
+	UTIL_PrecacheOtherWeapon("weapon_oc23");
+	UTIL_PrecacheOther("ammo_545x18");
+
+	UTIL_PrecacheOtherWeapon("weapon_oc27");
+	UTIL_PrecacheOther("ammo_9x19");
+	
+	UTIL_PrecacheOtherWeapon("weapon_22lr");
+	UTIL_PrecacheOther("ammo_545x18");
+
+	UTIL_PrecacheOtherWeapon("weapon_p7");
+	UTIL_PrecacheOther("ammo_9x19");
+
+	UTIL_PrecacheOtherWeapon("weapon_vp70");
+	UTIL_PrecacheOther("ammo_9x19");
+
+	UTIL_PrecacheOtherWeapon("weapon_ks23");
+	UTIL_PrecacheOther("ammo_23x75");
+
+	UTIL_PrecacheOtherWeapon("weapon_bekas");
+	UTIL_PrecacheOther("ammo_12x70");
+
+	UTIL_PrecacheOtherWeapon("weapon_saiga");
+	UTIL_PrecacheOther("ammo_12x70");
+
+	UTIL_PrecacheOtherWeapon("weapon_vepr");
+	UTIL_PrecacheOther("ammo_762x39");
+
+	UTIL_PrecacheOtherWeapon("weapon_mc255");
+	UTIL_PrecacheOther("ammo_12x70");
+
+	UTIL_PrecacheOtherWeapon("weapon_bizon");
+	UTIL_PrecacheOther("ammo_9x18");
+
+	UTIL_PrecacheOtherWeapon("weapon_kedr");
+	UTIL_PrecacheOther("ammo_9x18");
+
+	UTIL_PrecacheOtherWeapon("weapon_veresk");
+	UTIL_PrecacheOther("ammo_9x21");
+
+	UTIL_PrecacheOtherWeapon("weapon_kiparis");
+	UTIL_PrecacheOther("ammo_9x18");
+
+	UTIL_PrecacheOtherWeapon("weapon_gepard");
+	UTIL_PrecacheOther("ammo_9x19");
+
+	UTIL_PrecacheOtherWeapon("weapon_aksu");
+	UTIL_PrecacheOther("ammo_545x39");
+
+	UTIL_PrecacheOtherWeapon("weapon_aek");
+	UTIL_PrecacheOther("ammo_762x39");
+
+	UTIL_PrecacheOtherWeapon("weapon_an94");
+	UTIL_PrecacheOther("ammo_545x39");
+
+	UTIL_PrecacheOtherWeapon("weapon_vihr");
+	UTIL_PrecacheOther("ammo_9x39");
+	
+	UTIL_PrecacheOtherWeapon("weapon_akm");
+	UTIL_PrecacheOther("ammo_762x39");
+
+	UTIL_PrecacheOtherWeapon("weapon_tkb0146");
+	UTIL_PrecacheOther("ammo_545x39");
+
+	UTIL_PrecacheOtherWeapon("weapon_fal");
+	UTIL_PrecacheOther("ammo_762x51");
+	
+	UTIL_PrecacheOtherWeapon("weapon_g3");
+	UTIL_PrecacheOther("ammo_556x45");
+
+	UTIL_PrecacheOtherWeapon("weapon_aug");
+	UTIL_PrecacheOther("ammo_556x45");
+
+	UTIL_PrecacheOtherWeapon("weapon_svd");
+	UTIL_PrecacheOther("ammo_762x54");
+
+	UTIL_PrecacheOtherWeapon("weapon_svu");
+	UTIL_PrecacheOther("ammo_762x54");
+
+	UTIL_PrecacheOtherWeapon("weapon_vsk94");
+	UTIL_PrecacheOther("ammo_9x39");
+
+	UTIL_PrecacheOtherWeapon("weapon_psg");
+	UTIL_PrecacheOther("ammo_762x51");
+
+	UTIL_PrecacheOtherWeapon("weapon_pk");
+	UTIL_PrecacheOther("ammo_762x54");
+	
+	UTIL_PrecacheOtherWeapon("weapon_rpo");
+	UTIL_PrecacheOther("ammo_rpo");
+
+	UTIL_PrecacheOtherWeapon("weapon_railgun");
+	UTIL_PrecacheOther("ammo_railgun");
+
+	UTIL_PrecacheOtherWeapon("weapon_rgd5");
+	
+	UTIL_PrecacheOtherWeapon("weapon_f1");
+	
+	UTIL_PrecacheOtherWeapon("weapon_rgo");
+	
 	if ( g_pGameRules->IsDeathmatch() )
 	{
 		UTIL_PrecacheOther( "weaponbox" );// container for dropped deathmatch weapons

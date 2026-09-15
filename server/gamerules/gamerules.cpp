@@ -278,6 +278,92 @@ void CGameRules::RefreshSkillData ( void )
 	// MONSTER HORNET
 	gSkillData.monDmgHornet = GetSkillCvar( "sk_hornet_dmg");
 
+	gSkillData.plrDmgPM = GetSkillCvar("sk_plr_PM_bullet");
+
+	gSkillData.plrDmgAPS = GetSkillCvar("sk_plr_APS_bullet");
+
+	gSkillData.plrDmgGURZA = GetSkillCvar("sk_plr_GURZA_bullet");
+	
+	gSkillData.plrDmgGRACH = GetSkillCvar("sk_plr_GRACH_bullet");
+
+	gSkillData.plrDmgOC33 = GetSkillCvar("sk_plr_OC33_bullet");
+
+	gSkillData.plrDmgR92 = GetSkillCvar("sk_plr_R92_bullet");
+
+	gSkillData.plrDmgFLAREGUN = GetSkillCvar("sk_plr_FLAREGUN");
+
+	gSkillData.plrDmgPB = GetSkillCvar("sk_plr_PB_bullet");
+
+	gSkillData.plrDmgP96 = GetSkillCvar("sk_plr_P96_bullet");
+
+	gSkillData.plrDmgPSM = GetSkillCvar("sk_plr_PSM_bullet");
+
+	gSkillData.plrDmgOC23 = GetSkillCvar("sk_plr_OC23_bullet");
+
+	gSkillData.plrDmgOC27 = GetSkillCvar("sk_plr_OC27_bullet");
+
+	gSkillData.plrDmg22LR = GetSkillCvar("sk_plr_22LR_bullet");
+
+	gSkillData.plrDmgP7 = GetSkillCvar("sk_plr_P7_bullet");
+
+	gSkillData.plrDmgVP70 = GetSkillCvar("sk_plr_VP70_bullet");
+
+	gSkillData.plrDmgKS23 = GetSkillCvar("sk_plr_KS23");
+
+	gSkillData.plrDmgBEKAS = GetSkillCvar("sk_plr_BEKAS");
+	
+	gSkillData.plrDmgSAIGA = GetSkillCvar("sk_plr_SAIGA");
+
+	gSkillData.plrDmgVEPR = GetSkillCvar("sk_plr_VEPR_bullet");
+
+	gSkillData.plrDmgMC255 = GetSkillCvar("sk_plr_MC255");
+
+	gSkillData.plrDmgBIZON = GetSkillCvar("sk_plr_BIZON_bullet");
+
+	gSkillData.plrDmgKEDR = GetSkillCvar("sk_plr_KEDR_bullet");
+	
+	gSkillData.plrDmgVERESK = GetSkillCvar("sk_plr_VERESK_bullet");
+
+	gSkillData.plrDmgKIPARIS = GetSkillCvar("sk_plr_KIPARIS_bullet");
+
+	gSkillData.plrDmgGEPARD = GetSkillCvar("sk_plr_GEPARD_bullet");
+
+	gSkillData.plrDmgAKSU = GetSkillCvar("sk_plr_AKSU_bullet");
+
+	gSkillData.plrDmgAEK = GetSkillCvar("sk_plr_AEK_bullet");
+
+	gSkillData.plrDmgAN94 = GetSkillCvar("sk_plr_AN94_bullet");
+
+	gSkillData.plrDmgVIHR = GetSkillCvar("sk_plr_VIHR_bullet");
+
+	gSkillData.plrDmgAKM = GetSkillCvar("sk_plr_AKM_bullet");
+
+	gSkillData.plrDmgTKB0146 = GetSkillCvar("sk_plr_TKB0146_bullet");
+
+	gSkillData.plrDmgFAL = GetSkillCvar("sk_plr_FAL_bullet");
+
+	gSkillData.plrDmgG3 = GetSkillCvar("sk_plr_G3_bullet");
+
+	gSkillData.plrDmgAUG = GetSkillCvar("sk_plr_SVD_bullet");
+
+	gSkillData.plrDmgSVU = GetSkillCvar("sk_plr_SVU_bullet");
+
+	gSkillData.plrDmgVSK94 = GetSkillCvar("sk_plr_VSK94_bullet");
+
+	gSkillData.plrDmgPSG = GetSkillCvar("sk_plr_PSG_bullet");
+
+	gSkillData.plrDmgPK = GetSkillCvar("sk_plr_PK_bullet");
+	
+	gSkillData.plrDmgRPO = GetSkillCvar("sk_plr_RPO");
+
+	gSkillData.plrDmgRAILGUN = GetSkillCvar("sk_plr_RAILGUN");
+
+	gSkillData.plrDmgRGD5 = GetSkillCvar("sk_plr_RGD5");
+
+	gSkillData.plrDmgF1 = GetSkillCvar("sk_plr_F1");
+
+	gSkillData.plrDmgRGO = GetSkillCvar("sk_plr_RGO");
+
 	// PLAYER HORNET
 // Up to this point, player hornet damage and monster hornet damage were both using
 // monDmgHornet to determine how much damage to do. In tuning the hivehand, we now need

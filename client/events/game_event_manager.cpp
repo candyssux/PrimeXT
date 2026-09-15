@@ -32,6 +32,13 @@ GNU General Public License for more details.
 #include "egon_fire_event.h"
 #include "gauss_fire_event.h"
 #include "gauss_spin_event.h"
+#include "pm_fire_event.h"
+#include "aps_fire_event.h"
+#include "gurza_fire_event.h"
+#include "grach_fire_event.h"
+#include "oc33_fire_event.h"
+#include "r92_fire_event.h"
+#include "aksu_fire_event.h"
 
 CGameEventManager::CGameEventManager()
 {
@@ -47,6 +54,13 @@ CGameEventManager::CGameEventManager()
 	RegisterRPGEvents();
 	RegisterEgonEvents();
 	RegisterGaussEvents();
+	RegisterPMEvents();
+	RegisterAPSEvents();
+	RegisterGURZAEvents();
+	RegisterGRACHEvents();
+	RegisterOC33Events();
+	RegisterR92Events();
+	RegisterAKSUEvents();
 }
 
 void CGameEventManager::RegisterGlockEvents()
@@ -166,5 +180,85 @@ void CGameEventManager::RegisterGaussEvents()
 	gEngfuncs.pfnHookEvent("events/gaussspin.sc", [](event_args_s *args) {
 		CGaussSpinEvent event(args);
 		event.Execute();
+	});
+}
+
+void CGameEventManager::RegisterPMEvents()
+{
+	gEngfuncs.pfnHookEvent("events/pm1.sc", [](event_args_s *args) {
+		CPMFireEvent event(args);
+		event.Execute();
+	});
+	gEngfuncs.pfnHookEvent("events/pm2.sc", [](event_args_s *args) {
+		CPMFireEvent event(args);
+		event.Execute();
+	});
+}
+
+void CGameEventManager::RegisterAPSEvents()
+{
+	gEngfuncs.pfnHookEvent("events/aps1.sc", [](event_args_s *args) {
+		CAPSFireEvent event(args);
+		event.Execute();
+	});
+	gEngfuncs.pfnHookEvent("events/aps2.sc", [](event_args_s *args) {
+		CAPSFireEvent event(args);
+		event.Execute();
+	});
+}
+
+void CGameEventManager::RegisterGURZAEvents()
+{
+	gEngfuncs.pfnHookEvent("events/gurza1.sc", [](event_args_s *args) {
+		CGURZAFireEvent event(args);
+		event.Execute();
+	});
+	gEngfuncs.pfnHookEvent("events/gurza2.sc", [](event_args_s *args) {
+		CGURZAFireEvent event(args);
+		event.Execute();
+	});
+}
+
+void CGameEventManager::RegisterGRACHEvents()
+{
+	gEngfuncs.pfnHookEvent("events/grach1.sc", [](event_args_s *args) {
+		CGRACHFireEvent event(args);
+		event.Execute();
+	});
+	gEngfuncs.pfnHookEvent("events/grach2.sc", [](event_args_s *args) {
+		CGRACHFireEvent event(args);
+		event.Execute();
+	});
+}
+
+void CGameEventManager::RegisterOC33Events()
+{
+	gEngfuncs.pfnHookEvent("events/oc331.sc", [](event_args_s *args) {
+		COC33FireEvent event(args);
+		event.Execute();
+	});
+	gEngfuncs.pfnHookEvent("events/oc332.sc", [](event_args_s *args) {
+		COC33FireEvent event(args);
+		event.Execute();
+	});
+}
+
+void CGameEventManager::RegisterR92Events()
+{
+	gEngfuncs.pfnHookEvent("events/r92.sc", [](event_args_s *args) {
+		CR92FireEvent event(args);
+		event.Execute();
+	});
+}
+
+void CGameEventManager::RegisterAKSUEvents()
+{
+	gEngfuncs.pfnHookEvent("events/aksu.sc", [](event_args_s *args) {
+		CAKSUFireEvent event(args);
+		event.Execute(false);
+	});
+	gEngfuncs.pfnHookEvent("events/aksu2.sc", [](event_args_s *args) {
+		CAKSUFireEvent event(args);
+		event.Execute(true);
 	});
 }

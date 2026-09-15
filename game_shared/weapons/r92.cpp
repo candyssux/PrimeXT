@@ -1,19 +1,10 @@
 /***
 *
-*	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
-*	
-*	This product contains software technology licensed from Id 
-*	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc. 
-*	All Rights Reserved.
-*
-*   Use, distribution, and modification of this source code and/or resulting
-*   object code is restricted to non-commercial enhancements to products from
-*   Valve LLC.  All other use, distribution, or modification is prohibited
-*   without written permission from Valve LLC.
+*	ionization weapons by kpe0
 *
 ****/
 
-#include "python.h"
+#include "r92.h"
 
 #ifdef CLIENT_DLL
 #else
@@ -29,32 +20,32 @@
 // check VECTOR_CONE_1DEGREES macro
 #define CONE_2DEGREES	0.01745
 
-CPythonWeaponContext::CPythonWeaponContext(std::unique_ptr<IWeaponLayer>&& layer) :
+CR92WeaponContext::CR92WeaponContext(std::unique_ptr<IWeaponLayer>&& layer) :
 	CBaseWeaponContext(std::move(layer))
 {
-	m_iId = WEAPON_PYTHON;
-	m_iDefaultAmmo = PYTHON_DEFAULT_GIVE;
+	m_iId = WEAPON_R92;
+	m_iDefaultAmmo = R92_DEFAULT_GIVE;
 	m_fInZoom = false;
-	m_usFirePython = m_pLayer->PrecacheEvent("events/python.sc");
+	m_usFireR92 = m_pLayer->PrecacheEvent("events/r92.sc");
 }
 
-int CPythonWeaponContext::GetItemInfo(ItemInfo *p) const
+int CR92WeaponContext::GetItemInfo(ItemInfo *p) const
 {
-	p->pszName = CLASSNAME_STR(PYTHON_CLASSNAME);
-	p->pszAmmo1 = "357";
-	p->iMaxAmmo1 = _357_MAX_CARRY;
+	p->pszName = CLASSNAME_STR(R92_CLASSNAME);
+	p->pszAmmo1 = "9X18";
+	p->iMaxAmmo1 = _9X18_MAX_CARRY;
 	p->pszAmmo2 = NULL;
 	p->iMaxAmmo2 = -1;
-	p->iMaxClip = PYTHON_MAX_CLIP;
+	p->iMaxClip = R92_MAX_CLIP;
 	p->iFlags = 0;
 	p->iSlot = 1;
 	p->iPosition = 1;
 	p->iId = m_iId;
-	p->iWeight = PYTHON_WEIGHT;
+	p->iWeight = R92_WEIGHT;
 	return 1;
 }
 
-bool CPythonWeaponContext::Deploy()
+bool CR92WeaponContext::Deploy()
 {
 	if (m_pLayer->IsMultiplayer())
 	{
@@ -66,10 +57,10 @@ bool CPythonWeaponContext::Deploy()
 		m_pLayer->SetWeaponBodygroup(0);
 	}
 
-	return DefaultDeploy("models/v_357.mdl", "models/p_357.mdl", PYTHON_DRAW, "python");
+	return DefaultDeploy("models/v_r92.mdl", "models/p_r92.mdl", R92_DRAW, "r92");
 }
 
-void CPythonWeaponContext::Holster()
+void CR92WeaponContext::Holster()
 {
 	m_fInReload = FALSE; // cancel any reload in progress.
 
@@ -79,10 +70,11 @@ void CPythonWeaponContext::Holster()
 
 	m_pLayer->SetPlayerNextAttackTime(m_pLayer->GetWeaponTimeBase(UsePredicting()) + 1.0f);
 	m_flTimeWeaponIdle = m_pLayer->GetWeaponTimeBase(UsePredicting()) + m_pLayer->GetRandomFloat(m_pLayer->GetRandomSeed(), 10.f, 15.f);
-	SendWeaponAnim(PYTHON_HOLSTER);
+	SendWeaponAnim(R92_HOLSTER);
 }
 
-void CPythonWeaponContext::SecondaryAttack()
+/*
+void CR92WeaponContext::SecondaryAttack()
 {
 	if (!m_pLayer->IsMultiplayer())
 	{
@@ -102,8 +94,9 @@ void CPythonWeaponContext::SecondaryAttack()
 
 	m_flNextSecondaryAttack = m_pLayer->GetWeaponTimeBase(UsePredicting()) + 0.5f;
 }
+*/
 
-void CPythonWeaponContext::PrimaryAttack()
+void CR92WeaponContext::PrimaryAttack()
 {
 	// don't fire underwater
 	if (m_pLayer->GetPlayerWaterlevel() == 3)
@@ -132,11 +125,11 @@ void CPythonWeaponContext::PrimaryAttack()
 	Vector vecSrc = m_pLayer->GetGunPosition();
 	matrix3x3 cameraTransform = m_pLayer->GetCameraOrientation();
 	cameraTransform.SetForward(m_pLayer->GetAutoaimVector(AUTOAIM_10DEGREES));
-	Vector spread = m_pLayer->FireBullets(1, vecSrc, cameraTransform, 8192, CONE_2DEGREES, BULLET_PLAYER_357, m_pLayer->GetRandomSeed());
+	Vector spread = m_pLayer->FireBullets(1, vecSrc, cameraTransform, 8192, CONE_2DEGREES, BULLET_PLAYER_R92, m_pLayer->GetRandomSeed());
 
 	WeaponEventParams params;
 	params.flags = WeaponEventFlags::NotHost;
-	params.eventindex = m_usFirePython;
+	params.eventindex = m_usFireR92;
 	params.delay = 0.0f;
 	params.origin = vecSrc;
 	params.angles = cameraTransform.GetAngles();
@@ -151,7 +144,7 @@ void CPythonWeaponContext::PrimaryAttack()
 		m_pLayer->PlaybackWeaponEvent(params);
 	}
 
-	m_pLayer->AddPlayerPunchangle(-10.f, 0.f, 0.f);
+	m_pLayer->AddPlayerPunchangle(-3.f, 0.f, 0.f);
 
 #ifndef CLIENT_DLL
 	CBasePlayer *player = m_pLayer->GetWeaponEntity()->m_pPlayer;
@@ -170,7 +163,7 @@ void CPythonWeaponContext::PrimaryAttack()
 	m_flTimeWeaponIdle = m_pLayer->GetWeaponTimeBase(UsePredicting()) + m_pLayer->GetRandomFloat(m_pLayer->GetRandomSeed(), 10.f, 15.f);
 }
 
-void CPythonWeaponContext::Reload()
+void CR92WeaponContext::Reload()
 {
 	if (m_pLayer->GetPlayerAmmo(m_iPrimaryAmmoType) < 1)
 		return;
@@ -181,10 +174,10 @@ void CPythonWeaponContext::Reload()
 		m_fInZoom = false;
 	}
 
-	DefaultReload(6, PYTHON_RELOAD, 2.0f, m_pLayer->IsMultiplayer() ? 1 : 0);
+	DefaultReload(5, R92_RELOAD, 2.0f, m_pLayer->IsMultiplayer() ? 1 : 0);
 }
 
-void CPythonWeaponContext::WeaponIdle()
+void CR92WeaponContext::WeaponIdle()
 {
 	ResetEmptySound();
 
@@ -197,22 +190,22 @@ void CPythonWeaponContext::WeaponIdle()
 	float flRand = m_pLayer->GetRandomFloat(m_pLayer->GetRandomSeed(), 0.f, 1.f);
 	if (flRand <= 0.5f)
 	{
-		iAnim = PYTHON_IDLE1;
+		iAnim = R92_IDLE1;
 		m_flTimeWeaponIdle = (70.0 / 30.0);
 	}
 	else if (flRand <= 0.7f)
 	{
-		iAnim = PYTHON_IDLE2;
+		iAnim = R92_IDLE2;
 		m_flTimeWeaponIdle = (60.0 / 30.0);
 	}
 	else if (flRand <= 0.9f)
 	{
-		iAnim = PYTHON_IDLE3;
+		iAnim = R92_IDLE3;
 		m_flTimeWeaponIdle = (88.0 / 30.0);
 	}
 	else
 	{
-		iAnim = PYTHON_FIDGET;
+		iAnim = R92_FIDGET;
 		m_flTimeWeaponIdle = (170.0 / 30.0);
 	}
 

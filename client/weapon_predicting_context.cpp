@@ -31,6 +31,54 @@ GNU General Public License for more details.
 #include "weapons/rpg.h"
 #include "weapons/egon.h"
 #include "weapons/gauss.h"
+#include "weapons/pm.h"
+#include "weapons/aps.h"
+#include "weapons/gurza.h"
+#include "weapons/grach.h"
+#include "weapons/oc33.h"
+#include "weapons/r92.h"
+/*
+#include "weapons/flaregun.h"
+#include "weapons/pb.h"
+#include "weapons/p96.h"
+#include "weapons/psm.h"
+#include "weapons/oc23.h"
+#include "weapons/oc27.h"
+#include "weapons/22lr.h"
+#include "weapons/p7.h"
+#include "weapons/vp70.h"
+#include "weapons/ks23.h"
+#include "weapons/bekas.h"
+#include "weapons/saiga.h"
+#include "weapons/vepr.h"
+#include "weapons/mc255.h"
+#include "weapons/bizon.h"
+#include "weapons/kedr.h"
+#include "weapons/veresk.h"
+#include "weapons/kiparis.h"
+#include "weapons/gepard.h"
+*/
+#include "weapons/aksu.h"
+/*
+#include "weapons/aek.h"
+#include "weapons/an94.h"
+#include "weapons/vihr.h"
+#include "weapons/akm.h"
+#include "weapons/tkb0146.h"
+#include "weapons/fal.h"
+#include "weapons/g3.h"
+#include "weapons/aug.h"
+#include "weapons/svd.h"
+#include "weapons/svu.h"
+#include "weapons/vsk94.h"
+#include "weapons/psg.h"
+#include "weapons/pk.h"
+#include "weapons/rpo.h"
+#include "weapons/railgun.h"
+#include "weapons/rgd5.h"
+#include "weapons/f1.h"
+#include "weapons/rgo.h"
+*/
 #include <cstring>
 
 CWeaponPredictingContext::CWeaponPredictingContext()
@@ -362,6 +410,142 @@ CBaseWeaponContext* CWeaponPredictingContext::GetWeaponContext(uint32_t weaponID
 			case WEAPON_GAUSS:
 				m_weaponsState[weaponID] = std::make_unique<CGaussWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
 				break;
+			case WEAPON_PM:
+				m_weaponsState[weaponID] = std::make_unique<CPMWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_APS:
+				m_weaponsState[weaponID] = std::make_unique<CAPSWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_GURZA:
+				m_weaponsState[weaponID] = std::make_unique<CGURZAWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_GRACH:
+				m_weaponsState[weaponID] = std::make_unique<CGRACHWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_OC33:
+				m_weaponsState[weaponID] = std::make_unique<COC33WeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_R92:
+				m_weaponsState[weaponID] = std::make_unique<CR92WeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+				/*
+			case WEAPON_FLAREGUN:
+				m_weaponsState[weaponID] = std::make_unique<CFLAREGUNWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_PB:
+				m_weaponsState[weaponID] = std::make_unique<CPBWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_P96:
+				m_weaponsState[weaponID] = std::make_unique<CP96WeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_PSM:
+				m_weaponsState[weaponID] = std::make_unique<CPSMWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_OC23:
+				m_weaponsState[weaponID] = std::make_unique<COC23WeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_OC27:
+				m_weaponsState[weaponID] = std::make_unique<COC27WeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_22LR:
+				m_weaponsState[weaponID] = std::make_unique<C22LRWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_P7:
+				m_weaponsState[weaponID] = std::make_unique<CP7WeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_VP70:
+				m_weaponsState[weaponID] = std::make_unique<CVP70WeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_KS23:
+				m_weaponsState[weaponID] = std::make_unique<CKS23WeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_BEKAS:
+				m_weaponsState[weaponID] = std::make_unique<CBEKASWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_SAIGA:
+				m_weaponsState[weaponID] = std::make_unique<CSAIGAWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_VEPR:
+				m_weaponsState[weaponID] = std::make_unique<CVEPRWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_MC255:
+				m_weaponsState[weaponID] = std::make_unique<CMC255WeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_BIZON:
+				m_weaponsState[weaponID] = std::make_unique<CBIZONWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_KEDR:
+				m_weaponsState[weaponID] = std::make_unique<CKEDRWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_VERESK:
+				m_weaponsState[weaponID] = std::make_unique<CVERESKWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_KIPARIS:
+				m_weaponsState[weaponID] = std::make_unique<CKIPARISWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_GEPARD:
+				m_weaponsState[weaponID] = std::make_unique<CGEPARDWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+				*/
+			case WEAPON_AKSU:
+				m_weaponsState[weaponID] = std::make_unique<CAKSUWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+				/*
+			case WEAPON_AEK:
+				m_weaponsState[weaponID] = std::make_unique<CAEKWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_AN94:
+				m_weaponsState[weaponID] = std::make_unique<CAN94WeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_VIHR:
+				m_weaponsState[weaponID] = std::make_unique<CVIHRWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_AKM:
+				m_weaponsState[weaponID] = std::make_unique<CAKMWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_TKB0146:
+				m_weaponsState[weaponID] = std::make_unique<CTKB0146WeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_FAL:
+				m_weaponsState[weaponID] = std::make_unique<CFALWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_G3:
+				m_weaponsState[weaponID] = std::make_unique<CG3WeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_AUG:
+				m_weaponsState[weaponID] = std::make_unique<CAUGWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_SVD:
+				m_weaponsState[weaponID] = std::make_unique<CSVDWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_SVU:
+				m_weaponsState[weaponID] = std::make_unique<CSVUWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_VSK94:
+				m_weaponsState[weaponID] = std::make_unique<CVSK94WeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_PSG:
+				m_weaponsState[weaponID] = std::make_unique<CPSGWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_PK:
+				m_weaponsState[weaponID] = std::make_unique<CPKWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_RPO:
+				m_weaponsState[weaponID] = std::make_unique<CRPOWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_RAILGUN:
+				m_weaponsState[weaponID] = std::make_unique<CRAILGUNWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_RGD5:
+				m_weaponsState[weaponID] = std::make_unique<CRGD5WeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_F1:
+				m_weaponsState[weaponID] = std::make_unique<CF1WeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+			case WEAPON_RGO:
+				m_weaponsState[weaponID] = std::make_unique<CRGOWeaponContext>(std::make_unique<CClientWeaponLayerImpl>(m_playerState));
+				break;
+				*/
 			default: 
 				return nullptr;
 		}

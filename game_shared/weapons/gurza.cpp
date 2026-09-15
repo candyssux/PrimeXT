@@ -1,19 +1,10 @@
 /***
 *
-*	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
-*	
-*	This product contains software technology licensed from Id 
-*	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc. 
-*	All Rights Reserved.
-*
-*   Use, distribution, and modification of this source code and/or resulting
-*   object code is restricted to non-commercial enhancements to products from
-*   Valve LLC.  All other use, distribution, or modification is prohibited
-*   without written permission from Valve LLC.
+*	ionization weapons by kpe0
 *
 ****/
 
-#include "glock.h"
+#include "gurza.h"
 #include <utility>
 
 #ifdef CLIENT_DLL
@@ -27,48 +18,48 @@
 #include "player.h"
 #endif
 
-CGlockWeaponContext::CGlockWeaponContext(std::unique_ptr<IWeaponLayer> &&layer) :
+CGURZAWeaponContext::CGURZAWeaponContext(std::unique_ptr<IWeaponLayer> &&layer) :
 	CBaseWeaponContext(std::move(layer))
 {
-	m_iDefaultAmmo = GLOCK_DEFAULT_GIVE;
-	m_iId = WEAPON_GLOCK;
-	m_usFireGlock1 = m_pLayer->PrecacheEvent("events/glock1.sc");
-	m_usFireGlock2 = m_pLayer->PrecacheEvent("events/glock2.sc");
+	m_iDefaultAmmo = GURZA_DEFAULT_GIVE;
+	m_iId = WEAPON_GURZA;
+	m_usFireGURZA1 = m_pLayer->PrecacheEvent("events/gurza1.sc");
+	m_usFireGURZA2 = m_pLayer->PrecacheEvent("events/gurza2.sc");
 }
 
-int CGlockWeaponContext::GetItemInfo(ItemInfo *p) const
+int CGURZAWeaponContext::GetItemInfo(ItemInfo *p) const
 {
-	p->pszName = CLASSNAME_STR(GLOCK_CLASSNAME);
-	p->pszAmmo1 = "9mm";
-	p->iMaxAmmo1 = _9MM_MAX_CARRY;
+	p->pszName = CLASSNAME_STR(GURZA_CLASSNAME);
+	p->pszAmmo1 = "9X21";
+	p->iMaxAmmo1 = _9X21_MAX_CARRY;
 	p->pszAmmo2 = NULL;
 	p->iMaxAmmo2 = -1;
-	p->iMaxClip = GLOCK_MAX_CLIP;
+	p->iMaxClip = GURZA_MAX_CLIP;
 	p->iSlot = 1;
 	p->iPosition = 0;
 	p->iFlags = 0;
 	p->iId = m_iId;
-	p->iWeight = GLOCK_WEIGHT;
+	p->iWeight = GURZA_WEIGHT;
 	return 1;
 }
 
-bool CGlockWeaponContext::Deploy( )
+bool CGURZAWeaponContext::Deploy()
 {
 	// pev->body = 1;
-	return DefaultDeploy( "models/v_9mmhandgun.mdl", "models/p_9mmhandgun.mdl", GLOCK_DRAW, "onehanded" );
+	return DefaultDeploy("models/v_gurza.mdl", "models/p_gurza.mdl", GURZA_DRAW, "onehanded");
 }
 
-void CGlockWeaponContext::SecondaryAttack( void )
+//void CGURZAWeaponContext::SecondaryAttack(void)
+//{
+//	GURZAFire(0.1, 0.2, FALSE);
+//}
+
+void CGURZAWeaponContext::PrimaryAttack(void)
 {
-	GlockFire( 0.1, 0.2, FALSE );
+	GURZAFire(0.03, 0.2, TRUE);
 }
 
-void CGlockWeaponContext::PrimaryAttack(void)
-{
-	GlockFire( 0.01, 0.3, TRUE );
-}
-
-void CGlockWeaponContext::GlockFire( float flSpread , float flCycleTime, bool fUseAutoAim )
+void CGURZAWeaponContext::GURZAFire(float flSpread, float flCycleTime, bool fUseAutoAim)
 {
 	if (m_iClip <= 0)
 	{
@@ -83,13 +74,13 @@ void CGlockWeaponContext::GlockFire( float flSpread , float flCycleTime, bool fU
 
 	m_iClip--;
 
-	SendWeaponAnim(m_iClip != 0 ? GLOCK_SHOOT : GLOCK_SHOOT_EMPTY);
+	SendWeaponAnim(m_iClip != 0 ? GURZA_SHOOT : GURZA_SHOOT_EMPTY);
 
 #ifndef CLIENT_DLL
 	// player "shoot" animation
 	CBasePlayer *player = m_pLayer->GetWeaponEntity()->m_pPlayer;
 
-	player->SetAnimation( PLAYER_ATTACK1 );
+	player->SetAnimation(PLAYER_ATTACK1);
 	player->pev->effects = (int)(player->pev->effects) | EF_MUZZLEFLASH;
 
 	// silenced
@@ -113,13 +104,13 @@ void CGlockWeaponContext::GlockFire( float flSpread , float flCycleTime, bool fU
 		aimMatrix.SetForward(m_pLayer->GetAutoaimVector(AUTOAIM_10DEGREES));
 	}
 
-	Vector vecDir = m_pLayer->FireBullets(1, vecSrc, aimMatrix, 8192, flSpread, BULLET_PLAYER_9MM, m_pLayer->GetRandomSeed());
+	Vector vecDir = m_pLayer->FireBullets(1, vecSrc, aimMatrix, 8192, flSpread, BULLET_PLAYER_GURZA, m_pLayer->GetRandomSeed());
 	m_flNextPrimaryAttack = GetNextPrimaryAttackDelay(flCycleTime);
 	m_flNextSecondaryAttack = m_pLayer->GetWeaponTimeBase(UsePredicting()) + flCycleTime;
 
 	WeaponEventParams params;
 	params.flags = WeaponEventFlags::NotHost;
-	params.eventindex = fUseAutoAim ? m_usFireGlock1 : m_usFireGlock2;
+	params.eventindex = fUseAutoAim ? m_usFireGURZA1 : m_usFireGURZA2;
 	params.delay = 0.0f;
 	params.origin = vecSrc;
 	params.angles = aimMatrix.GetAngles();
@@ -144,14 +135,14 @@ void CGlockWeaponContext::GlockFire( float flSpread , float flCycleTime, bool fU
 	m_flTimeWeaponIdle = m_pLayer->GetWeaponTimeBase(UsePredicting()) + m_pLayer->GetRandomFloat(m_pLayer->GetRandomSeed(), 10.f, 15.f);
 }
 
-void CGlockWeaponContext::Reload( void )
+void CGURZAWeaponContext::Reload(void)
 {
 	int iResult;
 
 	if (m_iClip == 0)
-		iResult = DefaultReload( 17, GLOCK_RELOAD, 1.5 );
+		iResult = DefaultReload(18, GURZA_RELOAD, 1.5);
 	else
-		iResult = DefaultReload( 17, GLOCK_RELOAD_NOT_EMPTY, 1.5 );
+		iResult = DefaultReload(19, GURZA_RELOAD_NOT_EMPTY, 1.5);
 
 	if (iResult)
 	{
@@ -159,11 +150,11 @@ void CGlockWeaponContext::Reload( void )
 	}
 }
 
-void CGlockWeaponContext::WeaponIdle( void )
+void CGURZAWeaponContext::WeaponIdle(void)
 {
-	ResetEmptySound( );
+	ResetEmptySound();
 
-	m_pLayer->GetAutoaimVector( AUTOAIM_10DEGREES );
+	m_pLayer->GetAutoaimVector(AUTOAIM_10DEGREES);
 
 	if (m_flTimeWeaponIdle > m_pLayer->GetWeaponTimeBase(UsePredicting()))
 		return;
@@ -175,19 +166,19 @@ void CGlockWeaponContext::WeaponIdle( void )
 		float flRand = m_pLayer->GetRandomFloat(m_pLayer->GetRandomSeed(), 0.0f, 1.0f);
 		if (flRand <= 0.3 + 0 * 0.75)
 		{
-			iAnim = GLOCK_IDLE3;
+			iAnim = GURZA_IDLE3;
 			m_flTimeWeaponIdle = m_pLayer->GetWeaponTimeBase(UsePredicting()) + 49.0 / 16;
 		}
 		else if (flRand <= 0.6 + 0 * 0.875)
 		{
-			iAnim = GLOCK_IDLE1;
+			iAnim = GURZA_IDLE1;
 			m_flTimeWeaponIdle = m_pLayer->GetWeaponTimeBase(UsePredicting()) + 60.0 / 16.0;
 		}
 		else
 		{
-			iAnim = GLOCK_IDLE2;
+			iAnim = GURZA_IDLE2;
 			m_flTimeWeaponIdle = m_pLayer->GetWeaponTimeBase(UsePredicting()) + 40.0 / 16.0;
 		}
-		SendWeaponAnim( iAnim );
+		SendWeaponAnim(iAnim);
 	}
 }

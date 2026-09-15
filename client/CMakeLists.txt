@@ -96,7 +96,7 @@ list(APPEND CLDLL_SOURCES ${RENDER_SOURCES})
 list(APPEND CLDLL_SOURCES ${ENTITIES_SOURCES})
 list(APPEND CLDLL_SOURCES ${GAME_EVENTS_SOURCES})
 list(APPEND CLDLL_SOURCES ${WEAPONS_SHARED_SOURCES})
-add_library(${PROJECT_NAME} SHARED ${CLDLL_SOURCES})
+add_library(${PROJECT_NAME} SHARED ${CLDLL_SOURCES} "events/pm_fire_event.h" "events/pm_fire_event.cpp" "events/aps_fire_event.h" "events/aps_fire_event.cpp" "events/gurza_fire_event.h" "events/gurza_fire_event.cpp" "events/grach_fire_event.cpp" "events/oc33_fire_event.h" "events/oc33_fire_event.cpp" "events/r92_fire_event.h" "events/r92_fire_event.cpp" "events/aksu_fire_event.h" "events/aksu_fire_event.cpp")
 add_dependencies(${PROJECT_NAME} build_info)
 
 target_include_directories(${PROJECT_NAME} PRIVATE
