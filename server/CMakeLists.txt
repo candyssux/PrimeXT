@@ -106,7 +106,7 @@ list(APPEND SVDLL_SOURCES ${MONSTERS_SOURCES})
 list(APPEND SVDLL_SOURCES ${WEAPONS_SOURCES})
 list(APPEND SVDLL_SOURCES ${GAMERULES_SOURCES})
 list(APPEND SVDLL_SOURCES ${WEAPONS_SHARED_SOURCES})
-add_library(${PROJECT_NAME} SHARED ${SVDLL_SOURCES})
+add_library(${PROJECT_NAME} SHARED ${SVDLL_SOURCES} "weapons/weapon_pm.cpp" "weapons/weapon_aps.h" "weapons/weapon_aps.cpp" "weapons/weapon_gurza.h" "weapons/weapon_gurza.cpp" "weapons/weapon_grach.h" "weapons/weapon_grach.cpp" "weapons/weapon_oc33.h" "weapons/weapon_oc33.cpp" "weapons/weapon_r92.h" "weapons/weapon_r92.cpp" "weapons/weapon_aksu.h" "weapons/weapon_aksu.cpp")
 
 target_include_directories(${PROJECT_NAME} PRIVATE
 	"."

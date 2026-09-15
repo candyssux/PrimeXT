@@ -32,7 +32,7 @@
 typedef enum { expRandom, expDirected } ExplType;
 typedef enum { matGlass = 0, matWood, matMetal, matFlesh, matCinderBlock, matCeilingTile, matComputer, matUnbreakableGlass, matRocks, matNone, matLastMaterial } Materials;
 
-#define	NUM_SHARDS 6 // this many shards spawned when breakable objects break;
+#define	NUM_SHARDS 16 // this many shards spawned when breakable objects break;
 
 class CBreakable : public CBaseDelay
 {

@@ -31,7 +31,7 @@ GNU General Public License for more details.
 
 #define DEFAULT_SMOOTHNESS			0.0f
 #define FILTER_SIZE					2
-#define SKY_FOG_DENSITY_FACTOR		0.00005f	// experimentally determined value (chislo s potolka)
+#define SKY_FOG_DENSITY_FACTOR		0.000010f	// experimentally determined value (chislo s potolka)
 #define WATER_FOG_DENSITY_FACTOR	0.000025f
 
 // defined in cdll_int.cpp

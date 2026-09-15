@@ -306,7 +306,7 @@ static void GL_DrawSkySide( word hProgram, int skyside )
 			u->SetValue( GetVieworg().x, GetVieworg().y, GetVieworg().z );
 			break;
 		case UT_FOGPARAMS:
-			u->SetValue( tr.fogColor[0], tr.fogColor[1], tr.fogColor[2], tr.fogDensity * 0.5f );
+			u->SetValue( tr.fogColor[0], tr.fogColor[1], tr.fogColor[2], tr.fogDensity * 0.01f );
 			break;
 		case UT_ZFAR:
 			u->SetValue( RI->view.farClip );

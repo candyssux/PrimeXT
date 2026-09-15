@@ -193,6 +193,159 @@ Vector CServerWeaponLayerImpl::FireBullets(int bullets, Vector origin, matrix3x3
 					case BULLET_NONE: // FIX 
 						pEntity->TraceAttack(player->pev, 50, vecDir, &tr, DMG_CLUB);
 						break;
+
+					case BULLET_PLAYER_PM:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgPM, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_APS:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgAPS, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_GURZA:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgGURZA, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_GRACH:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgGRACH, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_OC33:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgOC33, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_R92:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgR92, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_PB:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgPB, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_P96:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgP96, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_PSM:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgPSM, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_OC23:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgOC23, vecDir, &tr, DMG_BULLET);
+						break;
+					
+					case BULLET_PLAYER_OC27:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgOC27, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_22LR:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmg22LR, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_P7:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgP7, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_VP70:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgVP70, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_KS23:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgKS23, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_BEKAS:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgBEKAS, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_SAIGA:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgSAIGA, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_VEPR:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgVEPR, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_MC255:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgMC255, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_BIZON:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgBIZON, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_KEDR:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgKEDR, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_VERESK:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgVERESK, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_KIPARIS:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgKIPARIS, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_GEPARD:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgGEPARD, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_AKSU:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgAKSU, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_AEK:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgAEK, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_AN94:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgAN94, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_VIHR:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgVIHR, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_AKM:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgAKM, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_TKB0146:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgTKB0146, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_FAL:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgFAL, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_G3:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgG3, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_AUG:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgAUG, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_SVD:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgSVD, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_SVU:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgSVU, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_VSK94:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgVSK94, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_PSG:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgPSG, vecDir, &tr, DMG_BULLET);
+						break;
+
+					case BULLET_PLAYER_PK:
+						pEntity->TraceAttack(player->pev, gSkillData.plrDmgPM, vecDir, &tr, DMG_BULLET);
+						break;
+
 				}
 
 				TEXTURETYPE_PlaySound(&tr, origin, vecEnd, bulletType);

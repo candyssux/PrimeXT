@@ -46,6 +46,20 @@ void DeactivateSatchels( CBasePlayer *pOwner );
 #define AMMO_RPGCLIP_GIVE		1
 #define AMMO_URANIUMBOX_GIVE	20
 #define AMMO_SNARKBOX_GIVE		5
+#define AMMO_9X18_GIVE			16
+#define AMMO_9X21_GIVE			16
+#define AMMO_9X19_GIVE			16
+#define AMMO_545X18_GIVE		16
+#define AMMO_FLARE_GIVE			1
+#define AMMO_12X70_GIVE			12
+#define AMMO_23X75_GIVE			4
+#define AMMO_762X39_GIVE		30
+#define AMMO_545X39_GIVE		30
+#define AMMO_556X45_GIVE		30
+#define AMMO_762X51_GIVE		30
+#define AMMO_9X39_GIVE			20
+#define AMMO_762X54_GIVE		10
+#define AMMO_RAILGUN_GIVE		5
 
 #define WEAPON_IS_ONTARGET 0x40
 

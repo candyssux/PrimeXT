@@ -375,6 +375,182 @@ cvar_t	sk_plr_tripmine1 = {"sk_plr_tripmine1","0"};
 cvar_t	sk_plr_tripmine2 = {"sk_plr_tripmine2","0"};
 cvar_t	sk_plr_tripmine3 = {"sk_plr_tripmine3","0"};
 
+cvar_t	sk_plr_PM_bullet1 = { "sk_plr_PM_bullet1", "0" };
+cvar_t	sk_plr_PM_bullet2 = { "sk_plr_PM_bullet2", "0" };
+cvar_t	sk_plr_PM_bullet3 = { "sk_plr_PM_bullet3", "0" };
+
+cvar_t	sk_plr_APS_bullet1 = { "sk_plr_APS_bullet1", "0" };
+cvar_t	sk_plr_APS_bullet2 = { "sk_plr_APS_bullet2", "0" };
+cvar_t	sk_plr_APS_bullet3 = { "sk_plr_APS_bullet3", "0" };
+
+cvar_t	sk_plr_GURZA_bullet1 = { "sk_plr_GURZA_bullet1", "0" };
+cvar_t	sk_plr_GURZA_bullet2 = { "sk_plr_GURZA_bullet2", "0" };
+cvar_t	sk_plr_GURZA_bullet3 = { "sk_plr_GURZA_bullet3", "0" };
+
+cvar_t	sk_plr_GRACH_bullet1 = { "sk_plr_GRACH_bullet1", "0" };
+cvar_t	sk_plr_GRACH_bullet2 = { "sk_plr_GRACH_bullet2", "0" };
+cvar_t	sk_plr_GRACH_bullet3 = { "sk_plr_GRACH_bullet3", "0" };
+
+cvar_t	sk_plr_OC33_bullet1 = { "sk_plr_OC33_bullet1", "0" };
+cvar_t	sk_plr_OC33_bullet2 = { "sk_plr_OC33_bullet2", "0" };
+cvar_t	sk_plr_OC33_bullet3 = { "sk_plr_OC33_bullet3", "0" };
+
+cvar_t	sk_plr_R92_bullet1 = { "sk_plr_R92_bullet1", "0" };
+cvar_t	sk_plr_R92_bullet2 = { "sk_plr_R92_bullet2", "0" };
+cvar_t	sk_plr_R92_bullet3 = { "sk_plr_R92_bullet3", "0" };
+
+cvar_t	sk_plr_FLAREGUN1 = { "sk_plr_FLAREGUN1", "0" };
+cvar_t	sk_plr_FLAREGUN2 = { "sk_plr_FLAREGUN2", "0" };
+cvar_t	sk_plr_FLAREGUN3 = { "sk_plr_FLAREGUN3", "0" };
+
+cvar_t	sk_plr_PB_bullet1 = { "sk_plr_PB_bullet1", "0" };
+cvar_t	sk_plr_PB_bullet2 = { "sk_plr_PB_bullet2", "0" };
+cvar_t	sk_plr_PB_bullet3 = { "sk_plr_PB_bullet3", "0" };
+
+cvar_t	sk_plr_P96_bullet1 = { "sk_plr_P96_bullet1", "0" };
+cvar_t	sk_plr_P96_bullet2 = { "sk_plr_P96_bullet2", "0" };
+cvar_t	sk_plr_P96_bullet3 = { "sk_plr_P96_bullet3", "0" };
+
+cvar_t	sk_plr_PSM_bullet1 = { "sk_plr_PSM_bullet1", "0" };
+cvar_t	sk_plr_PSM_bullet2 = { "sk_plr_PSM_bullet2", "0" };
+cvar_t	sk_plr_PSM_bullet3 = { "sk_plr_PSM_bullet3", "0" };
+
+cvar_t	sk_plr_OC23_bullet1 = { "sk_plr_OC23_bullet1", "0" };
+cvar_t	sk_plr_OC23_bullet2 = { "sk_plr_OC23_bullet2", "0" };
+cvar_t	sk_plr_OC23_bullet3 = { "sk_plr_OC23_bullet3", "0" };
+
+cvar_t	sk_plr_OC27_bullet1 = { "sk_plr_OC27_bullet1", "0" };
+cvar_t	sk_plr_OC27_bullet2 = { "sk_plr_OC27_bullet2", "0" };
+cvar_t	sk_plr_OC27_bullet3 = { "sk_plr_OC27_bullet3", "0" };
+
+cvar_t	sk_plr_22LR_bullet1 = { "sk_plr_22LR_bullet1", "0" };
+cvar_t	sk_plr_22LR_bullet2 = { "sk_plr_22LR_bullet2", "0" };
+cvar_t	sk_plr_22LR_bullet3 = { "sk_plr_22LR_bullet3", "0" };
+
+cvar_t	sk_plr_P7_bullet1 = { "sk_plr_P7_bullet1", "0" };
+cvar_t	sk_plr_P7_bullet2 = { "sk_plr_P7_bullet2", "0" };
+cvar_t	sk_plr_P7_bullet3 = { "sk_plr_P7_bullet3", "0" };
+
+cvar_t	sk_plr_VP70_bullet1 = { "sk_plr_VP70_bullet1", "0" };
+cvar_t	sk_plr_VP70_bullet2 = { "sk_plr_VP70_bullet2", "0" };
+cvar_t	sk_plr_VP70_bullet3 = { "sk_plr_VP70_bullet3", "0" };
+
+cvar_t	sk_plr_KS231 = { "sk_plr_KS231", "0" };
+cvar_t	sk_plr_KS232 = { "sk_plr_KS232", "0" };
+cvar_t	sk_plr_KS233 = { "sk_plr_KS233", "0" };
+
+cvar_t	sk_plr_BEKAS1 = { "sk_plr_BEKAS1", "0" };
+cvar_t	sk_plr_BEKAS2 = { "sk_plr_BEKAS2", "0" };
+cvar_t	sk_plr_BEKAS3 = { "sk_plr_BEKAS3", "0" };
+
+cvar_t	sk_plr_SAIGA1 = { "sk_plr_SAIGA1", "0" };
+cvar_t	sk_plr_SAIGA2 = { "sk_plr_SAIGA2", "0" };
+cvar_t	sk_plr_SAIGA3 = { "sk_plr_SAIGA3", "0" };
+
+cvar_t	sk_plr_VEPR_bullet1 = { "sk_plr_VEPR_bullet1", "0" };
+cvar_t	sk_plr_VEPR_bullet2 = { "sk_plr_VEPR_bullet2", "0" };
+cvar_t	sk_plr_VEPR_bullet3 = { "sk_plr_VEPR_bullet3", "0" };
+
+cvar_t	sk_plr_MC2551 = { "sk_plr_MC2551", "0" };
+cvar_t	sk_plr_MC2552 = { "sk_plr_MC2552", "0" };
+cvar_t	sk_plr_MC2553 = { "sk_plr_MC2553", "0" };
+
+cvar_t	sk_plr_BIZON_bullet1 = { "sk_plr_BIZON_bullet1", "0" };
+cvar_t	sk_plr_BIZON_bullet2 = { "sk_plr_BIZON_bullet2", "0" };
+cvar_t	sk_plr_BIZON_bullet3 = { "sk_plr_BIZON_bullet3", "0" };
+
+cvar_t	sk_plr_KEDR_bullet1 = { "sk_plr_KEDR_bullet1", "0" };
+cvar_t	sk_plr_KEDR_bullet2 = { "sk_plr_KEDR_bullet2", "0" };
+cvar_t	sk_plr_KEDR_bullet3 = { "sk_plr_KEDR_bullet3", "0" };
+
+cvar_t	sk_plr_VERESK_bullet1 = { "sk_plr_VERESK_bullet1", "0" };
+cvar_t	sk_plr_VERESK_bullet2 = { "sk_plr_VERESK_bullet2", "0" };
+cvar_t	sk_plr_VERESK_bullet3 = { "sk_plr_VERESK_bullet3", "0" };
+
+cvar_t	sk_plr_KIPARIS_bullet1 = { "sk_plr_KIPARIS_bullet1", "0" };
+cvar_t	sk_plr_KIPARIS_bullet2 = { "sk_plr_KIPARIS_bullet2", "0" };
+cvar_t	sk_plr_KIPARIS_bullet3 = { "sk_plr_KIPARIS_bullet3", "0" };
+
+cvar_t	sk_plr_GEPARD_bullet1 = { "sk_plr_GEPARD_bullet1", "0" };
+cvar_t	sk_plr_GEPARD_bullet2 = { "sk_plr_GEPARD_bullet2", "0" };
+cvar_t	sk_plr_GEPARD_bullet3 = { "sk_plr_GEPARD_bullet3", "0" };
+
+cvar_t	sk_plr_AKSU_bullet1 = { "sk_plr_AKSU_bullet1", "0" };
+cvar_t	sk_plr_AKSU_bullet2 = { "sk_plr_AKSU_bullet2", "0" };
+cvar_t	sk_plr_AKSU_bullet3 = { "sk_plr_AKSU_bullet3", "0" };
+
+cvar_t	sk_plr_AEK_bullet1 = { "sk_plr_AEK_bullet1", "0" };
+cvar_t	sk_plr_AEK_bullet2 = { "sk_plr_AEK_bullet2", "0" };
+cvar_t	sk_plr_AEK_bullet3 = { "sk_plr_AEK_bullet3", "0" };
+
+cvar_t	sk_plr_AN94_bullet1 = { "sk_plr_AN94_bullet1", "0" };
+cvar_t	sk_plr_AN94_bullet2 = { "sk_plr_AN94_bullet2", "0" };
+cvar_t	sk_plr_AN94_bullet3 = { "sk_plr_AN94_bullet3", "0" };
+
+cvar_t	sk_plr_VIHR_bullet1 = { "sk_plr_VIHR_bullet1", "0" };
+cvar_t	sk_plr_VIHR_bullet2 = { "sk_plr_VIHR_bullet2", "0" };
+cvar_t	sk_plr_VIHR_bullet3 = { "sk_plr_VIHR_bullet3", "0" };
+
+cvar_t	sk_plr_AKM_bullet1 = { "sk_plr_AKM_bullet1", "0" };
+cvar_t	sk_plr_AKM_bullet2 = { "sk_plr_AKM_bullet2", "0" };
+cvar_t	sk_plr_AKM_bullet3 = { "sk_plr_AKM_bullet3", "0" };
+
+cvar_t	sk_plr_TKB0146_bullet1 = { "sk_plr_TKB0146_bullet1", "0" };
+cvar_t	sk_plr_TKB0146_bullet2 = { "sk_plr_TKB0146_bullet2", "0" };
+cvar_t	sk_plr_TKB0146_bullet3 = { "sk_plr_TKB0146_bullet3", "0" };
+
+cvar_t	sk_plr_FAL_bullet1 = { "sk_plr_FAL_bullet1", "0" };
+cvar_t	sk_plr_FAL_bullet2 = { "sk_plr_FAL_bullet2", "0" };
+cvar_t	sk_plr_FAL_bullet3 = { "sk_plr_FAL_bullet3", "0" };
+
+cvar_t	sk_plr_G3_bullet1 = { "sk_plr_G3_bullet1", "0" };
+cvar_t	sk_plr_G3_bullet2 = { "sk_plr_G3_bullet2", "0" };
+cvar_t	sk_plr_G3_bullet3 = { "sk_plr_G3_bullet3", "0" };
+
+cvar_t	sk_plr_AUG_bullet1 = { "sk_plr_AUG_bullet1", "0" };
+cvar_t	sk_plr_AUG_bullet2 = { "sk_plr_AUG_bullet2", "0" };
+cvar_t	sk_plr_AUG_bullet3 = { "sk_plr_AUG_bullet3", "0" };
+
+cvar_t	sk_plr_SVD_bullet1 = { "sk_plr_SVD_bullet1", "0" };
+cvar_t	sk_plr_SVD_bullet2 = { "sk_plr_SVD_bullet2", "0" };
+cvar_t	sk_plr_SVD_bullet3 = { "sk_plr_SVD_bullet3", "0" };
+
+cvar_t	sk_plr_SVU_bullet1 = { "sk_plr_SVU_bullet1", "0" };
+cvar_t	sk_plr_SVU_bullet2 = { "sk_plr_SVU_bullet2", "0" };
+cvar_t	sk_plr_SVU_bullet3 = { "sk_plr_SVU_bullet3", "0" };
+
+cvar_t	sk_plr_VSK94_bullet1 = { "sk_plr_VSK94_bullet1", "0" };
+cvar_t	sk_plr_VSK94_bullet2 = { "sk_plr_VSK94_bullet2", "0" };
+cvar_t	sk_plr_VSK94_bullet3 = { "sk_plr_VSK94_bullet3", "0" };
+
+cvar_t	sk_plr_PSG_bullet1 = { "sk_plr_PSG_bullet1", "0" };
+cvar_t	sk_plr_PSG_bullet2 = { "sk_plr_PSG_bullet2", "0" };
+cvar_t	sk_plr_PSG_bullet3 = { "sk_plr_PSG_bullet3", "0" };
+
+cvar_t	sk_plr_PK_bullet1 = { "sk_plr_PK_bullet1", "0" };
+cvar_t	sk_plr_PK_bullet2 = { "sk_plr_PK_bullet2", "0" };
+cvar_t	sk_plr_PK_bullet3 = { "sk_plr_PK_bullet3", "0" };
+
+cvar_t	sk_plr_RPO1 = { "sk_plr_RPO1", "0" };
+cvar_t	sk_plr_RPO2 = { "sk_plr_RPO2", "0" };
+cvar_t	sk_plr_RPO3 = { "sk_plr_RPO3", "0" };
+
+cvar_t	sk_plr_RAILGUN1 = { "sk_plr_RAILGUN1", "0" };
+cvar_t	sk_plr_RAILGUN2 = { "sk_plr_RAILGUN2", "0" };
+cvar_t	sk_plr_RAILGUN3 = { "sk_plr_RAILGUN3", "0" };
+
+cvar_t	sk_plr_RGD51 = { "sk_plr_RGD5_bullet1", "0" };
+cvar_t	sk_plr_RGD52 = { "sk_plr_RGD5_bullet2", "0" };
+cvar_t	sk_plr_RGD53 = { "sk_plr_RGD5_bullet3", "0" };
+
+cvar_t	sk_plr_F11 = { "sk_plr_F11", "0" };
+cvar_t	sk_plr_F12 = { "sk_plr_F12", "0" };
+cvar_t	sk_plr_F13 = { "sk_plr_F13", "0" };
+
+cvar_t	sk_plr_RGO1 = {"sk_plr_RGO1", "0"};
+cvar_t	sk_plr_RGO2 = { "sk_plr_RGO2", "0" };
+cvar_t	sk_plr_RGO3 = { "sk_plr_RGO3", "0" };
+
 
 // WORLD WEAPONS
 cvar_t	sk_12mm_bullet1 = {"sk_12mm_bullet1","0"};
@@ -859,6 +1035,181 @@ void GameDLLInit( void )
 	CVAR_REGISTER ( &sk_plr_tripmine2 );// {"sk_plr_tripmine2","0"};
 	CVAR_REGISTER ( &sk_plr_tripmine3 );// {"sk_plr_tripmine3","0"};
 
+	CVAR_REGISTER(&sk_plr_PM_bullet1);
+	CVAR_REGISTER(&sk_plr_PM_bullet2);
+	CVAR_REGISTER(&sk_plr_PM_bullet3);
+
+	CVAR_REGISTER(&sk_plr_APS_bullet1);
+	CVAR_REGISTER(&sk_plr_APS_bullet2);
+	CVAR_REGISTER(&sk_plr_APS_bullet3);
+
+	CVAR_REGISTER(&sk_plr_GURZA_bullet1);
+	CVAR_REGISTER(&sk_plr_GURZA_bullet2);
+	CVAR_REGISTER(&sk_plr_GURZA_bullet3);
+
+	CVAR_REGISTER(&sk_plr_GRACH_bullet1);
+	CVAR_REGISTER(&sk_plr_GRACH_bullet2);
+	CVAR_REGISTER(&sk_plr_GRACH_bullet3);
+
+	CVAR_REGISTER(&sk_plr_OC33_bullet1);
+	CVAR_REGISTER(&sk_plr_OC33_bullet2);
+	CVAR_REGISTER(&sk_plr_OC33_bullet3);
+
+	CVAR_REGISTER(&sk_plr_R92_bullet1);
+	CVAR_REGISTER(&sk_plr_R92_bullet2);
+	CVAR_REGISTER(&sk_plr_R92_bullet3);
+
+	CVAR_REGISTER(&sk_plr_FLAREGUN1);
+	CVAR_REGISTER(&sk_plr_FLAREGUN2);
+	CVAR_REGISTER(&sk_plr_FLAREGUN3);
+
+	CVAR_REGISTER(&sk_plr_PB_bullet1);
+	CVAR_REGISTER(&sk_plr_PB_bullet2);
+	CVAR_REGISTER(&sk_plr_PB_bullet3);
+
+	CVAR_REGISTER(&sk_plr_P96_bullet1);
+	CVAR_REGISTER(&sk_plr_P96_bullet2);
+	CVAR_REGISTER(&sk_plr_P96_bullet3);
+
+	CVAR_REGISTER(&sk_plr_PSM_bullet1);
+	CVAR_REGISTER(&sk_plr_PSM_bullet2);
+	CVAR_REGISTER(&sk_plr_PSM_bullet3);
+
+	CVAR_REGISTER(&sk_plr_OC23_bullet1);
+	CVAR_REGISTER(&sk_plr_OC23_bullet2);
+	CVAR_REGISTER(&sk_plr_OC23_bullet3);
+
+	CVAR_REGISTER(&sk_plr_OC27_bullet1);
+	CVAR_REGISTER(&sk_plr_OC27_bullet2);
+	CVAR_REGISTER(&sk_plr_OC27_bullet3);
+
+	CVAR_REGISTER(&sk_plr_22LR_bullet1);
+	CVAR_REGISTER(&sk_plr_22LR_bullet2);
+	CVAR_REGISTER(&sk_plr_22LR_bullet3);
+
+	CVAR_REGISTER(&sk_plr_P7_bullet1);
+	CVAR_REGISTER(&sk_plr_P7_bullet2);
+	CVAR_REGISTER(&sk_plr_P7_bullet3);
+
+	CVAR_REGISTER(&sk_plr_VP70_bullet1);
+	CVAR_REGISTER(&sk_plr_VP70_bullet2);
+	CVAR_REGISTER(&sk_plr_VP70_bullet3);
+
+	CVAR_REGISTER(&sk_plr_KS231);
+	CVAR_REGISTER(&sk_plr_KS232);
+	CVAR_REGISTER(&sk_plr_KS233);
+
+	CVAR_REGISTER(&sk_plr_BEKAS1);
+	CVAR_REGISTER(&sk_plr_BEKAS2);
+	CVAR_REGISTER(&sk_plr_BEKAS3);
+
+	CVAR_REGISTER(&sk_plr_SAIGA1);
+	CVAR_REGISTER(&sk_plr_SAIGA2);
+	CVAR_REGISTER(&sk_plr_SAIGA3);
+
+	CVAR_REGISTER(&sk_plr_VEPR_bullet1);
+	CVAR_REGISTER(&sk_plr_VEPR_bullet2);
+	CVAR_REGISTER(&sk_plr_VEPR_bullet3);
+
+	CVAR_REGISTER(&sk_plr_MC2551);
+	CVAR_REGISTER(&sk_plr_MC2552);
+	CVAR_REGISTER(&sk_plr_MC2553);
+
+	CVAR_REGISTER(&sk_plr_BIZON_bullet1);
+	CVAR_REGISTER(&sk_plr_BIZON_bullet2);
+	CVAR_REGISTER(&sk_plr_BIZON_bullet3);
+
+	CVAR_REGISTER(&sk_plr_KEDR_bullet1);
+	CVAR_REGISTER(&sk_plr_KEDR_bullet2);
+	CVAR_REGISTER(&sk_plr_KEDR_bullet3);
+
+	CVAR_REGISTER(&sk_plr_VERESK_bullet1);
+	CVAR_REGISTER(&sk_plr_VERESK_bullet2);
+	CVAR_REGISTER(&sk_plr_VERESK_bullet3);
+
+	CVAR_REGISTER(&sk_plr_KIPARIS_bullet1);
+	CVAR_REGISTER(&sk_plr_KIPARIS_bullet2);
+	CVAR_REGISTER(&sk_plr_KIPARIS_bullet3);
+
+	CVAR_REGISTER(&sk_plr_GEPARD_bullet1);
+	CVAR_REGISTER(&sk_plr_GEPARD_bullet2);
+	CVAR_REGISTER(&sk_plr_GEPARD_bullet3);
+
+	CVAR_REGISTER(&sk_plr_AKSU_bullet1);
+	CVAR_REGISTER(&sk_plr_AKSU_bullet2);
+	CVAR_REGISTER(&sk_plr_AKSU_bullet3);
+
+	CVAR_REGISTER(&sk_plr_AEK_bullet1);
+	CVAR_REGISTER(&sk_plr_AEK_bullet2);
+	CVAR_REGISTER(&sk_plr_AEK_bullet3);
+	
+	CVAR_REGISTER(&sk_plr_AN94_bullet1);
+	CVAR_REGISTER(&sk_plr_AN94_bullet2);
+	CVAR_REGISTER(&sk_plr_AN94_bullet3);
+
+	CVAR_REGISTER(&sk_plr_VIHR_bullet1);
+	CVAR_REGISTER(&sk_plr_VIHR_bullet2);
+	CVAR_REGISTER(&sk_plr_VIHR_bullet3);
+	
+	CVAR_REGISTER(&sk_plr_AKM_bullet1);
+	CVAR_REGISTER(&sk_plr_AKM_bullet2);
+	CVAR_REGISTER(&sk_plr_AKM_bullet3);
+
+	CVAR_REGISTER(&sk_plr_TKB0146_bullet1);
+	CVAR_REGISTER(&sk_plr_TKB0146_bullet2);
+	CVAR_REGISTER(&sk_plr_TKB0146_bullet3);
+
+	CVAR_REGISTER(&sk_plr_FAL_bullet1);
+	CVAR_REGISTER(&sk_plr_FAL_bullet2);
+	CVAR_REGISTER(&sk_plr_FAL_bullet3);
+
+	CVAR_REGISTER(&sk_plr_G3_bullet1);
+	CVAR_REGISTER(&sk_plr_G3_bullet2);
+	CVAR_REGISTER(&sk_plr_G3_bullet3);
+
+	CVAR_REGISTER(&sk_plr_AUG_bullet1);
+	CVAR_REGISTER(&sk_plr_AUG_bullet2);
+	CVAR_REGISTER(&sk_plr_AUG_bullet3);
+
+	CVAR_REGISTER(&sk_plr_SVD_bullet1);
+	CVAR_REGISTER(&sk_plr_SVD_bullet2);
+	CVAR_REGISTER(&sk_plr_SVD_bullet3);
+
+	CVAR_REGISTER(&sk_plr_SVU_bullet1);
+	CVAR_REGISTER(&sk_plr_SVU_bullet2);
+	CVAR_REGISTER(&sk_plr_SVU_bullet3);
+
+	CVAR_REGISTER(&sk_plr_VSK94_bullet1);
+	CVAR_REGISTER(&sk_plr_VSK94_bullet2);
+	CVAR_REGISTER(&sk_plr_VSK94_bullet3);
+
+	CVAR_REGISTER(&sk_plr_PSG_bullet1);
+	CVAR_REGISTER(&sk_plr_PSG_bullet2);
+	CVAR_REGISTER(&sk_plr_PSG_bullet3);
+
+	CVAR_REGISTER(&sk_plr_PK_bullet1);
+	CVAR_REGISTER(&sk_plr_PK_bullet2);
+	CVAR_REGISTER(&sk_plr_PK_bullet3);
+
+	CVAR_REGISTER(&sk_plr_RPO1);
+	CVAR_REGISTER(&sk_plr_RPO2);
+	CVAR_REGISTER(&sk_plr_RPO3);
+
+	CVAR_REGISTER(&sk_plr_RAILGUN1);
+	CVAR_REGISTER(&sk_plr_RAILGUN2);
+	CVAR_REGISTER(&sk_plr_RAILGUN3);
+
+	CVAR_REGISTER(&sk_plr_RGD51);
+	CVAR_REGISTER(&sk_plr_RGD52);
+	CVAR_REGISTER(&sk_plr_RGD53);
+
+	CVAR_REGISTER(&sk_plr_F11);
+	CVAR_REGISTER(&sk_plr_F12);
+	CVAR_REGISTER(&sk_plr_F13);
+
+	CVAR_REGISTER(&sk_plr_RGO1);
+	CVAR_REGISTER(&sk_plr_RGO2);
+	CVAR_REGISTER(&sk_plr_RGO3);
 
 	// WORLD WEAPONS
 	CVAR_REGISTER ( &sk_12mm_bullet1 );// {"sk_12mm_bullet1","0"};

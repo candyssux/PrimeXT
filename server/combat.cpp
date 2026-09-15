@@ -1555,6 +1555,43 @@ void CBaseEntity::FireBullets(ULONG cShots, Vector vecSrc, Vector vecDirShooting
 				}
 
 				break;
+
+			case BULLET_PLAYER_PM:
+				pEntity->TraceAttack(pevAttacker, gSkillData.plrDmgPM, vecDir, &tr, DMG_BULLET);
+				if (!tracer)
+				{
+					TEXTURETYPE_PlaySound(&tr, vecSrc, vecEnd, iBulletType);
+					DecalGunshot(&tr, iBulletType, vecSrc, vecEnd);
+				}
+				break;
+
+			case BULLET_PLAYER_APS:
+				pEntity->TraceAttack(pevAttacker, gSkillData.plrDmgAPS, vecDir, &tr, DMG_BULLET);
+				if (!tracer)
+				{
+					TEXTURETYPE_PlaySound(&tr, vecSrc, vecEnd, iBulletType);
+					DecalGunshot(&tr, iBulletType, vecSrc, vecEnd);
+				}
+				break;
+
+			case BULLET_PLAYER_GURZA:
+				pEntity->TraceAttack(pevAttacker, gSkillData.plrDmgGURZA, vecDir, &tr, DMG_BULLET);
+				if (!tracer)
+				{
+					TEXTURETYPE_PlaySound(&tr, vecSrc, vecEnd, iBulletType);
+					DecalGunshot(&tr, iBulletType, vecSrc, vecEnd);
+				}
+				break;
+
+			case BULLET_PLAYER_GRACH:
+				pEntity->TraceAttack(pevAttacker, gSkillData.plrDmgGRACH, vecDir, &tr, DMG_BULLET);
+				if (!tracer)
+				{
+					TEXTURETYPE_PlaySound(&tr, vecSrc, vecEnd, iBulletType);
+					DecalGunshot(&tr, iBulletType, vecSrc, vecEnd);
+				}
+				break;
+
 			}
 		}
 		// make bullet trails
