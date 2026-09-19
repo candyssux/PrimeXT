@@ -403,7 +403,6 @@ bool GL_BackendStartFrame( ref_viewpass_t *rvp, RefParams params )
 	}
 
 	Mod_ResortFaces();
-	GL_LoadAndRebuildCubemaps( params );
 	tr.fCustomRendering = true;
 	r_stats.debug_surface = NULL;
 
@@ -420,6 +419,8 @@ bool GL_BackendStartFrame( ref_viewpass_t *rvp, RefParams params )
 
 	// setup light animation tables
 	R_AnimateLight();
+
+	GL_LoadAndRebuildCubemaps(params);
 
 	return 1;
 }
