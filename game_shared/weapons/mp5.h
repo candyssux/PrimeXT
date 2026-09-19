@@ -20,9 +20,9 @@
 
 #define WEAPON_MP5			4
 #define MP5_WEIGHT			15
-#define MP5_MAX_CLIP		50
-#define MP5_DEFAULT_AMMO	25
-#define MP5_DEFAULT_GIVE	25
+#define MP5_MAX_CLIP		30
+#define MP5_DEFAULT_AMMO	30
+#define MP5_DEFAULT_GIVE	30
 #define MP5_CLASSNAME		weapon_9mmAR
 
 enum mp5_e
