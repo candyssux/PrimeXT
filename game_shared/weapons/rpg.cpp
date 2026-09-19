@@ -26,7 +26,7 @@ CRpgWeaponContext::CRpgWeaponContext(std::unique_ptr<IWeaponLayer>&& layer) :
 {
 	m_iId = WEAPON_RPG;
 	m_iDefaultAmmo = m_pLayer->IsMultiplayer() ? (RPG_DEFAULT_GIVE * 2) : RPG_DEFAULT_GIVE;
-	m_fSpotActive = 1;
+	m_fSpotActive = 0;
 	m_cActiveRockets = 0;
 	m_usRpg = m_pLayer->PrecacheEvent("events/rpg.sc");
 
@@ -72,17 +72,14 @@ bool CRpgWeaponContext::CanHolster()
 
 void CRpgWeaponContext::Holster()
 {
-	m_fInReload = FALSE; // cancel any reload in progress.
+	m_fInReload = FALSE;
 	m_pLayer->SetPlayerNextAttackTime(m_pLayer->GetWeaponTimeBase(UsePredicting()) + 0.5f);
 	SendWeaponAnim( RPG_HOLSTER1 );
 
-#ifndef CLIENT_DLL
-	if (m_pSpot)
+	if (m_pLayer->GetPlayerFOV() != 0.0f)
 	{
-		m_pSpot->Killed( NULL, GIB_NEVER );
-		m_pSpot = nullptr;
+		m_pLayer->SetPlayerFOV(0.0f);
 	}
-#endif
 }
 
 void CRpgWeaponContext::PrimaryAttack()
@@ -134,20 +131,21 @@ void CRpgWeaponContext::PrimaryAttack()
 	{
 		PlayEmptySound();
 	}
-	UpdateSpot();
 }
 
 void CRpgWeaponContext::SecondaryAttack()
 {
-	m_fSpotActive = !m_fSpotActive;
-#ifndef CLIENT_DLL
-	if (!m_fSpotActive && m_pSpot)
+	if (m_pLayer->GetPlayerFOV() != 0.0f)
 	{
-		m_pSpot->Killed( NULL, GIB_NORMAL );
-		m_pSpot = nullptr;
+		m_pLayer->SetPlayerFOV(0.0f);
 	}
-#endif
-	m_flNextSecondaryAttack = m_pLayer->GetWeaponTimeBase(UsePredicting()) + 0.2f;
+	else
+	{
+		m_pLayer->SetPlayerFOV(45.0f);
+	}
+
+	m_flNextSecondaryAttack = m_pLayer->GetWeaponTimeBase(UsePredicting()) + 0.3f;
+	m_flTimeWeaponIdle = m_pLayer->GetWeaponTimeBase(UsePredicting()) + 5.0f;
 }
 
 void CRpgWeaponContext::Reload( void )
@@ -203,7 +201,6 @@ void CRpgWeaponContext::Reload( void )
 
 void CRpgWeaponContext::WeaponIdle( void )
 {
-	UpdateSpot( );
 
 	if (m_flTimeWeaponIdle > m_pLayer->GetWeaponTimeBase(UsePredicting()))
 		return;
@@ -240,24 +237,6 @@ void CRpgWeaponContext::WeaponIdle( void )
 	}
 }
 
-void CRpgWeaponContext::UpdateSpot( void )
+void CRpgWeaponContext::UpdateSpot(void)
 {
-	if (m_fSpotActive)
-	{
-#ifndef CLIENT_DLL
-		if (!m_pSpot)
-		{
-			m_pSpot = CLaserSpot::CreateSpot();
-		}
-
-		CRpg *pWeapon = static_cast<CRpg*>(m_pLayer->GetWeaponEntity());
-		UTIL_MakeVectors( pWeapon->m_pPlayer->pev->v_angle );
-		Vector vecSrc = pWeapon->m_pPlayer->GetGunPosition( );
-		Vector vecAiming = gpGlobals->v_forward;
-
-		TraceResult tr;
-		UTIL_TraceLine ( vecSrc, vecSrc + vecAiming * 8192, dont_ignore_monsters, ENT(pWeapon->m_pPlayer->pev), &tr );
-		UTIL_SetOrigin( m_pSpot, tr.vecEndPos );
-#endif
-	}
 }
