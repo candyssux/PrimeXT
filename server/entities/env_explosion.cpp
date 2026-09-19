@@ -128,7 +128,7 @@ void CEnvExplosion::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE
 
 	SetThink( &CEnvExplosion::Smoke );
 	pev->nextthink = gpGlobals->time + 0.3;
-
+	/*
 	// draw sparks
 	if ( !( pev->spawnflags & SF_ENVEXPLOSION_NOSPARKS ) )
 	{
@@ -139,6 +139,7 @@ void CEnvExplosion::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE
 			Create( "spark_shower", absOrigin, tr.vecPlaneNormal, NULL );
 		}
 	}
+	*/
 }
 
 void CEnvExplosion::Smoke( void )

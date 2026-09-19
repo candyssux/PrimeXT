@@ -28,12 +28,13 @@
 #define SF_BREAK_TOUCH		2	// can be 'crashed through' by running player (plate glass)
 #define SF_BREAK_PRESSURE		4	// can be broken by a player standing on it
 #define SF_BREAK_CROWBAR		256	// instant break if hit with crowbar
+#define SF_BREAK_NO_GIBS		512
 
 typedef enum { expRandom, expDirected } ExplType;
 typedef enum { matGlass = 0, matWood, matMetal, matFlesh, matCinderBlock, matCeilingTile, matComputer, matUnbreakableGlass, matRocks, matNone, matLastMaterial } Materials;
 
 #define NUM_SHARDS 6 // this many shards spawned when breakable objects break;
-#define MAX_SPAWN_OBJECTS 22 // number of entries in pSpawnObjects[]
+#define MAX_SPAWN_OBJECTS 66 // number of entries in pSpawnObjects[]
 
 class CBreakable : public CBaseDelay
 {
