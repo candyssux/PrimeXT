@@ -180,11 +180,15 @@ void CAmbientGeneric :: Spawn( void )
 	{
 		m_flAttenuation = ATTN_STATIC;
 	}
-	else if ( FBitSet ( pev->spawnflags, AMBIENT_SOUND_LARGERADIUS) )
+	else if (FBitSet(pev->spawnflags, AMBIENT_SOUND_LARGERADIUS))
 	{
 		m_flAttenuation = ATTN_NORM;
 	}
-	else 
+	else if (FBitSet(pev->spawnflags, AMBIENT_SOUND_EXTRALARGERADIUS))
+	{
+		m_flAttenuation = 0.2f;
+	}
+	else
 	{
 		// if the designer didn't set a sound attenuation, default to one.
 		m_flAttenuation = ATTN_STATIC;

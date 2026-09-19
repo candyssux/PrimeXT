@@ -514,6 +514,7 @@ extern DLL_GLOBAL int		g_iXashEngineBuildNumber;	// may be 0 for old versions or
 #define AMBIENT_SOUND_LARGERADIUS		8
 #define AMBIENT_SOUND_START_SILENT		16
 #define AMBIENT_SOUND_NOT_LOOPING		32
+#define AMBIENT_SOUND_EXTRALARGERADIUS 64
 
 #define SPEAKER_START_SILENT			1	// wait for trigger 'on' to start announcements
 
