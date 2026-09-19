@@ -20,8 +20,8 @@
 
 #define WEAPON_GLOCK		2
 #define GLOCK_WEIGHT		10
-#define GLOCK_MAX_CLIP		17
-#define GLOCK_DEFAULT_GIVE	17
+#define GLOCK_MAX_CLIP		10
+#define GLOCK_DEFAULT_GIVE	10
 #define GLOCK_CLASSNAME		weapon_9mmhandgun
 
 enum glock_e

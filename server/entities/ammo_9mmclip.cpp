@@ -34,7 +34,7 @@ void CGlockAmmo::Precache()
 
 BOOL CGlockAmmo::AddAmmo( CBaseEntity *pOther ) 
 { 
-	if (pOther->GiveAmmo( GLOCK_MAX_CLIP, "9mm", _9MM_MAX_CARRY ) != -1)
+	if (pOther->GiveAmmo( 16, "9mm", _9MM_MAX_CARRY ) != -1)
 	{
 		EMIT_SOUND(ENT(pev), CHAN_ITEM, "items/9mmclip1.wav", 1, ATTN_NORM);
 		return TRUE;
