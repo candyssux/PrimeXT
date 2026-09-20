@@ -41,8 +41,8 @@ CPythonWeaponContext::CPythonWeaponContext(std::unique_ptr<IWeaponLayer>&& layer
 int CPythonWeaponContext::GetItemInfo(ItemInfo *p) const
 {
 	p->pszName = CLASSNAME_STR(PYTHON_CLASSNAME);
-	p->pszAmmo1 = "357";
-	p->iMaxAmmo1 = _357_MAX_CARRY;
+	p->pszAmmo1 = "9X21";
+	p->iMaxAmmo1 = _9X21_MAX_CARRY;
 	p->pszAmmo2 = NULL;
 	p->iMaxAmmo2 = -1;
 	p->iMaxClip = PYTHON_MAX_CLIP;

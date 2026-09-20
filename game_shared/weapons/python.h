@@ -21,8 +21,8 @@
 
 #define WEAPON_PYTHON			3
 #define PYTHON_WEIGHT			15
-#define PYTHON_MAX_CLIP			6
-#define PYTHON_DEFAULT_GIVE		6
+#define PYTHON_MAX_CLIP			5
+#define PYTHON_DEFAULT_GIVE		5
 #define PYTHON_CLASSNAME		weapon_357
 
 enum python_e

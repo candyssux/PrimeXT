@@ -31,7 +31,7 @@ void CPythonAmmo::Precache(void)
 }
 BOOL CPythonAmmo::AddAmmo(CBaseEntity *pOther)
 {
-	if (pOther->GiveAmmo(PYTHON_MAX_CLIP, "357", _357_MAX_CARRY) != -1)
+	if (pOther->GiveAmmo(PYTHON_MAX_CLIP, "9X21", _9X21_MAX_CARRY) != -1)
 	{
 		EMIT_SOUND(ENT(pev), CHAN_ITEM, "items/9mmclip1.wav", 1, ATTN_NORM);
 		return TRUE;

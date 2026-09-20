@@ -53,7 +53,7 @@
 #define HORNET_MAX_CARRY		8
 #define M203_GRENADE_MAX_CARRY	10
 #define	_9X18_MAX_CARRY			90
-#define	_9X21_MAX_CARRY			90
+#define	_9X21_MAX_CARRY			48
 #define	_9X19_MAX_CARRY			90
 #define	_545X18_MAX_CARRY		96
 #define	FLARE_MAX_CARRY			10
