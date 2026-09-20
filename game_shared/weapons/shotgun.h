@@ -21,8 +21,8 @@
 
 #define WEAPON_SHOTGUN			7
 #define SHOTGUN_WEIGHT			15
-#define SHOTGUN_MAX_CLIP		8
-#define SHOTGUN_DEFAULT_GIVE	12
+#define SHOTGUN_MAX_CLIP		5
+#define SHOTGUN_DEFAULT_GIVE	5
 #define SHOTGUN_CLASSNAME		weapon_shotgun
 
 enum shotgun_e
