@@ -36,7 +36,7 @@ int CGURZAWeaponContext::GetItemInfo(ItemInfo *p) const
 	p->iMaxAmmo2 = -1;
 	p->iMaxClip = GURZA_MAX_CLIP;
 	p->iSlot = 1;
-	p->iPosition = 0;
+	p->iPosition = 3;
 	p->iFlags = 0;
 	p->iId = m_iId;
 	p->iWeight = GURZA_WEIGHT;

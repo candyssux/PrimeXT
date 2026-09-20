@@ -36,7 +36,7 @@ int CAPSWeaponContext::GetItemInfo(ItemInfo *p) const
 	p->iMaxAmmo2 = -1;
 	p->iMaxClip = APS_MAX_CLIP;
 	p->iSlot = 1;
-	p->iPosition = 0;
+	p->iPosition = 2;
 	p->iFlags = 0;
 	p->iId = m_iId;
 	p->iWeight = APS_WEIGHT;

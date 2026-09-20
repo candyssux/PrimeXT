@@ -396,121 +396,121 @@ void W_Precache(void)
 	UTIL_PrecacheOtherWeapon( "weapon_hornetgun" );
 
 	UTIL_PrecacheOtherWeapon("weapon_pm");
-	UTIL_PrecacheOther("ammo_9x18");
+	UTIL_PrecacheOther("ammo_9X18");
 
 	UTIL_PrecacheOtherWeapon("weapon_aps");
-	UTIL_PrecacheOther("ammo_9x18");
+	UTIL_PrecacheOther("ammo_9X18");
 
 	UTIL_PrecacheOtherWeapon("weapon_gurza");
-	UTIL_PrecacheOther("ammo_9x21");
+	UTIL_PrecacheOther("ammo_9X21");
 
 	UTIL_PrecacheOtherWeapon("weapon_grach");
-	UTIL_PrecacheOther("ammo_9x19");
+	UTIL_PrecacheOther("ammo_9X19");
 
 	UTIL_PrecacheOtherWeapon("weapon_oc33");
-	UTIL_PrecacheOther("ammo_9x18");
+	UTIL_PrecacheOther("ammo_9X18");
 
 	UTIL_PrecacheOtherWeapon("weapon_r92");
-	UTIL_PrecacheOther("ammo_9x18");
+	UTIL_PrecacheOther("ammo_9X18");
 
 	UTIL_PrecacheOtherWeapon("weapon_flaregun");
 	UTIL_PrecacheOther("ammo_flare");
 
 	UTIL_PrecacheOtherWeapon("weapon_pb");
-	UTIL_PrecacheOther("ammo_9x18");
+	UTIL_PrecacheOther("ammo_9X18");
 
 	UTIL_PrecacheOtherWeapon("weapon_p96");
-	UTIL_PrecacheOther("ammo_9x19");
+	UTIL_PrecacheOther("ammo_9X19");
 
 	UTIL_PrecacheOtherWeapon("weapon_psm");
-	UTIL_PrecacheOther("ammo_545x18");
+	UTIL_PrecacheOther("ammo_545X18");
 
 	UTIL_PrecacheOtherWeapon("weapon_oc23");
-	UTIL_PrecacheOther("ammo_545x18");
+	UTIL_PrecacheOther("ammo_545X18");
 
 	UTIL_PrecacheOtherWeapon("weapon_oc27");
-	UTIL_PrecacheOther("ammo_9x19");
+	UTIL_PrecacheOther("ammo_9X19");
 	
 	UTIL_PrecacheOtherWeapon("weapon_22lr");
-	UTIL_PrecacheOther("ammo_545x18");
+	UTIL_PrecacheOther("ammo_545X18");
 
 	UTIL_PrecacheOtherWeapon("weapon_p7");
-	UTIL_PrecacheOther("ammo_9x19");
+	UTIL_PrecacheOther("ammo_9X19");
 
 	UTIL_PrecacheOtherWeapon("weapon_vp70");
-	UTIL_PrecacheOther("ammo_9x19");
+	UTIL_PrecacheOther("ammo_9X19");
 
 	UTIL_PrecacheOtherWeapon("weapon_ks23");
-	UTIL_PrecacheOther("ammo_23x75");
+	UTIL_PrecacheOther("ammo_23X75");
 
 	UTIL_PrecacheOtherWeapon("weapon_bekas");
-	UTIL_PrecacheOther("ammo_12x70");
+	UTIL_PrecacheOther("ammo_12X70");
 
 	UTIL_PrecacheOtherWeapon("weapon_saiga");
-	UTIL_PrecacheOther("ammo_12x70");
+	UTIL_PrecacheOther("ammo_12X70");
 
 	UTIL_PrecacheOtherWeapon("weapon_vepr");
-	UTIL_PrecacheOther("ammo_762x39");
+	UTIL_PrecacheOther("ammo_762X39");
 
 	UTIL_PrecacheOtherWeapon("weapon_mc255");
-	UTIL_PrecacheOther("ammo_12x70");
+	UTIL_PrecacheOther("ammo_12X70");
 
 	UTIL_PrecacheOtherWeapon("weapon_bizon");
-	UTIL_PrecacheOther("ammo_9x18");
+	UTIL_PrecacheOther("ammo_9X18");
 
 	UTIL_PrecacheOtherWeapon("weapon_kedr");
-	UTIL_PrecacheOther("ammo_9x18");
+	UTIL_PrecacheOther("ammo_9X18");
 
 	UTIL_PrecacheOtherWeapon("weapon_veresk");
-	UTIL_PrecacheOther("ammo_9x21");
+	UTIL_PrecacheOther("ammo_9X21");
 
 	UTIL_PrecacheOtherWeapon("weapon_kiparis");
-	UTIL_PrecacheOther("ammo_9x18");
+	UTIL_PrecacheOther("ammo_9X18");
 
 	UTIL_PrecacheOtherWeapon("weapon_gepard");
-	UTIL_PrecacheOther("ammo_9x19");
+	UTIL_PrecacheOther("ammo_9X19");
 
 	UTIL_PrecacheOtherWeapon("weapon_aksu");
-	UTIL_PrecacheOther("ammo_545x39");
+	UTIL_PrecacheOther("ammo_545X39");
 
 	UTIL_PrecacheOtherWeapon("weapon_aek");
-	UTIL_PrecacheOther("ammo_762x39");
+	UTIL_PrecacheOther("ammo_762X39");
 
 	UTIL_PrecacheOtherWeapon("weapon_an94");
-	UTIL_PrecacheOther("ammo_545x39");
+	UTIL_PrecacheOther("ammo_545X39");
 
 	UTIL_PrecacheOtherWeapon("weapon_vihr");
-	UTIL_PrecacheOther("ammo_9x39");
+	UTIL_PrecacheOther("ammo_9X39");
 	
 	UTIL_PrecacheOtherWeapon("weapon_akm");
-	UTIL_PrecacheOther("ammo_762x39");
+	UTIL_PrecacheOther("ammo_762X39");
 
 	UTIL_PrecacheOtherWeapon("weapon_tkb0146");
-	UTIL_PrecacheOther("ammo_545x39");
+	UTIL_PrecacheOther("ammo_545X39");
 
 	UTIL_PrecacheOtherWeapon("weapon_fal");
-	UTIL_PrecacheOther("ammo_762x51");
+	UTIL_PrecacheOther("ammo_762X51");
 	
 	UTIL_PrecacheOtherWeapon("weapon_g3");
-	UTIL_PrecacheOther("ammo_556x45");
+	UTIL_PrecacheOther("ammo_556X45");
 
 	UTIL_PrecacheOtherWeapon("weapon_aug");
-	UTIL_PrecacheOther("ammo_556x45");
+	UTIL_PrecacheOther("ammo_556X45");
 
 	UTIL_PrecacheOtherWeapon("weapon_svd");
-	UTIL_PrecacheOther("ammo_762x54");
+	UTIL_PrecacheOther("ammo_762X54");
 
 	UTIL_PrecacheOtherWeapon("weapon_svu");
-	UTIL_PrecacheOther("ammo_762x54");
+	UTIL_PrecacheOther("ammo_762X54");
 
 	UTIL_PrecacheOtherWeapon("weapon_vsk94");
-	UTIL_PrecacheOther("ammo_9x39");
+	UTIL_PrecacheOther("ammo_9X39");
 
 	UTIL_PrecacheOtherWeapon("weapon_psg");
-	UTIL_PrecacheOther("ammo_762x51");
+	UTIL_PrecacheOther("ammo_762X51");
 
 	UTIL_PrecacheOtherWeapon("weapon_pk");
-	UTIL_PrecacheOther("ammo_762x54");
+	UTIL_PrecacheOther("ammo_762X54");
 	
 	UTIL_PrecacheOtherWeapon("weapon_rpo");
 	UTIL_PrecacheOther("ammo_rpo");
