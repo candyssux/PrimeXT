@@ -20,8 +20,8 @@
 
 #define WEAPON_CROSSBOW			6
 #define CROSSBOW_WEIGHT			10
-#define CROSSBOW_MAX_CLIP		5
-#define CROSSBOW_DEFAULT_GIVE	5
+#define CROSSBOW_MAX_CLIP		10
+#define CROSSBOW_DEFAULT_GIVE	10
 #define CROSSBOW_CLASSNAME		weapon_crossbow
 
 enum crossbow_e

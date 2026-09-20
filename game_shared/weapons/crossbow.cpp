@@ -119,7 +119,7 @@ void CCrossbowWeaponContext::FireSniperBolt()
 		m_pLayer->PlaybackWeaponEvent(params);
 	}
 
-	m_flNextPrimaryAttack = GetNextPrimaryAttackDelay(0.75f);
+	m_flNextPrimaryAttack = GetNextPrimaryAttackDelay(0.15f);
 #ifndef CLIENT_DLL
 	CBasePlayer *player = m_pLayer->GetWeaponEntity()->m_pPlayer;
 	player->SetAnimation( PLAYER_ATTACK1 );
@@ -196,13 +196,13 @@ void CCrossbowWeaponContext::FireBolt( void )
 		m_pLayer->PlaybackWeaponEvent(params);
 	}
 
-	m_flNextPrimaryAttack = GetNextPrimaryAttackDelay(0.75f);
-	m_flNextSecondaryAttack = m_pLayer->GetWeaponTimeBase(UsePredicting()) + 0.75f;
+	m_flNextPrimaryAttack = GetNextPrimaryAttackDelay(0.15f);
+	m_flNextSecondaryAttack = m_pLayer->GetWeaponTimeBase(UsePredicting()) + 0.15f;
 
 	if (m_iClip != 0)
 		m_flTimeWeaponIdle = m_pLayer->GetWeaponTimeBase(UsePredicting()) + 5.0f;
 	else
-		m_flTimeWeaponIdle = m_pLayer->GetWeaponTimeBase(UsePredicting()) + 0.75f;
+		m_flTimeWeaponIdle = m_pLayer->GetWeaponTimeBase(UsePredicting()) + 0.15f;
 
 #ifndef CLIENT_DLL
 	// player "shoot" animation
@@ -252,7 +252,7 @@ void CCrossbowWeaponContext::FireBolt( void )
 		player->SetSuitUpdate("!HEV_AMO0", FALSE, 0);
 #endif
 
-	m_pLayer->AddPlayerPunchangle(-2.f, 0.f, 0.f);
+	m_pLayer->AddPlayerPunchangle(-0.8f, 0.f, 0.f);
 }
 
 void CCrossbowWeaponContext::SecondaryAttack( void )

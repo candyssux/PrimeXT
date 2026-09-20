@@ -33,7 +33,7 @@ void CCrossbowAmmo::Precache( void )
 
 BOOL CCrossbowAmmo::AddAmmo( CBaseEntity *pOther ) 
 { 
-	if (pOther->GiveAmmo( CROSSBOW_MAX_CLIP, "bolts", BOLT_MAX_CARRY ) != -1)
+	if (pOther->GiveAmmo( 10, "bolts", BOLT_MAX_CARRY ) != -1)
 	{
 		EMIT_SOUND(ENT(pev), CHAN_ITEM, "items/9mmclip1.wav", 1, ATTN_NORM);
 		return TRUE;
