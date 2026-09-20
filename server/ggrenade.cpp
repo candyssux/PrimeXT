@@ -269,7 +269,7 @@ void CGrenade::BounceTouch( CBaseEntity *pOther )
 	{
 		// add a bit of static friction
 		Vector vecVelocity = GetAbsVelocity();
-		vecVelocity *= 0.8f;
+		vecVelocity *= 0.95f;
 		SetAbsVelocity( vecVelocity );
 
 		pev->sequence = RANDOM_LONG( 1, 1 );
@@ -429,7 +429,7 @@ CGrenade * CGrenade:: ShootTimed( entvars_t *pevOwner, Vector vecStart, Vector v
 	pGrenade->pev->framerate = 1.0;
 
 	pGrenade->pev->gravity = 0.5;
-	pGrenade->pev->friction = 0.8;
+	pGrenade->pev->friction = 0.55;
 
 	SET_MODEL( pGrenade->edict(), "models/w_grenade.mdl" );
 	pGrenade->pev->dmg = 100;
