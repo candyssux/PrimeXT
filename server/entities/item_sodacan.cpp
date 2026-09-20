@@ -25,6 +25,7 @@ END_DATADESC()
 void CItemSoda :: Precache ( void )
 {
 	PRECACHE_MODEL( "models/can.mdl" );
+	PRECACHE_SOUND("items/sodacan.wav");
 }
 
 void CItemSoda::Spawn( void )
@@ -63,8 +64,14 @@ void CItemSoda::CanTouch ( CBaseEntity *pOther )
 	}
 
 	// spoit sound here
+	if (pOther->pev->health >= pOther->pev->max_health)
+	{
+		return;
+	}
+	
+	EMIT_SOUND(ENT(pOther->pev), CHAN_ITEM, "items/sodacan.wav", 1, ATTN_NORM);
 
-	pOther->TakeHealth( 1, DMG_GENERIC );// a bit of health.
+	pOther->TakeHealth(3, DMG_GENERIC);
 
 	if ( !FNullEnt( pev->owner ) )
 	{
