@@ -81,13 +81,17 @@ edict_t *CGameRules :: GetPlayerSpawnSpot( CBasePlayer *pPlayer )
 
 //=========================================================
 //=========================================================
-BOOL CGameRules::CanHavePlayerItem( CBasePlayer *pPlayer, CBasePlayerItem *pWeapon )
+BOOL CGameRules::CanHavePlayerItem(CBasePlayer *pPlayer, CBasePlayerItem *pWeapon)
 {
 	// only living players can have items
-	if ( pPlayer->pev->deadflag != DEAD_NO )
+	if (pPlayer->pev->deadflag != DEAD_NO)
 		return FALSE;
 
-	if ( pWeapon->pszAmmo1() )
+	// Only one weapon can occupy an inventory slot.
+	if (pPlayer->m_rgpPlayerItems[pWeapon->iItemSlot()])
+		return FALSE;
+
+	if (pWeapon->pszAmmo1())
 	{
 		if ( !CanHaveAmmo( pPlayer, pWeapon->pszAmmo1(), pWeapon->iMaxAmmo1() ) )
 		{

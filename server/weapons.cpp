@@ -1199,20 +1199,20 @@ void CWeaponBox::Kill( void )
 // CWeaponBox - Touch: try to add my contents to the toucher
 // if the toucher is a player.
 //=========================================================
-void CWeaponBox::Touch( CBaseEntity *pOther )
+void CWeaponBox::Touch(CBaseEntity *pOther)
 {
-	if ( !(pev->flags & FL_ONGROUND ) )
+	if (!(pev->flags & FL_ONGROUND))
 	{
 		return;
 	}
 
-	if ( !pOther->IsPlayer() )
+	if (!pOther->IsPlayer())
 	{
 		// only players may touch a weaponbox.
 		return;
 	}
 
-	if ( !pOther->IsAlive() )
+	if (!pOther->IsAlive())
 	{
 		// no dead guys.
 		return;
@@ -1221,50 +1221,57 @@ void CWeaponBox::Touch( CBaseEntity *pOther )
 	CBasePlayer *pPlayer = (CBasePlayer *)pOther;
 	int i;
 
-// dole out ammo
-	for ( i = 0 ; i < MAX_AMMO_SLOTS ; i++ )
+	// dole out ammo
+	for (i = 0; i < MAX_AMMO_SLOTS; i++)
 	{
-		if ( !FStringNull( m_rgiszAmmo[ i ] ) )
+		if (!FStringNull(m_rgiszAmmo[i]))
 		{
-			// there's some ammo of this type. 
-			pPlayer->GiveAmmo( m_rgAmmo[ i ], (char *)STRING( m_rgiszAmmo[ i ] ), MaxAmmoCarry( m_rgiszAmmo[ i ] ) );
-
-			//ALERT ( at_console, "Gave %d rounds of %s\n", m_rgAmmo[i], STRING(m_rgiszAmmo[i]) );
+			// there's some ammo of this type.
+			pPlayer->GiveAmmo(m_rgAmmo[i], (char *)STRING(m_rgiszAmmo[i]), MaxAmmoCarry(m_rgiszAmmo[i]));
 
 			// now empty the ammo from the weaponbox since we just gave it to the player
-			m_rgiszAmmo[ i ] = iStringNull;
-			m_rgAmmo[ i ] = 0;
+			m_rgiszAmmo[i] = iStringNull;
+			m_rgAmmo[i] = 0;
 		}
 	}
 
-// go through my weapons and try to give the usable ones to the player. 
-// it's important the the player be given ammo first, so the weapons code doesn't refuse 
-// to deploy a better weapon that the player may pick up because he has no ammo for it.
-	for ( i = 0 ; i < MAX_ITEM_TYPES ; i++ )
+	// go through my weapons and try to give the usable ones to the player.
+	// it's important that the player be given ammo first, so the weapons code doesn't refuse
+	// to deploy a better weapon that the player may pick up because he has no ammo for it.
+	for (i = 0; i < MAX_ITEM_TYPES; i++)
 	{
-		if ( m_rgpPlayerItems[ i ] )
+		while (m_rgpPlayerItems[i])
 		{
-			CBasePlayerItem *pItem;
+			CBasePlayerItem *pItem = m_rgpPlayerItems[i];
 
-			// have at least one weapon in this slot
-			while ( m_rgpPlayerItems[ i ] )
+			// Don't take the weapon out of the box if the player already
+			// occupies the same inventory slot and position.
+			if (!g_pGameRules->CanHavePlayerItem(pPlayer, pItem))
+				break;
+
+			m_rgpPlayerItems[i] = pItem->m_pNext;
+			pItem->m_pNext = NULL;
+
+			if (pPlayer->AddPlayerItem(pItem))
 			{
-				//ALERT ( at_console, "trying to give %s\n", STRING( m_rgpPlayerItems[ i ]->pev->classname ) );
-
-				pItem = m_rgpPlayerItems[ i ];
-				m_rgpPlayerItems[ i ] = m_rgpPlayerItems[ i ]->m_pNext;// unlink this weapon from the box
-
-				if ( pPlayer->AddPlayerItem( pItem ) )
-				{
-					pItem->AttachToPlayer( pPlayer );
-				}
+				pItem->AttachToPlayer(pPlayer);
+			}
+			else
+			{
+				// Keep the weapon in the box if it could not be added.
+				pItem->m_pNext = m_rgpPlayerItems[i];
+				m_rgpPlayerItems[i] = pItem;
+				break;
 			}
 		}
 	}
 
-	EMIT_SOUND( pOther->edict(), CHAN_ITEM, "items/gunpickup2.wav", 1, ATTN_NORM );
-	SetTouch( NULL);
-	UTIL_Remove(this);
+	if (IsEmpty())
+	{
+		EMIT_SOUND(pOther->edict(), CHAN_ITEM, "items/gunpickup2.wav", 1, ATTN_NORM);
+		SetTouch(NULL);
+		UTIL_Remove(this);
+	}
 }
 
 //=========================================================
