@@ -4880,12 +4880,6 @@ int CBasePlayer :: GetCustomDecalFrames( void )
 //=========================================================
 void CBasePlayer::DropPlayerItem ( char *pszItemName )
 {
-	if ( !g_pGameRules->IsMultiplayer() || (weaponstay.value > 0) )
-	{
-		// no dropping in single player.
-		return;
-	}
-
 	if ( !strlen( pszItemName ) )
 	{
 		// if this string has no length, the client didn't type a name!
@@ -4926,24 +4920,62 @@ void CBasePlayer::DropPlayerItem ( char *pszItemName )
 		}
 
 		
-		// if we land here with a valid pWeapon pointer, that's because we found the 
+		// if we land here with a valid pWeapon pointer, that's because we found the
 		// item we want to drop and hit a BREAK;  pWeapon is the item.
-		if ( pWeapon )
+		if (pWeapon)
 		{
-			g_pGameRules->GetNextBestWeapon( this, pWeapon );
+			UTIL_MakeVectors(pev->v_angle);
 
-			UTIL_MakeVectors ( GetAbsAngles() ); 
+			int iCurrentWeight = pWeapon->iWeight();
+			CBasePlayerItem *pNextWeapon = NULL;
 
-			RemoveWeapon( pWeapon->iWeaponID() );	// take item off hud
+			RemoveWeapon(pWeapon->iWeaponID());
 
-			CWeaponBox *pWeaponBox = (CWeaponBox *)CBaseEntity::Create( "weaponbox", GetAbsOrigin() + gpGlobals->v_forward * 10, GetAbsAngles(), edict() );
+			for (int slot = 0; slot < MAX_ITEM_TYPES; ++slot)
+			{
+				CBasePlayerItem *pCheck = m_rgpPlayerItems[slot];
+
+				while (pCheck)
+				{
+					if (pCheck != pWeapon && pCheck->CanDeploy())
+					{
+						if (pCheck->iWeight() == iCurrentWeight)
+						{
+							pNextWeapon = pCheck;
+							break;
+						}
+
+						if (!pNextWeapon || pCheck->iWeight() > pNextWeapon->iWeight())
+							pNextWeapon = pCheck;
+					}
+
+					pCheck = pCheck->m_pNext;
+				}
+
+				if (pNextWeapon && pNextWeapon->iWeight() == iCurrentWeight)
+					break;
+			}
+
+			if (pNextWeapon)
+				SwitchWeapon(pNextWeapon);
+
+			CWeaponBox *pWeaponBox = (CWeaponBox *)CBaseEntity::Create(
+				"weaponbox",
+				GetAbsOrigin() + gpGlobals->v_forward * 10,
+				GetAbsAngles(),
+				edict()
+			);
+
 			Vector vecAngles = pWeaponBox->GetAbsAngles();
 			vecAngles.x = 0;
 			vecAngles.z = 0;
-			pWeaponBox->SetAbsAngles( vecAngles );
-			pWeaponBox->PackWeapon( pWeapon );
-			pWeaponBox->SetAbsVelocity( gpGlobals->v_forward * 400 );
-			
+			pWeaponBox->SetAbsAngles(vecAngles);
+
+			SET_MODEL(ENT(pWeaponBox->pev), STRING(pWeapon->m_iszWorldModel));
+
+			pWeaponBox->PackWeapon(pWeapon);
+			pWeaponBox->SetAbsVelocity(gpGlobals->v_forward * 400);
+
 			// drop half of the ammo for this weapon.
 			int	iAmmoIndex;
 

@@ -562,6 +562,7 @@ void W_Precache(void)
 BEGIN_DATADESC( CBasePlayerItem )
 	DEFINE_FIELD( m_pPlayer, FIELD_CLASSPTR ),
 	DEFINE_FIELD( m_pNext, FIELD_CLASSPTR ),
+	DEFINE_FIELD(m_iszWorldModel, FIELD_STRING),
 	DEFINE_FUNCTION( DestroyItem ),
 	DEFINE_FUNCTION( DefaultTouch ),
 	DEFINE_FUNCTION( FallThink ),
@@ -799,8 +800,11 @@ void CBasePlayerItem::Holster( void )
 	m_pPlayer->pev->weaponmodel = 0;
 }
 
-void CBasePlayerItem::AttachToPlayer ( CBasePlayer *pPlayer )
+void CBasePlayerItem::AttachToPlayer(CBasePlayer *pPlayer)
 {
+	if (!FStringNull(pev->model))
+		m_iszWorldModel = pev->model;
+
 	pev->movetype = MOVETYPE_FOLLOW;
 	pev->solid = SOLID_NOT;
 	pev->aiment = pPlayer->edict();

@@ -107,6 +107,8 @@ public:
 	CBasePlayer	*m_pPlayer;
 	CBasePlayerItem	*m_pNext;
 
+	string_t m_iszWorldModel;
+
 	virtual int	iItemSlot() = 0;
 	virtual int	iItemPosition() = 0;
 	virtual const char *pszAmmo1() = 0;
