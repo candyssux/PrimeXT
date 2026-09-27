@@ -174,33 +174,8 @@ bool CBaseWeaponContext :: IsUseable()
 	return TRUE;
 }
 
-bool CBaseWeaponContext :: CanDeploy()
+bool CBaseWeaponContext::CanDeploy()
 {
-	BOOL bHasAmmo = 0;
-
-	if ( !pszAmmo1() )
-	{
-		// this weapon doesn't use ammo, can always deploy.
-		return TRUE;
-	}
-
-	if ( pszAmmo1() )
-	{
-		bHasAmmo |= (m_pLayer->GetPlayerAmmo(m_iPrimaryAmmoType) != 0);
-	}
-	if ( pszAmmo2() )
-	{
-		bHasAmmo |= (m_pLayer->GetPlayerAmmo(m_iSecondaryAmmoType) != 0);
-	}
-	if (m_iClip > 0)
-	{
-		bHasAmmo |= 1;
-	}
-	if (!bHasAmmo)
-	{
-		return FALSE;
-	}
-
 	return TRUE;
 }
 
