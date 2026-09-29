@@ -119,12 +119,12 @@ void CGrenade::Explode( TraceResult *pTrace, int bitsDamageType )
 	SetAbsVelocity( g_vecZero );
 	pev->nextthink = gpGlobals->time + 0.3;
 
-	if (iContents != CONTENTS_WATER)
-	{
-		int sparkCount = RANDOM_LONG(0,3);
-		for ( int i = 0; i < sparkCount; i++ )
-			Create( "spark_shower", absOrigin, pTrace->vecPlaneNormal, NULL );
-	}
+	//if (iContents != CONTENTS_WATER)
+	//{
+	//	int sparkCount = RANDOM_LONG(0,3);
+	//	for ( int i = 0; i < sparkCount; i++ )
+	//		Create( "spark_shower", absOrigin, pTrace->vecPlaneNormal, NULL );
+	//}
 }
 
 
