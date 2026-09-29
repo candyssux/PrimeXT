@@ -89,7 +89,7 @@ playermove_t *pmove = NULL;
 #define PLAYER_MAX_SAFE_FALL_SPEED		580// approx 20 feet
 #define DAMAGE_FOR_FALL_SPEED			(float) 100 / ( PLAYER_FATAL_FALL_SPEED - PLAYER_MAX_SAFE_FALL_SPEED )// damage per unit per second.
 #define PLAYER_MIN_BOUNCE_SPEED		200
-#define PLAYER_FALL_PUNCH_THRESHHOLD		(float)350 // won't punch player's screen/make scrape noise unless player falling at least this fast.
+#define PLAYER_FALL_PUNCH_THRESHHOLD		(float)100 // won't punch player's screen/make scrape noise unless player falling at least this fast.
 
 #define PLAYER_LONGJUMP_SPEED			(pmove->maxspeed * 1.095f) // how fast we longjump
 #define PM_CHECKSTUCK_MINTIME			0.05f	// Don't check again too quickly.
@@ -2434,24 +2434,17 @@ void PM_CheckFalling( void )
 				//pmove->PM_PlaySound( CHAN_VOICE, "player/pl_fallpain2.wav", 1, ATTN_NORM, 0, PITCH_NORM );
 				//break;
 			//case 1:
-				pmove->PM_PlaySound( CHAN_VOICE, "player/pl_fallpain3.wav", 1, ATTN_NORM, 0, PITCH_NORM );
+				pmove->PM_PlaySound( CHAN_VOICE, "player/pl_jumpland2.wav", 1, ATTN_NORM, 0, PITCH_NORM );
 			//	break;
 			//}
 			fvol = 1.0;
 		}
-		else if ( pmove->flFallVelocity > PLAYER_MAX_SAFE_FALL_SPEED / 2 )
+		else if (pmove->flFallVelocity > PLAYER_MAX_SAFE_FALL_SPEED / 2)
 		{
-			qboolean tfc = false;
-			tfc = atoi( pmove->PM_Info_ValueForKey( pmove->physinfo, "tfc" ) ) == 1 ? true : false;
-
-			if ( tfc )
-			{
-				pmove->PM_PlaySound( CHAN_VOICE, "player/pl_fallpain3.wav", 1, ATTN_NORM, 0, PITCH_NORM );
-			}
-
+			pmove->PM_PlaySound(CHAN_VOICE, "player/pl_jumpland2.wav", 1, ATTN_NORM, 0, PITCH_NORM);
 			fvol = 0.85;
 		}
-		else if ( pmove->flFallVelocity < PLAYER_MIN_BOUNCE_SPEED )
+		else if (pmove->flFallVelocity < PLAYER_MIN_BOUNCE_SPEED)
 		{
 			fvol = 0;
 		}
@@ -2468,6 +2461,7 @@ void PM_CheckFalling( void )
 
 			// Knock the screen around a little bit, temporary effect
 			pmove->punchangle[ 2 ] = pmove->flFallVelocity * 0.013;	// punch z axis
+			pmove->punchangle[0] += 1.0f;
 
 			if ( pmove->punchangle[ 0 ] > 8 )
 			{

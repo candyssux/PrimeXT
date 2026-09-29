@@ -76,9 +76,9 @@ void V_Init( void )
 	v_centermove	= CVAR_REGISTER( "v_centermove", "0.15", 0 );
 	v_centerspeed	= CVAR_REGISTER( "v_centerspeed","500", 0 );
 
-	cl_bobcycle	= CVAR_REGISTER( "cl_bobcycle","0.8", 0 );
-	cl_bob		= CVAR_REGISTER( "cl_bob","0.01", 0 );
-	cl_bobup		= CVAR_REGISTER( "cl_bobup","0.5", 0 );
+	cl_bobcycle = CVAR_REGISTER("cl_bobcycle", "1", 0);
+	cl_bob = CVAR_REGISTER("cl_bob", "0.005", 0);
+	cl_bobup = CVAR_REGISTER("cl_bobup", "0.5", 0);
 	cl_waterdist	= CVAR_REGISTER( "cl_waterdist","4", 0 );
 	cl_chasedist	= CVAR_REGISTER( "cl_chasedist","112", 0 );
 	cl_weaponlag	= CVAR_REGISTER( "cl_weaponlag", "0.3", FCVAR_ARCHIVE );
@@ -97,36 +97,41 @@ void V_Init( void )
 // Quakeworld bob code, this fixes jitters in the mutliplayer
 // since the clock (pparams->time) isn't quite linear
 //==========================
-float V_CalcBob( struct ref_params_s *pparams )
+float V_CalcBob(struct ref_params_s *pparams)
 {
 	static double bobtime;
 	static float bob, lasttime;
+
 	float cycle;
 	Vector vel;
 
-	if( pparams->onground == -1 || pparams->time == lasttime )
-		return bob;	
+	if (pparams->onground == -1 || pparams->time == lasttime)
+		return bob;
 
 	lasttime = pparams->time;
 
 	bobtime += pparams->frametime;
-	cycle = bobtime - (int)( bobtime / cl_bobcycle->value ) * cl_bobcycle->value;
+
+	cycle = bobtime - (int)(bobtime / cl_bobcycle->value) * cl_bobcycle->value;
 	cycle /= cl_bobcycle->value;
-	
-	if( cycle < cl_bobup->value )
+
+	if (cycle < cl_bobup->value)
 	{
 		cycle = M_PI * cycle / cl_bobup->value;
 	}
 	else
 	{
-		cycle = M_PI + M_PI * ( cycle - cl_bobup->value ) / ( 1.0f - cl_bobup->value );
+		cycle = M_PI + M_PI * (cycle - cl_bobup->value) / (1.0f - cl_bobup->value);
 	}
 
 	vel = pparams->simvel;
-	bob = sqrt( vel.x * vel.x + vel.y * vel.y ) * cl_bob->value;
-	bob = bob * 0.3f + bob * 0.7f * sin( cycle );
 
-	return bound( -7, bob, 4 );
+	float speed = sqrt(vel.x * vel.x + vel.y * vel.y);
+
+	bob = speed * cl_bob->value;
+	bob = bob * 0.3f + bob * 0.7f * sin(cycle);
+
+	return bound(-7, bob, 4);
 }
 
 extern cvar_t *cl_forwardspeed;
@@ -278,7 +283,7 @@ void V_CalcViewModelLag( ref_params_t *pparams, Vector &origin, Vector &angles, 
 
 		vDifference = forward - m_vecLastFacing;
 
-		float flSpeed = 5.0f;
+		float flSpeed = 0.5f;
 
 		// If we start to lag too far behind, we'll increase the "catch up" speed.
 		// Solves the problem with fast cl_yawspeed, m_yaw or joysticks rotating quickly.
@@ -295,7 +300,7 @@ void V_CalcViewModelLag( ref_params_t *pparams, Vector &origin, Vector &angles, 
 		m_vecLastFacing = m_vecLastFacing + vDifference * ( flSpeed * pparams->frametime );
 		// Make sure it doesn't grow out of control!!!
 		m_vecLastFacing = m_vecLastFacing.Normalize();
-		origin = origin + (vDifference * -1.0f) * flSpeed;
+		origin = origin + (vDifference * -1.0f) * flSpeed * 0.1f;
 	}
 
 	AngleVectors( original_angles, forward, right, up );
@@ -319,9 +324,9 @@ void V_CalcViewModelLag( ref_params_t *pparams, Vector &origin, Vector &angles, 
 	else
 	{
 		// FIXME: These are the old settings that caused too many exposed polys on some models
-		origin = origin + forward * ( -pitch * 0.035f );
-		origin = origin + right * ( -pitch * 0.03f );
-		origin = origin + up * ( -pitch * 0.02f );
+		origin = origin + forward * ( -pitch * 0.001f );
+		origin = origin + right * ( -pitch * 0.001f );
+		origin = origin + up * ( -pitch * 0.001f );
 	}
 }
 
@@ -885,6 +890,122 @@ void V_InterpolatePos( struct ref_params_s *pparams )
 }
 
 //==========================
+// V_CalcLandingImpact
+//==========================
+static void V_CalcLandingImpact(struct ref_params_s *pparams)
+{
+	static bool wasInAir = false;
+	static float maxAirZ = 0.0f;	// Запоминаем максимальную высоту во время полёта
+	static float impact = 0.0f;
+
+	if (pparams->onground == -1)
+	{
+		// Игрок в воздухе
+		if (!wasInAir)
+		{
+			// Только что оторвались от земли, запоминаем текущую высоту как начальную
+			maxAirZ = pparams->simorg.z;
+			wasInAir = true;
+		}
+		else
+		{
+			// Продолжаем летать, обновляем максимальную высоту
+			if (pparams->simorg.z > maxAirZ)
+				maxAirZ = pparams->simorg.z;
+		}
+
+		return;
+	}
+
+	// Игрок на земле
+	if (wasInAir)
+	{
+		// Только что приземлились - вычисляем дистанцию падения
+		// от максимальной высоты в воздухе до текущей позиции
+		float fallDistance = maxAirZ - pparams->simorg.z;
+
+		if (fallDistance >= 40.0f)
+		{
+			impact = 1.0f;
+
+			gEngfuncs.pEventAPI->EV_PlaySound(
+				pparams->viewentity,
+				pparams->simorg,
+				CHAN_BODY,
+				"player/pl_step1.wav",
+				0.8f,
+				ATTN_NORM,
+				0,
+				PITCH_NORM
+			);
+		}
+
+		wasInAir = false;
+	}
+
+	if (impact > 0.0f)
+	{
+		pparams->viewangles[PITCH] += impact * 2.0f;
+
+		impact -= pparams->frametime * 8.0f;
+
+		if (impact < 0.0f)
+			impact = 0.0f;
+	}
+}
+
+//==========================
+// V_CalcViewModelRoll
+//==========================
+static void V_CalcViewModelRoll(struct ref_params_s *pparams, Vector &angles)
+{
+	static float currentRoll = 0.0f;
+	static float lastYaw = 0.0f;
+
+	float yawDelta = pparams->cl_viewangles[YAW] - lastYaw;
+
+	if (yawDelta > 180.0f)
+		yawDelta -= 360.0f;
+	else if (yawDelta < -180.0f)
+		yawDelta += 360.0f;
+
+	lastYaw = pparams->cl_viewangles[YAW];
+
+	float targetRoll = -yawDelta * 1.5f;
+	targetRoll = bound(-3.0f, targetRoll, 3.0f);
+
+	float blend = pparams->frametime * 12.0f;
+	blend = bound(0.0f, blend, 1.0f);
+
+	currentRoll += (targetRoll - currentRoll) * blend;
+
+	angles[ROLL] += currentRoll;
+}
+
+//==========================
+// V_CalcStrafeRoll
+//==========================
+static void V_CalcStrafeRoll(struct ref_params_s *pparams)
+{
+	static float currentRoll = 0.0f;
+
+	Vector right;
+	AngleVectors(pparams->cl_viewangles, NULL, right, NULL);
+
+	float sideSpeed = DotProduct(pparams->simvel, right);
+
+	float targetRoll = sideSpeed * 0.015f;
+	targetRoll = bound(-1.5f, targetRoll, 1.5f);
+
+	float blend = pparams->frametime * 15.0f;
+	blend = bound(0.0f, blend, 1.0f);
+
+	currentRoll += (targetRoll - currentRoll) * blend;
+
+	pparams->viewangles[ROLL] += currentRoll;
+}
+
+//==========================
 // V_CalcFirstPersonRefdef
 //==========================
 void V_CalcFirstPersonRefdef( struct ref_params_s *pparams )
@@ -907,8 +1028,10 @@ void V_CalcFirstPersonRefdef( struct ref_params_s *pparams )
 	float waterOffset = V_CalcWaterLevel( pparams );
 	pparams->vieworg[2] += waterOffset;
 
-	V_CalcViewRoll( pparams );
-	V_AddIdle( pparams );
+	V_CalcViewRoll(pparams);
+	V_CalcStrafeRoll(pparams);
+	//V_CalcLandingImpact(pparams);
+	V_AddIdle(pparams);
 
 	// offsets
 	AngleVectors( pparams->cl_viewangles, pparams->forward, pparams->right, pparams->up );
@@ -926,7 +1049,7 @@ void V_CalcFirstPersonRefdef( struct ref_params_s *pparams )
 	// Let the viewmodel shake at about 10% of the amplitude
 	gEngfuncs.V_ApplyShake( view->origin, view->angles, 0.9f );
 
-	view->origin += pparams->forward * bob * 0.4f;
+	view->origin += pparams->right * bob * 0.25f;
 	view->origin.z += bob;
 
 	view->angles[PITCH] -= bob * 0.3f;
@@ -954,6 +1077,7 @@ void V_CalcFirstPersonRefdef( struct ref_params_s *pparams )
 	}
 
 	V_CalcViewModelLag( pparams, view->origin, view->angles, lastAngles );
+	V_CalcViewModelRoll(pparams, view->angles);
 		
 	pparams->viewangles += pparams->punchangle;
 
