@@ -140,7 +140,19 @@ static bool R_GetDirectLightFromSurface( msurface_t *surf, const Vector &point, 
 	ds /= sample_size;
 	dt /= sample_size;
 
-	lm = surf->samples + Q_rint( dt ) * smax + Q_rint( ds );
+	int x0 = (int)floor(ds);
+	int y0 = (int)floor(dt);
+	int x1 = Q_min(x0 + 1, smax - 1);
+	int y1 = Q_min(y0 + 1, tmax - 1);
+
+	float fx = ds - (float)x0;
+	float fy = dt - (float)y0;
+
+	int i00 = y0 * smax + x0;
+	int i10 = y0 * smax + x1;
+	int i01 = y1 * smax + x0;
+	int i11 = y1 * smax + x1;
+
 	colorVec localDiffuse = { 0, 0, 0, 0 };
 	size = smax * tmax;
 
@@ -149,7 +161,7 @@ static bool R_GetDirectLightFromSurface( msurface_t *surf, const Vector &point, 
 		Vector vec_x, vec_y, vec_z;
 		matrix3x3	mat;
 
-		dm = es->normals + Q_rint( dt ) * smax + Q_rint( ds );
+		dm = es->normals;
 
 		// flat TBN for better results
 		vec_x = Vector( surf->info->lmvecs[0] );
@@ -163,28 +175,77 @@ static bool R_GetDirectLightFromSurface( msurface_t *surf, const Vector &point, 
 		mat.SetRight( -vec_y.Normalize( ));
 		mat.SetUp( vec_z.Normalize( ));
 
-		for( map = 0; map < MAXLIGHTMAPS && surf->styles[map] != 255; map++ )
+		for (map = 0; map < MAXLIGHTMAPS && surf->styles[map] != 255; map++)
 		{
+			lm = surf->samples + map * size;
+			dm = es->normals + map * size;
+
+			float w00 = (1.0f - fx) * (1.0f - fy);
+			float w10 = fx * (1.0f - fy);
+			float w01 = (1.0f - fx) * fy;
+			float w11 = fx * fy;
+
 			float f = (1.0f / 128.0f);
-			Vector normal = Vector(((float)dm->r - 128.0f) * f, ((float)dm->g - 128.0f) * f, ((float)dm->b - 128.0f) * f);
-			uint scale = tr.lightstyle[surf->styles[map]]; // style modifier
-			mworldlight_t *pSkyLight = NULL;
-			Vector localDir = g_vecZero;
-			Vector sky_color = g_vecZero;
+			uint scale = tr.lightstyle[surf->styles[map]];
+
+			const color24 &lm00 = lm[i00];
+			const color24 &lm10 = lm[i10];
+			const color24 &lm01 = lm[i01];
+			const color24 &lm11 = lm[i11];
+
+			localDiffuse.r += (
+				R_LightToTexGamma(lm00.r) * w00 +
+				R_LightToTexGamma(lm10.r) * w10 +
+				R_LightToTexGamma(lm01.r) * w01 +
+				R_LightToTexGamma(lm11.r) * w11
+			) * scale;
+
+			localDiffuse.g += (
+				R_LightToTexGamma(lm00.g) * w00 +
+				R_LightToTexGamma(lm10.g) * w10 +
+				R_LightToTexGamma(lm01.g) * w01 +
+				R_LightToTexGamma(lm11.g) * w11
+			) * scale;
+
+			localDiffuse.b += (
+				R_LightToTexGamma(lm00.b) * w00 +
+				R_LightToTexGamma(lm10.b) * w10 +
+				R_LightToTexGamma(lm01.b) * w01 +
+				R_LightToTexGamma(lm11.b) * w11
+			) * scale;
+
+			Vector n00 = Vector(
+				((float)dm[i00].r - 128.0f) * f,
+				((float)dm[i00].g - 128.0f) * f,
+				((float)dm[i00].b - 128.0f) * f
+			);
+
+			Vector n10 = Vector(
+				((float)dm[i10].r - 128.0f) * f,
+				((float)dm[i10].g - 128.0f) * f,
+				((float)dm[i10].b - 128.0f) * f
+			);
+
+			Vector n01 = Vector(
+				((float)dm[i01].r - 128.0f) * f,
+				((float)dm[i01].g - 128.0f) * f,
+				((float)dm[i01].b - 128.0f) * f
+			);
+
+			Vector n11 = Vector(
+				((float)dm[i11].r - 128.0f) * f,
+				((float)dm[i11].g - 128.0f) * f,
+				((float)dm[i11].b - 128.0f) * f
+			);
+
+			Vector normal =
+				n00 * w00 +
+				n10 * w10 +
+				n01 * w01 +
+				n11 * w11;
 
 			// rotate from tangent to model space
-			localDir = mat.VectorRotate( normal );
-
-			// add local dir into main
-			info->normal += localDir * (float)scale; // direction factor
-
-			// compute diffuse color
-			localDiffuse.r += R_LightToTexGamma( lm->r ) * scale;
-			localDiffuse.g += R_LightToTexGamma( lm->g ) * scale;
-			localDiffuse.b += R_LightToTexGamma( lm->b ) * scale;
-
-			lm += size; // skip to next lightmap
-			dm += size; // skip to next deluxemap
+			info->normal += mat.VectorRotate(normal) * (float)scale;
 		}
 
 		info->lightmap.r = Q_min(( localDiffuse.r >> 7 ), 255 );
