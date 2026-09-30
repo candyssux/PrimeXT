@@ -45,6 +45,7 @@ public:
 		float maxSpeed;
 		float fov;
 		float nextAttack;
+		bool hideViewmodel;
 		std::unordered_map<uint32_t, int32_t> ammo;
 
 		// state unrelated to player, but required anyway
@@ -61,6 +62,7 @@ public:
 
 	CWeaponPredictingContext();
 	void PostThink(local_state_t *from, local_state_t *to, usercmd_t *cmd, bool runfuncs, double time, uint32_t randomSeed);
+	bool IsViewmodelHidden() const;
 
 private:
 	void ReadPlayerState(const local_state_t *from, const local_state_t *to, usercmd_t *cmd);

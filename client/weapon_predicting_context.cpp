@@ -81,8 +81,14 @@ GNU General Public License for more details.
 */
 #include <cstring>
 
+bool CWeaponPredictingContext::IsViewmodelHidden() const
+{
+	return m_playerState.hideViewmodel;
+}
+
 CWeaponPredictingContext::CWeaponPredictingContext()
 {
+	m_playerState.hideViewmodel = false;
 }
 
 void CWeaponPredictingContext::PostThink(local_state_t *from, local_state_t *to, usercmd_t *cmd, bool runfuncs, double time, uint32_t randomSeed)

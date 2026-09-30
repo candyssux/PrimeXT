@@ -44,6 +44,11 @@ mobile_engfuncs_t gMobileAPI;
 render_api_t gRenderfuncs;
 static std::unique_ptr<CGameEventManager> g_pEventManager;
 static std::unique_ptr<CWeaponPredictingContext> g_pWeaponPredicting;
+bool CL_IsViewmodelHidden()
+{
+	return g_pWeaponPredicting && g_pWeaponPredicting->IsViewmodelHidden();
+}
+
 CHud gHUD;
 
 /*

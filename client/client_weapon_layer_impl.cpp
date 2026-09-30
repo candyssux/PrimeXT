@@ -146,6 +146,11 @@ float CClientWeaponLayerImpl::GetPlayerFOV()
 	return m_playerState.fov;
 }
 
+void CClientWeaponLayerImpl::SetPlayerViewmodelHidden(bool hidden)
+{
+	m_playerState.hideViewmodel = hidden;
+}
+
 Vector CClientWeaponLayerImpl::GetPlayerVelocity()
 {
 	return m_playerState.velocity;

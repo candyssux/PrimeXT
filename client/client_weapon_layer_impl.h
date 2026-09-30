@@ -46,6 +46,7 @@ public:
 	void SetPlayerNextAttackTime(float value) override;
 	void SetPlayerFOV(float value) override;
 	float GetPlayerFOV() override;
+	void SetPlayerViewmodelHidden(bool hidden) override;
 	Vector GetPlayerVelocity() override;
 	void SetPlayerVelocity(Vector value) override;
 	void AddPlayerPunchangle(float pitch, float yaw, float roll) override;

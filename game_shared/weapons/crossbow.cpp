@@ -259,12 +259,14 @@ void CCrossbowWeaponContext::SecondaryAttack( void )
 {
 	if (m_pLayer->GetPlayerFOV() != 0.0f)
 	{
-		m_pLayer->SetPlayerFOV(0.0f); // 0 means reset to default fov
+		m_pLayer->SetPlayerFOV(0.0f);
+		m_pLayer->SetPlayerViewmodelHidden(false);
 		m_fInZoom = false;
 	}
 	else
 	{
 		m_pLayer->SetPlayerFOV(20.0f);
+		m_pLayer->SetPlayerViewmodelHidden(true);
 		m_fInZoom = true;
 	}
 	

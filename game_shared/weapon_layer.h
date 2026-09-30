@@ -109,6 +109,7 @@ public:
 	virtual void SetPlayerNextAttackTime(float value) = 0;
 	virtual void SetPlayerFOV(float value) = 0;
 	virtual float GetPlayerFOV() = 0;
+	virtual void SetPlayerViewmodelHidden(bool hidden) {}
 	virtual Vector GetPlayerVelocity() = 0;
 	virtual void SetPlayerVelocity(Vector value) = 0;
 	virtual void AddPlayerPunchangle(float pitch, float yaw, float roll) = 0;

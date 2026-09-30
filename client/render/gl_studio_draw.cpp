@@ -31,6 +31,7 @@ GNU General Public License for more details.
 #include "gl_world.h"
 #include "gl_cvars.h"
 #include "visualizer/debug_visualizer.h"
+#include "client_viewmodel.h"
 
 #define LIGHT_INTERP_UPDATE	0.1f
 #define LIGHT_INTERP_FACTOR	(1.0f / LIGHT_INTERP_UPDATE)
@@ -2588,6 +2589,9 @@ void CStudioModelRenderer :: DrawViewModel( void )
 	cl_entity_t	*view = GET_VIEWMODEL();
 
 	if( !CVAR_TO_BOOL( m_pCvarDrawViewModel ))
+		return;
+
+	if (CL_IsViewmodelHidden())
 		return;
 
 	// ignore in thirdperson, camera view or client is died

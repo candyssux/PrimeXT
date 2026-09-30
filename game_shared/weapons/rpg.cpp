@@ -138,10 +138,12 @@ void CRpgWeaponContext::SecondaryAttack()
 	if (m_pLayer->GetPlayerFOV() != 0.0f)
 	{
 		m_pLayer->SetPlayerFOV(0.0f);
+		m_pLayer->SetPlayerViewmodelHidden(false);
 	}
 	else
 	{
 		m_pLayer->SetPlayerFOV(45.0f);
+		m_pLayer->SetPlayerViewmodelHidden(true);
 	}
 
 	m_flNextSecondaryAttack = m_pLayer->GetWeaponTimeBase(UsePredicting()) + 0.3f;
