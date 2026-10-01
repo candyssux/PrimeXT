@@ -66,13 +66,18 @@ void DeactivateSatchels( CBasePlayer *pOwner );
 // Items that the player has in their inventory that they can use
 class CBasePlayerItem : public CBaseAnimating
 {
-	DECLARE_CLASS( CBasePlayerItem, CBaseAnimating );
+	DECLARE_CLASS(CBasePlayerItem, CBaseAnimating);
 public:
-	virtual void SetObjectCollisionBox( void );
+	virtual void SetObjectCollisionBox(void);
+
+	virtual int ObjectCaps(void)
+	{
+		return BaseClass::ObjectCaps() | FCAP_HOLDABLE_ITEM;
+	}
 
 	DECLARE_DATADESC();
 
-	virtual int AddToPlayer( CBasePlayer *pPlayer );	// return TRUE if the item you want the item added to the player inventory
+	virtual int AddToPlayer(CBasePlayer *pPlayer);// return TRUE if the item you want the item added to the player inventory
 	virtual int AddDuplicate( CBasePlayerItem *pItem ) { return FALSE; }	// return TRUE if you want your duplicate removed from world
 	void DestroyItem( void );
 	void DefaultTouch( CBaseEntity *pOther );	// default weapon touch
