@@ -56,11 +56,18 @@ int CCrossbowWeaponContext::GetItemInfo(ItemInfo *p) const
 	return 1;
 }
 
-bool CCrossbowWeaponContext::Deploy( )
+bool CCrossbowWeaponContext::Deploy()
 {
+	bool result;
+
 	if (m_iClip)
-		return DefaultDeploy( "models/v_crossbow.mdl", "models/p_crossbow.mdl", CROSSBOW_DRAW1, "bow" );
-	return DefaultDeploy( "models/v_crossbow.mdl", "models/p_crossbow.mdl", CROSSBOW_DRAW2, "bow" );
+		result = DefaultDeploy("models/v_crossbow.mdl", "models/p_crossbow.mdl", CROSSBOW_DRAW1, "bow");
+	else
+		result = DefaultDeploy("models/v_crossbow.mdl", "models/p_crossbow.mdl", CROSSBOW_DRAW2, "bow");
+
+	m_pLayer->SetPlayerNextAttackTime(m_pLayer->GetWeaponTimeBase(UsePredicting()) + 2.0f);
+
+	return result;
 }
 
 void CCrossbowWeaponContext::Holster( void )
