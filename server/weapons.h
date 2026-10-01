@@ -185,14 +185,19 @@ protected:
 
 class CBasePlayerAmmo : public CBaseEntity
 {
-	DECLARE_CLASS( CBasePlayerAmmo, CBaseEntity );
+	DECLARE_CLASS(CBasePlayerAmmo, CBaseEntity);
 public:
-	virtual void Spawn( void );
-	void DefaultTouch( CBaseEntity *pOther ); // default weapon touch
-	virtual BOOL AddAmmo( CBaseEntity *pOther ) { return TRUE; };
+	virtual void Spawn(void);
+	void DefaultTouch(CBaseEntity *pOther); // default weapon touch
+	virtual BOOL AddAmmo(CBaseEntity *pOther) { return TRUE; };
 
-	CBaseEntity* Respawn( void );
-	void Materialize( void );
+	CBaseEntity* Respawn(void);
+	void Materialize(void);
+
+	virtual int ObjectCaps(void)
+	{
+		return BaseClass::ObjectCaps() | FCAP_HOLDABLE_ITEM;
+	}
 
 	DECLARE_DATADESC();
 };

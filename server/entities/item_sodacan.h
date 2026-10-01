@@ -30,5 +30,10 @@ public:
 	void	CanThink(void);
 	void	CanTouch(CBaseEntity *pOther);
 
+	virtual int ObjectCaps(void)
+	{
+		return BaseClass::ObjectCaps() | FCAP_HOLDABLE_ITEM;
+	}
+
 	DECLARE_DATADESC();
 };

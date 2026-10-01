@@ -28,22 +28,18 @@ void CItemSoda :: Precache ( void )
 	PRECACHE_SOUND("items/sodacan.wav");
 }
 
-void CItemSoda::Spawn( void )
+void CItemSoda::Spawn(void)
 {
 	Precache();
+
 	pev->solid = SOLID_NOT;
+	pev->movetype = MOVETYPE_TOSS;
 
-	if( WorldPhysic->Initialized( ))
-		pev->movetype = MOVETYPE_PHYSIC;
-	else pev->movetype = MOVETYPE_TOSS;
+	SET_MODEL(ENT(pev), "models/can.mdl");
+	UTIL_SetSize(pev, Vector(0, 0, 0), Vector(0, 0, 0));
 
-	SET_MODEL ( ENT(pev), "models/can.mdl" );
-	UTIL_SetSize ( pev, Vector ( 0, 0, 0 ), Vector ( 0, 0, 0 ) );
-	
-	SetThink( &CItemSoda::CanThink);
+	SetThink(&CItemSoda::CanThink);
 	pev->nextthink = gpGlobals->time + 0.5;
-
-	m_pUserData = WorldPhysic->CreateBodyFromEntity( this );
 }
 
 void CItemSoda::CanThink ( void )
