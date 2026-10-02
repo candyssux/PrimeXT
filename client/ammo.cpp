@@ -164,13 +164,13 @@ void WeaponsResource :: LoadWeaponSprites( WEAPON *pWeapon )
 }
 
 // Returns the first weapon for a given slot.
-WEAPON *WeaponsResource :: GetFirstPos( int iSlot )
+WEAPON *WeaponsResource::GetFirstPos(int iSlot)
 {
 	WEAPON *pret = NULL;
 
-	for( int i = 0; i < MAX_WEAPON_POSITIONS; i++ )
+	for (int i = 0; i < MAX_WEAPON_POSITIONS; i++)
 	{
-		if( rgSlots[iSlot][i] && HasAmmo( rgSlots[iSlot][i] ))
+		if (rgSlots[iSlot][i])
 		{
 			pret = rgSlots[iSlot][i];
 			break;
@@ -179,15 +179,15 @@ WEAPON *WeaponsResource :: GetFirstPos( int iSlot )
 	return pret;
 }
 
-WEAPON* WeaponsResource :: GetNextActivePos( int iSlot, int iSlotPos )
+WEAPON* WeaponsResource::GetNextActivePos(int iSlot, int iSlotPos)
 {
-	if( iSlotPos >= MAX_WEAPON_POSITIONS || iSlot >= MAX_WEAPON_SLOTS )
+	if (iSlotPos >= MAX_WEAPON_POSITIONS || iSlot >= MAX_WEAPON_SLOTS)
 		return NULL;
 
-	WEAPON *p = gWR.rgSlots[iSlot][iSlotPos+1];
-	
-	if( !p || !gWR.HasAmmo(p) )
-		return GetNextActivePos( iSlot, iSlotPos + 1 );
+	WEAPON *p = gWR.rgSlots[iSlot][iSlotPos + 1];
+
+	if (!p)
+		return GetNextActivePos(iSlot, iSlotPos + 1);
 
 	return p;
 }
@@ -740,7 +740,7 @@ void CHudAmmo::UserCmd_NextWeapon( void )
 			{
 				WEAPON *wsp = gWR.GetWeaponSlot( slot, pos );
 
-				if( wsp && gWR.HasAmmo( wsp ))
+				if (wsp)
 				{
 					gpActiveSel = wsp;
 					return;
@@ -782,7 +782,7 @@ void CHudAmmo::UserCmd_PrevWeapon( void )
 			{
 				WEAPON *wsp = gWR.GetWeaponSlot( slot, pos );
 
-				if( wsp && gWR.HasAmmo( wsp ))
+				if (wsp)
 				{
 					gpActiveSel = wsp;
 					return;
