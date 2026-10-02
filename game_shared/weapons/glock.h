@@ -48,7 +48,7 @@ public:
 	int iItemSlot() override { return 2; }
 	int GetItemInfo(ItemInfo *p) const override;
 	void PrimaryAttack() override;
-	void SecondaryAttack() override;
+	//void SecondaryAttack() override;
 	bool Deploy() override;
 	void Reload() override;
 	void WeaponIdle() override;

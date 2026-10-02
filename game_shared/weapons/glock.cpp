@@ -58,10 +58,10 @@ bool CGlockWeaponContext::Deploy( )
 	return DefaultDeploy( "models/v_9mmhandgun.mdl", "models/p_9mmhandgun.mdl", GLOCK_DRAW, "onehanded" );
 }
 
-void CGlockWeaponContext::SecondaryAttack( void )
+/*void CGlockWeaponContext::SecondaryAttack(void)
 {
 	GlockFire( 0.1, 0.2, FALSE );
-}
+}*/
 
 void CGlockWeaponContext::PrimaryAttack(void)
 {

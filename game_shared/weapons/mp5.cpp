@@ -124,7 +124,7 @@ void CMP5WeaponContext::PrimaryAttack()
 	m_flTimeWeaponIdle = m_pLayer->GetWeaponTimeBase(UsePredicting()) + m_pLayer->GetRandomFloat(m_pLayer->GetRandomSeed(), 10.f, 15.f);
 }
 
-void CMP5WeaponContext::SecondaryAttack()
+/*void CMP5WeaponContext::SecondaryAttack()
 {
 	// don't fire underwater
 	if (m_pLayer->GetPlayerWaterlevel() == 3)
@@ -181,7 +181,7 @@ void CMP5WeaponContext::SecondaryAttack()
 	m_flNextPrimaryAttack = GetNextPrimaryAttackDelay(1.0f);
 	m_flNextSecondaryAttack = m_pLayer->GetWeaponTimeBase(UsePredicting()) + 1.f;
 	m_flTimeWeaponIdle = m_pLayer->GetWeaponTimeBase(UsePredicting()) + 5.f; // idle pretty soon after shooting.
-}
+}*/
 
 void CMP5WeaponContext::Reload()
 {

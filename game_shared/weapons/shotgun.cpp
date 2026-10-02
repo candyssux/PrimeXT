@@ -130,7 +130,7 @@ void CShotgunWeaponContext::PrimaryAttack()
 	m_fInSpecialReload = 0;
 }
 
-void CShotgunWeaponContext::SecondaryAttack()
+/*void CShotgunWeaponContext::SecondaryAttack()
 {
 	// don't fire underwater
 	if (m_pLayer->GetPlayerWaterlevel() == 3)
@@ -200,7 +200,7 @@ void CShotgunWeaponContext::SecondaryAttack()
 		m_flTimeWeaponIdle = m_pLayer->GetWeaponTimeBase(UsePredicting()) + 1.5;
 
 	m_fInSpecialReload = 0;
-}
+}*/
 
 void CShotgunWeaponContext::Reload()
 {

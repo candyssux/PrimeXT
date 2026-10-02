@@ -88,8 +88,12 @@ BOOL CGameRules::CanHavePlayerItem(CBasePlayer *pPlayer, CBasePlayerItem *pWeapo
 		return FALSE;
 
 	// Only one weapon can occupy an inventory slot.
+// Hand grenades are an exception: one weapon entity can hold multiple grenades as ammo.
 	if (pPlayer->m_rgpPlayerItems[pWeapon->iItemSlot()])
-		return FALSE;
+	{
+		if (pWeapon->iWeaponID() != 12)
+			return FALSE;
+	}
 
 	if (pWeapon->pszAmmo1())
 	{
