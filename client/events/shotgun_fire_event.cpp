@@ -51,8 +51,28 @@ void CShotgunFireEvent::SingleShot()
 	Vector shellVelocity = GetVelocity() + right * gEngfuncs.pfnRandomFloat(50, 70) + up * gEngfuncs.pfnRandomFloat(100, 150) + forward * 25.0f;
 	Vector shellOrigin = GetOrigin() + up * -12.0f + forward * 32.0f + right * 6.0f;
 
+	gEngfuncs.pEventAPI->EV_PlaySound(GetEntityIndex(), GetOrigin(), CHAN_WEAPON, "weapons/sbarrel1.wav", gEngfuncs.pfnRandomFloat(0.95, 1.0), ATTN_NORM, 0, 93 + gEngfuncs.pfnRandomLong(0, 15));
+
+}
+
+void CShotgunFireEvent::Pump()
+{
+	matrix3x3 cameraMatrix(GetAngles());
+	Vector up = cameraMatrix.GetUp();
+	Vector right = cameraMatrix.GetRight();
+	Vector forward = cameraMatrix.GetForward();
+
+	int brassModelIndex = gEngfuncs.pEventAPI->EV_FindModelIndex("models/shotgunshell.mdl");
+	Vector shellVelocity = GetVelocity() - right * gEngfuncs.pfnRandomFloat(50, 70) + up * gEngfuncs.pfnRandomFloat(100, 150) + forward * 25.0f;
+	Vector shellOrigin = GetOrigin() + up * -12.0f + forward * 32.0f + right * 0.0f;
+
 	GameEventUtils::EjectBrass(shellOrigin, GetAngles(), shellVelocity, brassModelIndex, TE_BOUNCE_SHELL);
-	gEngfuncs.pEventAPI->EV_PlaySound( GetEntityIndex(), GetOrigin(), CHAN_WEAPON, "weapons/sbarrel1.wav", gEngfuncs.pfnRandomFloat(0.95, 1.0), ATTN_NORM, 0, 93 + gEngfuncs.pfnRandomLong(0, 15));
+
+	gEngfuncs.pfnPlaySoundByNameAtLocation(
+		"weapons/scock1.wav",
+		1.0,
+		GetOrigin()
+	);
 }
 
 void CShotgunFireEvent::DoubleShot()

@@ -117,6 +117,10 @@ void CGameEventManager::RegisterShotgunEvents()
 		CShotgunFireEvent event(args);
 		event.Execute(false);
 	});
+	gEngfuncs.pfnHookEvent("events/shotgun_pump.sc", [](event_args_s *args) {
+		CShotgunFireEvent event(args);
+		event.Pump();
+	});
 }
 
 void CGameEventManager::RegisterCrowbarEvents()

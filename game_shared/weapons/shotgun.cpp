@@ -37,6 +37,7 @@ CShotgunWeaponContext::CShotgunWeaponContext(std::unique_ptr<IWeaponLayer> &&lay
 	m_iDefaultAmmo = SHOTGUN_DEFAULT_GIVE;
 	m_usSingleFire = m_pLayer->PrecacheEvent("events/shotgun1.sc");
 	m_usDoubleFire = m_pLayer->PrecacheEvent("events/shotgun2.sc");
+	m_usPump = m_pLayer->PrecacheEvent("events/shotgun_pump.sc");
 }
 
 int CShotgunWeaponContext::GetItemInfo(ItemInfo *p) const
@@ -95,13 +96,33 @@ void CShotgunWeaponContext::PrimaryAttack()
 	params.angles = cameraTransform.GetAngles();
 	params.fparam1 = spread.x;
 	params.fparam2 = spread.y;
-	params.iparam1 = 0;
+	params.iparam1 = m_iClip;
 	params.iparam2 = 0;
 	params.bparam1 = 0;
 	params.bparam2 = 0;
 
 	if (m_pLayer->ShouldRunFuncs()) {
 		m_pLayer->PlaybackWeaponEvent(params);
+	}
+
+	if (m_iClip >= 0)
+	{
+		WeaponEventParams pumpParams;
+		pumpParams.flags = WeaponEventFlags::NotHost;
+		pumpParams.eventindex = m_usPump;
+		pumpParams.delay = 0.5f;
+		pumpParams.origin = vecSrc;
+		pumpParams.angles = cameraTransform.GetAngles();
+		pumpParams.fparam1 = 0.0f;
+		pumpParams.fparam2 = 0.0f;
+		pumpParams.iparam1 = 0;
+		pumpParams.iparam2 = 0;
+		pumpParams.bparam1 = 0;
+		pumpParams.bparam2 = 0;
+
+		if (m_pLayer->ShouldRunFuncs()) {
+			m_pLayer->PlaybackWeaponEvent(pumpParams);
+		}
 	}
 
 	m_pLayer->AddPlayerPunchangle(-5.f, 0.f, 0.f);

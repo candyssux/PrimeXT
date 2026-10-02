@@ -56,6 +56,7 @@ public:
 
 	uint16_t m_usSingleFire;
 	uint16_t m_usDoubleFire;
+	uint16_t m_usPump;
 };
 
 template<>

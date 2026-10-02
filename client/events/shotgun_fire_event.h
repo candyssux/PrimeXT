@@ -24,6 +24,7 @@ public:
 	~CShotgunFireEvent() = default;
 
 	void Execute(bool singleShot);
+	void Pump();
 
 private:
 	void SingleShot();
