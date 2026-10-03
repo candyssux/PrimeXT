@@ -549,8 +549,8 @@ void CPhysEntity :: Killed( entvars_t *pevAttacker, int iGib )
 	SUB_UseTargets( NULL, USE_TOGGLE, 0 );
 
 	// Spawn item on break
-	if ( m_iszSpawnObject )
-		CBaseEntity::Create( (char *)STRING(m_iszSpawnObject), vecSpot, GetAbsAngles(), edict() );
+	if (m_iszSpawnObject)
+		CBaseEntity::Create((char *)STRING(m_iszSpawnObject), vecSpot, g_vecZero, edict());
 
 	// Explosive breaking
 	if ( pev->impulse > 0 )
