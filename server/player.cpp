@@ -127,6 +127,7 @@ BEGIN_DATADESC( CBasePlayer )
 	DEFINE_FIELD( m_pMonitor, FIELD_EHANDLE ),
 	DEFINE_FIELD( m_pHoldableItem, FIELD_EHANDLE ),
 	DEFINE_FIELD( m_pVehicle, FIELD_EHANDLE ),
+	DEFINE_FIELD(m_bWeaponsLocked, FIELD_BOOLEAN),
 	DEFINE_FIELD( m_iHideHUD, FIELD_INTEGER ),
 	DEFINE_FIELD( m_iFOV, FIELD_INTEGER ),
 
@@ -2908,6 +2909,7 @@ void CBasePlayer::Spawn( void )
 	m_afPhysicsFlags		= 0;
 	m_fLongJump		= FALSE;// no longjump module. 
 	m_iInCarState		= VEHICLE_INACTIVE;
+	m_bWeaponsLocked = FALSE;
 
 	pev->targetname		= MAKE_STRING( "*player" );
 
@@ -3358,6 +3360,9 @@ int CBasePlayer::Restore( CRestore &restore )
 
 void CBasePlayer::SelectNextItem( int iItem )
 {
+	if (m_bWeaponsLocked)
+		return;
+
 	CBasePlayerItem *pItem;
 
 	pItem = m_rgpPlayerItems[ iItem ];
@@ -3404,6 +3409,9 @@ void CBasePlayer::SelectNextItem( int iItem )
 
 void CBasePlayer::SelectItem(const char *pstr)
 {
+	if (m_bWeaponsLocked)
+		return;
+
 	if (!pstr)
 		return;
 
@@ -3453,6 +3461,9 @@ void CBasePlayer::SelectItem(const char *pstr)
 
 void CBasePlayer::SelectLastItem(void)
 {
+	if (m_bWeaponsLocked)
+		return;
+	
 	if (!m_pLastItem)
 	{
 		return;
@@ -4027,9 +4038,9 @@ int CBasePlayer::AddPlayerItem( CBasePlayerItem *pItem )
 		m_rgpPlayerItems[pItem->iItemSlot()] = pItem;
 
 		// should we switch to this item?
-		if ( g_pGameRules->FShouldSwitchWeapon( this, pItem ) )
+		if (!m_bWeaponsLocked && g_pGameRules->FShouldSwitchWeapon(this, pItem))
 		{
-			SwitchWeapon( pItem );
+			SwitchWeapon(pItem);
 		}
 
 		return TRUE;
@@ -4134,7 +4145,10 @@ Called every frame by the player PreThink
 */
 void CBasePlayer::ItemPreFrame()
 {
-	if ( m_flNextAttack > 0.0f )
+	if (m_bWeaponsLocked)
+		return;
+
+	if (m_flNextAttack > 0.0f)
 	{
 		return;
 	}
@@ -4142,7 +4156,7 @@ void CBasePlayer::ItemPreFrame()
 	if (!m_pActiveItem)
 		return;
 
-	m_pActiveItem->ItemPreFrame( );
+	m_pActiveItem->ItemPreFrame();
 }
 
 
@@ -4158,15 +4172,18 @@ void CBasePlayer::ItemPostFrame()
 	static int fInSelect = FALSE;
 
 	// check if the player is using a tank
-	if ( m_pTank != NULL )
+	if (m_pTank != NULL)
 		return;
 
 	ImpulseCommands();
 
-	if ( m_flNextAttack > 0.0f )
+	if (m_bWeaponsLocked)
 		return;
 
-	if( FBitSet( m_iHideHUD, HIDEHUD_WEAPONS ))
+	if (m_flNextAttack > 0.0f)
+		return;
+
+	if (FBitSet(m_iHideHUD, HIDEHUD_WEAPONS))
 		return;
 
 	if (!m_pActiveItem)
@@ -4672,26 +4689,49 @@ void CBasePlayer :: EnableControl(BOOL fControl)
 
 }
 
-void CBasePlayer :: HideWeapons( BOOL fHideWeapons )
+void CBasePlayer::HideWeapons(BOOL fHideWeapons)
 {
-	if( fHideWeapons )
+	if (fHideWeapons)
 	{
-		if( m_pActiveItem )
+		if (m_pActiveItem)
 		{
 			m_pActiveItem->Holster();
-			pev->weaponmodel = 0;
-			// viewmodel reset in tank
 		}
+
+		// Важно: viewmodel должен уйти и на client-side prediction.
+		pev->viewmodel = 0;
+		pev->weaponmodel = 0;
 
 		m_iHideHUD |= HIDEHUD_WEAPONS;
 	}
 	else
 	{
-		// bring back player's weapons
-		if( m_pActiveItem )
-			m_pActiveItem->Deploy();
-
+		// Сначала разрешаем оружие обратно.
 		m_iHideHUD &= ~HIDEHUD_WEAPONS;
+
+		if (m_pActiveItem)
+			m_pActiveItem->Deploy();
+	}
+}
+
+void CBasePlayer::SetWeaponsLocked(BOOL bLocked)
+{
+	m_bWeaponsLocked = bLocked;
+
+	if (bLocked)
+	{
+		// Не даём server/client weapon prediction выполнять атаки.
+		m_flNextAttack = 999999.0f;
+
+		// Полностью убираем текущее оружие.
+		HideWeapons(TRUE);
+	}
+	else
+	{
+		// Возвращаем нормальное состояние атаки.
+		m_flNextAttack = 0.0f;
+
+		HideWeapons(FALSE);
 	}
 }
 

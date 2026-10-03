@@ -107,28 +107,26 @@ void CWeaponPredictingContext::PostThink(local_state_t *from, local_state_t *to,
 			HandlePlayerSpawnDeath(to, currWeapon);
 		}
 
-		if (playerAlive && m_playerState.viewmodel)
+		// Weapons are completely disabled while viewmodel is hidden.
+		if (playerAlive && m_playerState.viewmodel && m_playerState.nextAttack <= 0.0f)
 		{
-			if (m_playerState.nextAttack <= 0.0f) {
-				currWeapon->ItemPostFrame();
-			}
+			currWeapon->ItemPostFrame();
 		}
 
-		if (playerAlive && cmd->weaponselect)
+		// Do not allow weapon switching while weapons are hidden/locked.
+		if (playerAlive && cmd->weaponselect && m_playerState.viewmodel)
 		{
-			// handle weapon switching on weapons code side
 			HandleWeaponSwitch(from, to, cmd, currWeapon);
 		}
 		else
 		{
-			// does not changing weapons now, keep weapon ID same
 			to->client.m_iId = from->client.m_iId;
 		}
 
 		// check for desync between local & server-side weapon animation
 		if (runfuncs && (m_playerState.activeWeaponanim != m_playerState.weaponanim))
 		{
-			gEngfuncs.pfnWeaponAnim( m_playerState.weaponanim, 0 );
+			gEngfuncs.pfnWeaponAnim(m_playerState.weaponanim, 0);
 			m_playerState.activeWeaponanim = m_playerState.weaponanim;
 		}
 	}

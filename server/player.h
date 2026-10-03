@@ -178,6 +178,7 @@ public:
 	BOOL		m_fGameHUDInitialized;
 	int		m_iTrain;				// Train control position
 	BOOL		m_fWeapon;				// Set this to FALSE to force a reset of the current weapon HUD info
+	BOOL		m_bWeaponsLocked;
 
 	EHANDLE		m_pTank;				// the tank which the player is currently controlling,  NULL if no tank
 	EHANDLE		m_pMonitor;
@@ -308,6 +309,8 @@ public:
 	void GiveNamedItem( const char *szName );
 	void EnableControl(BOOL fControl);
 	void HideWeapons( BOOL fHideWeapons );
+	void SetWeaponsLocked(BOOL bLocked);
+	BOOL IsWeaponsLocked(void) const { return m_bWeaponsLocked; }
 	void SnapEyeAngles( const Vector &viewAngles );
 
 	int  GiveAmmo( int iAmount, char *szName, int iMax );

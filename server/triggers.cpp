@@ -14,6 +14,7 @@
 ****/
 
 #include "triggers.h"
+#include "player.h"
 #include "gamerules.h"
 #include "trigger_hurt.h"
 
@@ -27,6 +28,42 @@ BEGIN_DATADESC( CBaseTrigger )
 	DEFINE_FUNCTION( CounterUse ),
 	DEFINE_FUNCTION( ToggleUse ),
 END_DATADESC()
+
+class CTriggerWeaponLock : public CPointEntity
+{
+	DECLARE_CLASS(CTriggerWeaponLock, CPointEntity);
+
+public:
+	void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+};
+
+LINK_ENTITY_TO_CLASS(trigger_weapon_lock, CTriggerWeaponLock);
+
+void CTriggerWeaponLock::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+{
+	if (!pActivator || !pActivator->IsPlayer())
+		return;
+
+	CBasePlayer *pPlayer = static_cast<CBasePlayer *>(pActivator);
+
+	switch (useType)
+	{
+		case USE_ON:
+			pPlayer->SetWeaponsLocked(TRUE);
+			break;
+
+		case USE_OFF:
+			pPlayer->SetWeaponsLocked(FALSE);
+			break;
+
+		case USE_TOGGLE:
+			pPlayer->SetWeaponsLocked(!pPlayer->IsWeaponsLocked());
+			break;
+
+		default:
+			break;
+	}
+}
 
 void CBaseTrigger::InitTrigger( )
 {
