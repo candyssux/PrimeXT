@@ -40,7 +40,7 @@ void DeactivateSatchels( CBasePlayer *pOwner );
 
 // The amount of ammo given to a player by an ammo item.
 #define AMMO_URANIUMBOX_GIVE	20
-#define AMMO_CHAINBOX_GIVE		200
+#define AMMO_CHAINBOX_GIVE		15
 #define AMMO_M203BOX_GIVE		2
 #define AMMO_BUCKSHOTBOX_GIVE	12
 #define AMMO_RPGCLIP_GIVE		1

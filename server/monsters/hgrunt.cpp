@@ -676,35 +676,86 @@ void CHGrunt :: HandleAnimEvent( MonsterEvent_t *pEvent )
 	switch( pEvent->event )
 	{
 		case HGRUNT_AE_DROP_GUN:
-			{
-
-			if( pev->spawnflags & SF_MONSTER_NO_WPN_DROP )
+		{
+			if (pev->spawnflags & SF_MONSTER_NO_WPN_DROP)
 				break; //LRC
 
 			Vector	vecGunPos;
 			Vector	vecGunAngles;
 
-			GetAttachment( 0, vecGunPos, vecGunAngles );
+			GetAttachment(0, vecGunPos, vecGunAngles);
 
 			// switch to body group with no gun.
-			SetBodygroup( GUN_GROUP, GUN_NONE );
+			SetBodygroup(GUN_GROUP, GUN_NONE);
 
-			// now spawn a gun.
-			if (HasWeapon( HGRUNT_SHOTGUN ))
+			CBaseEntity *pGun;
+			CBaseEntity *pAmmo;
+
+			// Offset ammo so it does not spawn directly on top of the weapon.
+			Vector vecAmmoPos = vecGunPos;
+
+			UTIL_MakeVectors(GetAbsAngles());
+
+			vecAmmoPos += gpGlobals->v_right * RANDOM_FLOAT(8.0f, 14.0f);
+			vecAmmoPos += gpGlobals->v_forward * RANDOM_FLOAT(-4.0f, 4.0f);
+
+			// Drop weapon and matching ammo.
+			if (HasWeapon(HGRUNT_SHOTGUN))
 			{
-				 DropItem( "weapon_shotgun", vecGunPos, vecGunAngles );
+				pGun = DropItem("weapon_shotgun", vecGunPos, vecGunAngles);
+
+				if (pGun)
+				{
+					pGun->pev->angles = Vector(
+						RANDOM_FLOAT(-10.0f, 10.0f),
+						RANDOM_FLOAT(0.0f, 360.0f),
+						RANDOM_FLOAT(-10.0f, 10.0f)
+					);
+				}
+
+				pAmmo = DropItem("ammo_buckshot", vecAmmoPos, vecGunAngles);
+
+				if (pAmmo)
+				{
+					pAmmo->pev->angles = Vector(
+						RANDOM_FLOAT(-10.0f, 10.0f),
+						RANDOM_FLOAT(0.0f, 360.0f),
+						RANDOM_FLOAT(-10.0f, 10.0f)
+					);
+				}
 			}
 			else
 			{
-				 DropItem( "weapon_9mmAR", vecGunPos, vecGunAngles );
-			}
-			if (HasWeapon( HGRUNT_GRENADELAUNCHER ))
-			{
-				DropItem( "ammo_ARgrenades", BodyTarget( GetAbsOrigin() ), vecGunAngles );
+				pGun = DropItem("weapon_9mmAR", vecGunPos, vecGunAngles);
+
+				if (pGun)
+				{
+					pGun->pev->angles = Vector(
+						RANDOM_FLOAT(-10.0f, 10.0f),
+						RANDOM_FLOAT(0.0f, 360.0f),
+						RANDOM_FLOAT(-10.0f, 10.0f)
+					);
+				}
+
+				pAmmo = DropItem("ammo_9mmbox", vecAmmoPos, vecGunAngles);
+
+				if (pAmmo)
+				{
+					pAmmo->pev->angles = Vector(
+						RANDOM_FLOAT(-10.0f, 10.0f),
+						RANDOM_FLOAT(0.0f, 360.0f),
+						RANDOM_FLOAT(-10.0f, 10.0f)
+					);
+				}
 			}
 
+			// Keep grenade launcher ammo drop unchanged.
+			if (HasWeapon(HGRUNT_GRENADELAUNCHER))
+			{
+				DropItem("ammo_ARgrenades", BodyTarget(GetAbsOrigin()), vecGunAngles);
 			}
-			break;
+		}
+		break;
 
 		case HGRUNT_AE_RELOAD:
 			EMIT_SOUND( ENT(pev), CHAN_WEAPON, "hgrunt/gr_reload1.wav", 1, ATTN_NORM );
