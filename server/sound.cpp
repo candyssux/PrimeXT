@@ -186,7 +186,7 @@ void CAmbientGeneric :: Spawn( void )
 	}
 	else if (FBitSet(pev->spawnflags, AMBIENT_SOUND_EXTRALARGERADIUS))
 	{
-		m_flAttenuation = 0.2f;
+		m_flAttenuation = 0.4f;
 	}
 	else
 	{
@@ -2092,13 +2092,10 @@ void CAmbientMusic :: Spawn( void )
 	}
 }
 
-void CAmbientMusic :: StartMessage( CBasePlayer *pPlayer )
+void CAmbientMusic::StartMessage(CBasePlayer *pPlayer)
 {
-	if( pev->button ) return; // fire once at spawn
-
-	if( FBitSet( pev->spawnflags, SF_START_ON ))
-		PlayStream( pPlayer, true );
-	pev->button = true;
+	if (FBitSet(pev->spawnflags, SF_START_ON))
+		PlayStream(pPlayer, true);
 }
 
 void CAmbientMusic :: PlayStream( CBasePlayer *pPlayer, bool bPlay )

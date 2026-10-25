@@ -718,9 +718,9 @@ void CHGrunt :: HandleAnimEvent( MonsterEvent_t *pEvent )
 				if (pAmmo)
 				{
 					pAmmo->pev->angles = Vector(
-						RANDOM_FLOAT(-10.0f, 10.0f),
+						0.0f,
 						RANDOM_FLOAT(0.0f, 360.0f),
-						RANDOM_FLOAT(-10.0f, 10.0f)
+						0.0f
 					);
 				}
 			}
@@ -742,9 +742,9 @@ void CHGrunt :: HandleAnimEvent( MonsterEvent_t *pEvent )
 				if (pAmmo)
 				{
 					pAmmo->pev->angles = Vector(
-						RANDOM_FLOAT(-10.0f, 10.0f),
+						0.0f,
 						RANDOM_FLOAT(0.0f, 360.0f),
-						RANDOM_FLOAT(-10.0f, 10.0f)
+						0.0f
 					);
 				}
 			}

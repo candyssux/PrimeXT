@@ -263,6 +263,10 @@ class CWeaponBox : public CBaseEntity
 	void SetObjectCollisionBox( void );
 
 public:
+	int ObjectCaps(void) override
+	{
+		return CBaseEntity::ObjectCaps() | FCAP_HOLDABLE_ITEM;
+	}
 	void Kill ( void );
 
 	DECLARE_DATADESC();
