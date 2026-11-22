@@ -317,6 +317,76 @@ static const Vector R_GetPointForBush( int vertexNum, const Vector &pos, float s
 
 	return g_vecZero; // error
 }
+
+static float R_GrassRandomYaw(
+	msurface_t *surf,
+	grassentry_t *grassEntry,
+	const Vector &pos)
+{
+	unsigned int hash = (unsigned int)(surf - worldmodel->surfaces);
+
+	hash ^= (unsigned int)grassEntry->seed * 0x9E3779B9u;
+	hash ^= (unsigned int)Q_rint(pos.x * 256.0f) * 0x85EBCA6Bu;
+	hash ^= (unsigned int)Q_rint(pos.y * 256.0f) * 0xC2B2AE35u;
+	hash ^= (unsigned int)Q_rint(pos.z * 256.0f) * 0x27D4EB2Fu;
+
+	hash ^= hash >> 16;
+	hash *= 0x7FEB352Du;
+	hash ^= hash >> 15;
+	hash *= 0x846CA68Bu;
+	hash ^= hash >> 16;
+
+	return (float)(hash & 0x00FFFFFFu) *
+		(6.28318530718f / 16777216.0f);
+}
+
+static const Vector R_GetPointForSinglePlane(
+	int vertexNum,
+	int planeIndex,
+	int numPlanes,
+	const Vector &pos,
+	float scale,
+	float yaw)
+{
+	float axisX = 1.0f;
+	float axisY = 0.0f;
+
+	if (numPlanes == 1)
+	{
+		axisX = cos(yaw);
+		axisY = sin(yaw);
+	}
+	else if (numPlanes == 2 && planeIndex == 1)
+	{
+		axisX = 0.0f;
+		axisY = 1.0f;
+	}
+	else if (numPlanes == 3)
+	{
+		if (planeIndex == 1)
+		{
+			axisX = 0.5f;
+			axisY = 0.8660254f;
+		}
+		else if (planeIndex == 2)
+		{
+			axisX = -0.5f;
+			axisY = 0.8660254f;
+		}
+	}
+
+	float width = (m_iTextureWidth * 0.1f) * scale;
+	float height = (m_iTextureHeight * 0.1f) * scale;
+
+	float side = (vertexNum < 2) ? -width : width;
+	float top = (vertexNum == 1 || vertexNum == 2) ? height : 0.0f;
+
+	return Vector(
+		pos.x + axisX * side,
+		pos.y + axisY * side,
+		pos.z + top
+	);
+}
 /*
 ================
 R_GetTexCoordForBush
@@ -476,32 +546,153 @@ R_CreateSingleBush
 create a bush with specified pos
 ================
 */
-bool R_CreateSingleBush( msurface_t *surf, mextrasurf_t *es, grasshdr_t *hdr, const Vector &pos, float size )
+bool R_CreateSingleBush(
+	msurface_t *surf,
+	mextrasurf_t *es,
+	grasshdr_t *hdr,
+	grassentry_t *grassEntry,
+	const Vector &pos,
+	float size)
 {
-	for( int i = 0; i < 16; i++ )
+	int numPlanes = grassEntry->planes;
+
+	if (numPlanes < 1 || numPlanes > 4)
+		numPlanes = 4;
+
+	// Orientation is used only for a single plane.
+	int orientation = (numPlanes == 1) ? grassEntry->orientation : 0;
+
+	if (orientation < 0 || orientation > 3)
+		orientation = 0;
+
+	float yaw = 0.0f;
+
+	if (orientation == 0 || orientation == 3)
+		yaw = R_GrassRandomYaw(surf, grassEntry, pos);
+
+	Vector surfaceNormal = g_vecZero;
+	Vector planeAxis = g_vecZero;
+	Vector planeUp = g_vecZero;
+
+	if (orientation == 3)
 	{
-		gvert_t *entry = &m_arraygvert[m_iNumVertex];
-		Vector vertex = R_GetPointForBush( i, pos, size );
-		memcpy( entry->styles, surf->styles, sizeof( entry->styles ));
-		R_GrassLightForVertex( surf, es, vertex, pos.z, entry->light, entry->delux );
-		AddPointToBounds( vertex, hdr->mins, hdr->maxs ); // build bbox for grass
-		Vector dir = ( vertex - pos ).Normalize();
-		float scale = ( vertex - pos ).Length();
+		surfaceNormal = surf->plane->normal;
 
-		entry->center[0] = pos.x;
-		entry->center[1] = pos.y;
-		entry->center[2] = pos.z;
-		entry->center[3] = scale;
-		entry->normal[0] = dir.x;
-		entry->normal[1] = dir.y;
-		entry->normal[2] = dir.z;
-		entry->normal[3] = i;
+		if (FBitSet(surf->flags, SURF_PLANEBACK))
+			surfaceNormal = -surfaceNormal;
 
-		// generate indices
-		if( !R_GrassAdvanceVertex( ))
+		surfaceNormal = surfaceNormal.Normalize();
+
+		Vector reference = (fabs(surfaceNormal.z) > 0.9f)
+			? Vector(1.0f, 0.0f, 0.0f)
+			: Vector(0.0f, 0.0f, 1.0f);
+
+		planeAxis = CrossProduct(reference, surfaceNormal).Normalize();
+		planeUp = CrossProduct(surfaceNormal, planeAxis).Normalize();
+
+		// Rotate the plane around the surface normal.
+		Vector rotatedAxis =
+			planeAxis * cos(yaw) + planeUp * sin(yaw);
+
+		planeAxis = rotatedAxis.Normalize();
+		planeUp = CrossProduct(surfaceNormal, planeAxis).Normalize();
+	}
+
+	for (int plane = 0; plane < numPlanes; plane++)
+	{
+		for (int corner = 0; corner < 4; corner++)
 		{
-			// vertexes is out
-			return false;
+			gvert_t *vert = &m_arraygvert[m_iNumVertex];
+
+			Vector vertex;
+			int vertexID;
+
+			if (numPlanes == 4)
+			{
+				// Original vanilla geometry and vertex numbering.
+				int i = plane * 4 + corner;
+
+				vertex = R_GetPointForBush(i, pos, size);
+				vertexID = i;
+			}
+			else if (orientation == 3)
+			{
+				float width = (m_iTextureWidth * 0.1f) * size;
+				float height = (m_iTextureHeight * 0.1f) * size;
+
+				float side = (corner < 2) ? -width : width;
+				float top = (corner == 1 || corner == 2) ? height : 0.0f;
+
+				vertex = pos + surfaceNormal * 0.1f
+					+ planeAxis * side
+					+ planeUp * top;
+
+				vertexID = 60 + corner;
+			}
+			else
+			{
+				vertex = R_GetPointForSinglePlane(
+					corner, plane, numPlanes, pos, size, yaw);
+
+				int baseID;
+
+				if (numPlanes == 1)
+				{
+					if (orientation == 1)
+						baseID = 52;
+					else if (orientation == 2)
+						baseID = 56;
+					else
+						baseID = 16;
+				}
+				else if (numPlanes == 2)
+					baseID = 20;
+				else
+					baseID = 28;
+
+				vertexID = baseID + plane * 4 + corner;
+			}
+
+			memcpy(vert->styles, surf->styles, sizeof(vert->styles));
+
+			float lightPosZ = (orientation == 3) ? vertex.z : pos.z;
+
+			R_GrassLightForVertex(
+				surf, es, vertex, lightPosZ, vert->light, vert->delux);
+
+			AddPointToBounds(vertex, hdr->mins, hdr->maxs);
+
+			if (orientation == 3)
+			{
+				// Y=3 stores the final vertex position and surface normal.
+				vert->center[0] = vertex.x;
+				vert->center[1] = vertex.y;
+				vert->center[2] = vertex.z;
+				vert->center[3] = 0.0f;
+
+				vert->normal[0] = surfaceNormal.x;
+				vert->normal[1] = surfaceNormal.y;
+				vert->normal[2] = surfaceNormal.z;
+			}
+			else
+			{
+				Vector dir = (vertex - pos).Normalize();
+				float vertexScale = (vertex - pos).Length();
+
+				vert->center[0] = pos.x;
+				vert->center[1] = pos.y;
+				vert->center[2] = pos.z;
+				vert->center[3] = vertexScale;
+
+				vert->normal[0] = dir.x;
+				vert->normal[1] = dir.y;
+				vert->normal[2] = dir.z;
+			}
+
+			vert->normal[3] = vertexID;
+
+			if (!R_GrassAdvanceVertex())
+				return false;
 		}
 	}
 
@@ -606,7 +797,7 @@ bool R_BuildGrassMesh( msurface_t *surf, mextrasurf_t *es, grassentry_t *entry, 
 			if( !Mod_CheckLayerNameForPixel( land, pos, entry->name ))
 				continue;	// rejected by heightmap
 
-			if( !R_CreateSingleBush( surf, es, hdr, pos, size ))
+			if (!R_CreateSingleBush(surf, es, hdr, entry, pos, size))
 				goto build_mesh; // vertices is out (more than 2048 bushes per surface created)
 		}
 	}

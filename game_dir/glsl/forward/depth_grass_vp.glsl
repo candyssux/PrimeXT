@@ -36,16 +36,40 @@ void main( void )
 	float dist = GRASS_ANIM_DIST + 1.0;	// disable animation
 	float scale = 1.0;			// keep constant size
 #endif
-	int vertexID = int( attr_Normal.w ) - int( 4.0 * floor( attr_Normal.w * 0.25 )); // equal to gl_VertexID & 3
-	vec4 position = vec4( attr_Position.xyz + normalize( attr_Normal.xyz ) * ( attr_Position.w * scale ), 1.0 );	// in object space
+	int grassVertex = int( attr_Normal.w );
 
-	if( bool( dist < GRASS_ANIM_DIST ) && bool( vertexID == 1 || vertexID == 2 ))
-	{
-		position.x += sin( position.z + u_RealTime * 0.5 );
-		position.y += cos( position.z + u_RealTime * 0.5 );
-	}
+int vertexID = grassVertex -
+    int( 4.0 * floor( attr_Normal.w * 0.25 ));
 
-	vec4 worldpos = u_ModelMatrix * position;
+vec3 localOffset =
+    normalize( attr_Normal.xyz ) * ( attr_Position.w * scale );
+
+vec4 worldCenter = u_ModelMatrix * vec4( attr_Position.xyz, 1.0 );
+vec4 worldpos;
+
+if( grassVertex >= 52 && grassVertex < 60 )
+{
+    vec3 viewDirection = u_ViewOrigin - worldCenter.xyz;
+
+    vec3 billboardOffset = GetGrassBillboardOffset(
+        grassVertex, localOffset, viewDirection );
+
+    worldpos = vec4( worldCenter.xyz + billboardOffset, 1.0 );
+}
+else
+{
+    vec4 position = vec4( attr_Position.xyz + localOffset, 1.0 );
+
+    if( bool( dist < GRASS_ANIM_DIST ) &&
+        bool( vertexID == 1 || vertexID == 2 ) &&
+        grassVertex < 60 )
+    {
+        position.x += sin( position.z + u_RealTime * 0.5 );
+        position.y += cos( position.z + u_RealTime * 0.5 );
+    }
+
+    worldpos = u_ModelMatrix * position;
+}
 	gl_Position = gl_ModelViewProjectionMatrix * worldpos;
 	var_TexDiffuse = GetTexCoordsForVertex( int( attr_Normal.w ));
 	gl_ClipVertex = gl_ModelViewMatrix * worldpos;
