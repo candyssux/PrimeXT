@@ -1617,6 +1617,8 @@ void R_GrassInit( void )
 		while(( pfile = COM_ParseFile( pfile, token )) != NULL )
 		{
 			Q_strncpy( entry.name, token, sizeof( entry.name ));
+			entry.planes = 4;
+			entry.orientation = 0;
 
 			pfile = COM_ParseLine( pfile, token );
 			if( !pfile )
@@ -1668,6 +1670,25 @@ void R_GrassInit( void )
 				entry.seed = Q_max( 1, entry.seed );
 			}
 			else entry.seed = random_seed++;
+			// number of planes is optional: default is 4
+			pfile = COM_ParseLine(pfile, token);
+			if (pfile && token[0])
+			{
+				int planes = Q_atoi(token);
+
+				if (planes == 0)
+					entry.planes = 4;
+				else
+					entry.planes = bound(1, planes, 4);
+
+				// orientation is optional: default is 0
+				pfile = COM_ParseLine(pfile, token);
+				if (pfile && token[0])
+				{
+					int orientation = Q_atoi(token);
+					entry.orientation = bound(0, orientation, 3);
+				}
+			}
 
 			grassInfo.AddToTail( entry );
 			parse_line++;

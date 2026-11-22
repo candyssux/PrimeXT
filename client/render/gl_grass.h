@@ -33,6 +33,8 @@ typedef struct grassentry_s
 	float	min;		// min grass scale
 	float	max;		// max grass scale
 	int	seed;		// seed for predictable random (auto-filled)
+	byte    planes;       // number of planes in a bush (1-4)
+	byte    orientation;  // orientation mode for a single plane (0-3)
 } grassentry_t;
 
 typedef struct grasstexture_s
