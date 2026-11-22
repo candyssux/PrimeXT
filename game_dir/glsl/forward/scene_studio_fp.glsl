@@ -90,13 +90,17 @@ void main( void )
 	vec_TexDiffuse = var_TexDiffuse;
 #endif
 	albedo = colormap2D( u_ColorMap, vec_TexDiffuse );
+	float reflectionMask = 1.0;
+
+#if defined( REFLECTION_ALPHA_MASK )
+    reflectionMask = 1.0 - albedo.a;
+#endif
 #if !defined( ALPHA_BLENDING )
 	albedo.a = AlphaRescaling( u_ColorMap, vec_TexDiffuse, albedo.a );
 #endif
 #if defined( ALPHA_TO_COVERAGE )
-	// TODO should be cutoff value hardcoded?
-	albedo.a = max( albedo.a, 0.5 );
-	albedo.a = AlphaSharpening( albedo.a, 0.5 );
+    albedo.a = AlphaSharpening( albedo.a, 0.5 );
+    albedo.a = max( albedo.a, 0.8 );
 #endif
 	result = albedo;
 
@@ -201,7 +205,7 @@ lighting.diffuse += var_AmbientLight;
 #if defined( REFLECTION_CUBEMAP )
 	vec3 reflected = CubemapReflectionProbe( var_Position, u_ViewOrigin, worldNormal, mat.smoothness );
 	float fresnel = GetFresnel( V, N, WATER_F0_VALUE, FRESNEL_FACTOR );
-	result.rgb += reflected * mat.smoothness * u_ReflectScale;
+	result.rgb += reflected * mat.smoothness * u_ReflectScale * reflectionMask;
 #endif // REFLECTION_CUBEMAP
 
 #if defined( LIGHTMAP_DEBUG ) || defined( LIGHTVEC_DEBUG )

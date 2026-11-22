@@ -2917,9 +2917,14 @@ word CStudioModelRenderer :: ShaderSceneForward( mstudiomaterial_t *mat, int lig
 		}
 	}
 
-	if(( world->num_cubemaps > 0 ) && CVAR_TO_BOOL( r_cubemap ) && (mat->reflectScale > 0.0f) && !RP_CUBEPASS( ))
+	if ((world->num_cubemaps > 0) && CVAR_TO_BOOL(r_cubemap) && (mat->reflectScale > 0.0f) && !RP_CUBEPASS())
 	{
-		GL_AddShaderDirective( options, "REFLECTION_CUBEMAP" );
+		GL_AddShaderDirective(options, "REFLECTION_CUBEMAP");
+
+		// Use alpha channel as cubemap reflection mask
+		if (mat->gl_diffuse_id.GetFlags() & TF_HAS_ALPHA)
+			GL_AddShaderDirective(options, "REFLECTION_ALPHA_MASK");
+
 		using_cubemaps = true;
 	}
 
