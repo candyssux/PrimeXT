@@ -340,6 +340,30 @@ static float R_GrassRandomYaw(
 		(6.28318530718f / 16777216.0f);
 }
 
+static float R_GrassRandomLift(
+	msurface_t *surf,
+	grassentry_t *grassEntry,
+	const Vector &pos)
+{
+	unsigned int hash = (unsigned int)(surf - worldmodel->surfaces);
+
+	hash ^= (unsigned int)grassEntry->seed * 0x9E3779B9u;
+	hash ^= (unsigned int)Q_rint(pos.x * 256.0f) * 0x85EBCA6Bu;
+	hash ^= (unsigned int)Q_rint(pos.y * 256.0f) * 0xC2B2AE35u;
+	hash ^= (unsigned int)Q_rint(pos.z * 256.0f) * 0x27D4EB2Fu;
+
+	hash ^= 0xA511E9B3u;
+	hash ^= hash >> 16;
+	hash *= 0x7FEB352Du;
+	hash ^= hash >> 15;
+	hash *= 0x846CA68Bu;
+	hash ^= hash >> 16;
+
+	float randomValue = (float)(hash & 0x00FFFFFFu) / 16777215.0f;
+
+	return 0.1f + randomValue * 0.4f;
+}
+
 static const Vector R_GetPointForSinglePlane(
 	int vertexNum,
 	int planeIndex,
@@ -570,6 +594,13 @@ bool R_CreateSingleBush(
 	if (orientation == 0 || orientation == 3)
 		yaw = R_GrassRandomYaw(surf, grassEntry, pos);
 
+	float randomLift = 0.1f;
+
+	if (orientation == 3)
+	{
+		randomLift += (yaw / 6.28318530718f) * 0.4f;
+	}
+
 	Vector surfaceNormal = g_vecZero;
 	Vector planeAxis = g_vecZero;
 	Vector planeUp = g_vecZero;
@@ -582,6 +613,7 @@ bool R_CreateSingleBush(
 			surfaceNormal = -surfaceNormal;
 
 		surfaceNormal = surfaceNormal.Normalize();
+		float randomLift = R_GrassRandomLift(surf, grassEntry, pos);
 
 		Vector reference = (fabs(surfaceNormal.z) > 0.9f)
 			? Vector(1.0f, 0.0f, 0.0f)
@@ -617,13 +649,13 @@ bool R_CreateSingleBush(
 			}
 			else if (orientation == 3)
 			{
-				float width = (m_iTextureWidth * 0.1f) * size;
+				float width = (m_iTextureWidth * 0.05f) * size;
 				float height = (m_iTextureHeight * 0.1f) * size;
 
 				float side = (corner < 2) ? -width : width;
 				float top = (corner == 1 || corner == 2) ? height : 0.0f;
 
-				vertex = pos + surfaceNormal * 0.1f
+				vertex = pos + surfaceNormal * randomLift
 					+ planeAxis * side
 					+ planeUp * top;
 
@@ -655,7 +687,15 @@ bool R_CreateSingleBush(
 
 			memcpy(vert->styles, surf->styles, sizeof(vert->styles));
 
-			float lightPosZ = (orientation == 3) ? vertex.z : pos.z;
+			Vector lightVertex = vertex;
+
+			if (orientation == 3)
+				lightVertex -= surfaceNormal * randomLift;
+
+			float lightPosZ = (orientation == 3) ? lightVertex.z : pos.z;
+
+			R_GrassLightForVertex(
+				surf, es, lightVertex, lightPosZ, vert->light, vert->delux);
 
 			R_GrassLightForVertex(
 				surf, es, vertex, lightPosZ, vert->light, vert->delux);
