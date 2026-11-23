@@ -64,8 +64,7 @@ else
         bool( vertexID == 1 || vertexID == 2 ) &&
         grassVertex < 60 )
     {
-        position.x += sin( position.z + u_RealTime * 0.5 );
-        position.y += cos( position.z + u_RealTime * 0.5 );
+        position.xy += GetGrassWindOffset(worldCenter.xyz, u_RealTime);
     }
 
     worldpos = u_ModelMatrix * position;

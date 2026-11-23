@@ -149,4 +149,25 @@ vec3 GetNormalForVertex(
     return vec3(0.707107, 0.707107, 0.0);
 }
 
+vec2 GetGrassWindOffset(vec3 worldPosition, float time)
+{
+    // Пространственная фаза: соседние кусты двигаются не синхронно.
+    float spatialPhase = dot(worldPosition.xy, vec2(0.035, 0.027));
+
+    // Быстрое основное колебание.
+    float phase = time * 3.6 + spatialPhase;
+
+    // Медленная волна силы ветра — формирует порывы.
+    float gustPhase = time * 1.25 + spatialPhase * 0.45;
+    float gust = 0.18 + 0.82 * pow(max(sin(gustPhase), 0.0), 2.0);
+
+    // Дополнительная частота делает движение менее монотонным.
+    float sway = (
+        sin(phase) +
+        0.22 * sin(phase * 2.17 + 1.1)
+    ) * gust;
+
+    return vec2(sway, sway * 0.35);
+}
+
 #endif//GRASSDATA_H
