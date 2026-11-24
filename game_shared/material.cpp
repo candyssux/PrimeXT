@@ -352,6 +352,7 @@ matdesc_t *COM_DefaultMatdesc()
 		defmat.refractScale = 0.0f;
 		defmat.reliefScale = 0.0f;
 		defmat.smoothness = DEFAULT_SMOOTHNESS; 
+		defmat.alphaAdditive = Vector4D(-1.0f, -1.0f, -1.0f, -1.0f);
 		defmat.effects = COM_DefaultMatdef();
 	}
 	return &defmat;
@@ -443,6 +444,7 @@ void COM_LoadMaterials(const char *path)
 		mat->detailScale[0] = 10.0f;
 		mat->detailScale[1] = 10.0f;
 		mat->smoothness = DEFAULT_SMOOTHNESS;
+		mat->alphaAdditive = Vector4D(-1.0f, -1.0f, -1.0f, -1.0f);
 
 		// read opening brace
 		pfile = COM_ParseFile(pfile, token);
@@ -602,6 +604,22 @@ void COM_LoadMaterials(const char *path)
 
 				mat->swayHeight = Q_atoi(token);
 			}
+			else if (!Q_stricmp(token, "alpha additive"))
+			{
+				pfile = COM_ParseFile(pfile, token);
+				if (!pfile)
+				{
+					ALERT(at_error, "COM_LoadMaterials: hit EOF while parsing 'alpha additive'\n");
+					goto getout;
+				}
+
+				mat->alphaAdditive = Q_atov4(token);
+
+				mat->alphaAdditive.x = bound(0.0f, mat->alphaAdditive.x, 255.0f) / 255.0f;
+				mat->alphaAdditive.y = bound(0.0f, mat->alphaAdditive.y, 255.0f) / 255.0f;
+				mat->alphaAdditive.z = bound(0.0f, mat->alphaAdditive.z, 255.0f) / 255.0f;
+				mat->alphaAdditive.w = bound(0.0f, mat->alphaAdditive.w, 255.0f) / 255.0f;
+				}
 			else if (!Q_stricmp(token, "ReliefScale"))
 			{
 				pfile = COM_ParseFile(pfile, token);

@@ -308,6 +308,13 @@ vec2_t Q_atov2(const char *str)
 	return vec;
 }
 
+vec4_t Q_atov4(const char *str)
+{
+	vec4_t vec = Vector4D(0.0f, 0.0f, 0.0f, 0.0f);
+	Q_atovn(str, &vec.x, 4);
+	return vec;
+}
+
 char *Q_strchr( const char *s, char c )
 {
 	int	len = Q_strlen( s );

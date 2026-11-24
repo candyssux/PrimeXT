@@ -35,6 +35,7 @@ uniform sampler2D	u_DepthMap;
 uniform vec4	u_RenderColor;
 uniform float	u_Smoothness;
 uniform float	u_ReflectScale;
+uniform vec4	u_AlphaAdditive;
 uniform vec4	u_FogParams;
 uniform vec3	u_ViewOrigin;
 uniform vec2	u_LightShade;
@@ -89,19 +90,50 @@ void main( void )
 #else
 	vec_TexDiffuse = var_TexDiffuse;
 #endif
-	albedo = colormap2D( u_ColorMap, vec_TexDiffuse );
+		albedo = colormap2D( u_ColorMap, vec_TexDiffuse );
+
 	float reflectionMask = 1.0;
+	float alphaAdditiveMask = 0.0;
 
 #if defined( REFLECTION_ALPHA_MASK )
-    reflectionMask = 1.0 - albedo.a;
+	reflectionMask = 1.0 - albedo.a;
 #endif
+
+	// Activate only when the MAT parameter is present.
+	if (u_AlphaAdditive.a >= 0.0)
+		alphaAdditiveMask = 1.0 - step(0.001, albedo.a);
+
+	// Preserve the original alpha pipeline for materials without alpha additive.
+	if (u_AlphaAdditive.a < 0.0)
+	{
 #if !defined( ALPHA_BLENDING )
-	albedo.a = AlphaRescaling( u_ColorMap, vec_TexDiffuse, albedo.a );
+		albedo.a = AlphaRescaling( u_ColorMap, vec_TexDiffuse, albedo.a );
 #endif
 #if defined( ALPHA_TO_COVERAGE )
-    albedo.a = AlphaSharpening( albedo.a, 0.5 );
-    albedo.a = max( albedo.a, 0.8 );
+		albedo.a = AlphaSharpening( albedo.a, 0.5 );
+		albedo.a = max( albedo.a, 0.8 );
 #endif
+	}
+	else
+	{
+		// Replace alpha only in originally transparent texels.
+		if (alphaAdditiveMask > 0.5)
+		{
+			albedo.a = u_AlphaAdditive.a;
+		}
+		else
+		{
+			// Keep the old processing for the original opaque texels.
+#if !defined( ALPHA_BLENDING )
+			albedo.a = AlphaRescaling( u_ColorMap, vec_TexDiffuse, albedo.a );
+#endif
+#if defined( ALPHA_TO_COVERAGE )
+			albedo.a = AlphaSharpening( albedo.a, 0.5 );
+			albedo.a = max( albedo.a, 0.8 );
+#endif
+		}
+	}
+
 	result = albedo;
 
 #if defined( HAS_DETAIL )
@@ -197,6 +229,9 @@ lighting.diffuse += var_AmbientLight;
 	result.rgb *= lighting.diffuse; // apply diffuse/ambient lighting
 #endif
 	result.rgb += lighting.specular; // apply specular lighting
+	// Override glass base color after lighting, before cubemap reflections.
+	if (alphaAdditiveMask > 0.5)
+		result.rgb = u_AlphaAdditive.rgb;
 
 #if defined( LIGHTVEC_DEBUG ) && !defined (SURFACE_LIGHTING)
 	lighting.diffuse = ( normalize( N + L ) + 1.0 ) * 0.5;
@@ -213,8 +248,14 @@ lighting.diffuse += var_AmbientLight;
 #endif
 #endif // LIGHTING_FULLBRIGHT
 
+#if defined( LIGHTING_FULLBRIGHT )
+	// Fullbright materials do not pass through the lighting block above.
+	if (alphaAdditiveMask > 0.5)
+		result.rgb = u_AlphaAdditive.rgb;
+#endif
+
 #if defined( HAS_LUMA )
-	result.rgb += texture( u_GlowMap, vec_TexDiffuse ).rgb;
+	result.rgb += texture( u_GlowMap, vec_TexDiffuse ).rgb * (1.0 - alphaAdditiveMask);
 #endif
 
 #if defined( USING_SCREENCOPY )

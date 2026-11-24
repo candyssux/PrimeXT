@@ -47,6 +47,7 @@ struct matdesc_t
 	float		aberrationScale;	// chromatic abberation
 	float		reliefScale;		// relief-mapping
 	float       swayHeight;    // height from model origin for swaying, 0 - disabled
+	vec4_t		alphaAdditive;	// RGB color and opacity; alpha < 0 means disabled
 	matdef_t	*effects;			// hit, impact, particle effects etc
 	char		name[64];			// just a name of material
 	uint32_t	hash;

@@ -3629,6 +3629,14 @@ void CStudioModelRenderer :: DrawSingleMesh( CSolidEntry *entry, bool force, boo
 		case UT_SWAYHEIGHT:
 			u->SetValue(mat->swayHeight);
 			break;
+		case UT_ALPHAADDITIVE:
+			u->SetValue(
+				mat->alphaAdditive.x,
+				mat->alphaAdditive.y,
+				mat->alphaAdditive.z,
+				mat->alphaAdditive.w
+			);
+			break;
 		default:
 			ALERT( at_error, "%s: unhandled uniform %s\n", RI->currentshader->name, u->name );
 			break;

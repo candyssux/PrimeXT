@@ -26,6 +26,7 @@ int Q_atoi( const char *str );
 float Q_atof( const char *str );
 vec3_t Q_atov( const char *str );
 vec2_t Q_atov2(const char *str);
+vec4_t Q_atov4(const char *str);
 char *Q_strchr( const char *s, char c );
 char *Q_strrchr( const char *s, char c );
 int Q_strnicmp( const char *s1, const char *s2, int n );
