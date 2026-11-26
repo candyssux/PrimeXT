@@ -35,6 +35,7 @@ typedef struct grassentry_s
 	int	seed;		// seed for predictable random (auto-filled)
 	byte    planes;       // number of planes in a bush (1-4)
 	byte    orientation;  // orientation mode for a single plane (0-3)
+	float   windScale;    // leaf wind amplitude multiplier
 } grassentry_t;
 
 typedef struct grasstexture_s

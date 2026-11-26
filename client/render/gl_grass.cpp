@@ -656,7 +656,12 @@ bool R_CreateSingleBush(
 		planeUp = CrossProduct(surfaceNormal, planeAxis).Normalize();
 	}
 
-	Vector spriteCenter = pos + surfaceNormal * randomLift;
+	float leafWidth = (m_iTextureWidth * 0.05f) * size;
+	float leafHeight = (m_iTextureHeight * 0.1f) * size;
+
+	Vector spriteCenter = pos
+		+ surfaceNormal * randomLift
+		+ planeUp * (leafHeight * 0.5f);
 
 	for (int plane = 0; plane < numPlanes; plane++)
 	{
@@ -677,11 +682,10 @@ bool R_CreateSingleBush(
 			}
 			else if (orientation == 3)
 			{
-				float width = (m_iTextureWidth * 0.05f) * size;
-				float height = (m_iTextureHeight * 0.1f) * size;
-
-				float side = (corner < 2) ? -width : width;
-				float top = (corner == 1 || corner == 2) ? height : 0.0f;
+				float side = (corner < 2) ? -leafWidth : leafWidth;
+				float top = (corner == 1 || corner == 2)
+					? leafHeight * 0.5f
+					: -leafHeight * 0.5f;
 
 				vertex = spriteCenter
 					+ planeAxis * side
@@ -736,7 +740,7 @@ bool R_CreateSingleBush(
 				vert->center[0] = spriteCenter.x;
 				vert->center[1] = spriteCenter.y;
 				vert->center[2] = spriteCenter.z;
-				vert->center[3] = 1.0f;
+				vert->center[3] = grassEntry->windScale;
 
 				// Store this vertex offset from the sprite center.
 				vert->anim[0] = vertex.x - spriteCenter.x;
@@ -1890,6 +1894,8 @@ void R_GrassInit( void )
 			entry.planes = 4;
 			entry.orientation = 0;
 
+			entry.windScale = 1.0f;
+
 			pfile = COM_ParseLine( pfile, token );
 			if( !pfile )
 			{
@@ -1958,6 +1964,13 @@ void R_GrassInit( void )
 					int orientation = Q_atoi(token);
 					entry.orientation = bound(0, orientation, 3);
 				}
+			}
+
+			// Wind multiplier is optional; default is 1.0.
+			pfile = COM_ParseLine(pfile, token);
+			if (pfile && token[0])
+			{
+				entry.windScale = Q_max(0.0f, Q_atof(token));
 			}
 
 			grassInfo.AddToTail( entry );

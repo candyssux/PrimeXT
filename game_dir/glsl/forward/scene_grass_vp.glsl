@@ -106,10 +106,10 @@ if (grassVertex >= 60 && grassVertex < 64)
     if (dist < GRASS_ANIM_DIST)
     {
         angle = GetLeafWindAngle(
-            worldCenter.xyz,
-            u_RealTime,
-            attr_GrassAnim.w
-        );
+    worldCenter.xyz,
+    u_RealTime,
+    attr_GrassAnim.w
+) * attr_Position.w;
     }
 
     vec3 localNormal = normalize(attr_Normal.xyz);

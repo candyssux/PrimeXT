@@ -43,6 +43,16 @@ float GetLeafWindAngle(vec3 worldPosition, float time, float phase)
     return sway * gust * 0.12;
 }
 
+vec3 RotateAroundAxis(vec3 value, vec3 axis, float angle)
+{
+    float s = sin(angle);
+    float c = cos(angle);
+
+    return value * c
+         + cross(axis, value) * s
+         + axis * dot(axis, value) * (1.0 - c);
+}
+
 void main( void )
 {
 #if defined( APPLY_FADE_DIST )
@@ -70,10 +80,10 @@ if (grassVertex >= 60 && grassVertex < 64)
     if (dist < GRASS_ANIM_DIST)
     {
         angle = GetLeafWindAngle(
-            worldCenter.xyz,
-            u_RealTime,
-            attr_GrassAnim.w
-        );
+    worldCenter.xyz,
+    u_RealTime,
+    attr_GrassAnim.w
+) * attr_Position.w;
     }
 
     vec3 surfaceNormal = normalize(attr_Normal.xyz);
