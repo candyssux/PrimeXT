@@ -94,6 +94,9 @@ static void BindBufferBaseGL21( grass_t *pOut, int attrFlags )
 
 	pglVertexAttribPointerARB( ATTR_INDEX_LIGHT_STYLES, 4, GL_UNSIGNED_BYTE, GL_FALSE, sizeof( gvert_v0_gl21_t ), (void *)offsetof( gvert_v0_gl21_t, styles ));
 	pglEnableVertexAttribArrayARB( ATTR_INDEX_LIGHT_STYLES );
+
+	pglVertexAttribPointerARB( ATTR_INDEX_GRASS_ANIM, 4, GL_FLOAT, GL_FALSE, sizeof( gvert_v0_gl21_t ), (void *)offsetof( gvert_v0_gl21_t, anim ));
+	pglEnableVertexAttribArrayARB( ATTR_INDEX_GRASS_ANIM );
 }
 
 static void CreateBufferBaseGL30( grass_t *pOut, gvert_t *arrayxvert )
@@ -144,6 +147,9 @@ static void BindBufferBaseGL30( grass_t *pOut, int attrFlags )
 
 	pglVertexAttribPointerARB( ATTR_INDEX_LIGHT_STYLES, 4, GL_UNSIGNED_BYTE, GL_FALSE, sizeof( gvert_v0_gl30_t ), (void *)offsetof( gvert_v0_gl30_t, styles ));
 	pglEnableVertexAttribArrayARB( ATTR_INDEX_LIGHT_STYLES );
+
+	pglVertexAttribPointerARB( ATTR_INDEX_GRASS_ANIM, 4, GL_FLOAT, GL_FALSE, sizeof( gvert_v0_gl30_t ), (void *)offsetof( gvert_v0_gl30_t, anim ));
+	pglEnableVertexAttribArrayARB( ATTR_INDEX_GRASS_ANIM );
 }
 
 static void CreateBufferBaseBumpGL21( grass_t *pOut, gvert_t *arrayxvert )
@@ -203,6 +209,9 @@ static void BindBufferBaseBumpGL21( grass_t *pOut, int attrFlags )
 
 	pglVertexAttribPointerARB( ATTR_INDEX_LIGHT_STYLES, 4, GL_UNSIGNED_BYTE, GL_FALSE, sizeof( gvert_v1_gl21_t ), (void *)offsetof( gvert_v1_gl21_t, styles ));
 	pglEnableVertexAttribArrayARB( ATTR_INDEX_LIGHT_STYLES );
+
+	pglVertexAttribPointerARB( ATTR_INDEX_GRASS_ANIM, 4, GL_FLOAT, GL_FALSE, sizeof( gvert_v1_gl21_t ), (void *)offsetof( gvert_v1_gl21_t, anim ));
+	pglEnableVertexAttribArrayARB( ATTR_INDEX_GRASS_ANIM );
 }
 
 static void CreateBufferBaseBumpGL30( grass_t *pOut, gvert_t *arrayxvert )
@@ -251,6 +260,9 @@ static void BindBufferBaseBumpGL30( grass_t *pOut, int attrFlags )
 
 	pglVertexAttribPointerARB( ATTR_INDEX_NORMAL, 4, GL_BYTE, GL_FALSE, sizeof( gvert_v1_gl30_t ), (void *)offsetof( gvert_v1_gl30_t, normal ));
 	pglEnableVertexAttribArrayARB( ATTR_INDEX_NORMAL );
+
+	pglVertexAttribPointerARB(ATTR_INDEX_GRASS_ANIM, 4, GL_FLOAT, GL_FALSE, sizeof(gvert_v1_gl30_t), (void *)offsetof(gvert_v1_gl30_t, anim));
+	pglEnableVertexAttribArrayARB(ATTR_INDEX_GRASS_ANIM);
 
 	pglVertexAttribPointerARB( ATTR_INDEX_LIGHT_COLOR, 4, GL_FLOAT, GL_FALSE, sizeof( gvert_v1_gl30_t ), (void *)offsetof( gvert_v1_gl30_t, light )); 
 	pglEnableVertexAttribArrayARB( ATTR_INDEX_LIGHT_COLOR );

@@ -51,6 +51,7 @@ enum
 	ATTR_INDEX_LIGHT_VECS,	// studio & grass
 	ATTR_INDEX_LIGHT_NUMS0,	// brushmodels only
 	ATTR_INDEX_LIGHT_NUMS1,	// brushmodels only
+	ATTR_INDEX_GRASS_ANIM,	// grass only
 };
 
 // shader->attribs

@@ -22,6 +22,7 @@ attribute vec4		attr_Normal;
 attribute vec4		attr_LightColor;
 attribute vec4		attr_LightVecs;
 attribute vec4		attr_LightStyles;
+attribute vec4 attr_GrassAnim;
 
 uniform mat4		u_ModelMatrix;
 uniform float		u_LightStyleValues[MAX_LIGHTSTYLES];
@@ -50,6 +51,31 @@ vec3 ApplyLightStyleGrass( float scale, float packedLight, float packedDelux, ve
 #else
 	return lightmap * factor * scale;
 #endif
+}
+
+vec3 RotateAroundAxis(vec3 value, vec3 axis, float angle)
+{
+    float s = sin(angle);
+    float c = cos(angle);
+
+    return value * c
+         + cross(axis, value) * s
+         + axis * dot(axis, value) * (1.0 - c);
+}
+
+float GetLeafWindAngle(vec3 worldPosition, float time, float phase)
+{
+    float spatialPhase = dot(worldPosition.xy, vec2(0.035, 0.027));
+
+    float sharedPhase = time * 3.6 + spatialPhase;
+    float gustPhase = time * 1.25 + spatialPhase * 0.45;
+
+    float gust = 0.18 + 0.82 * pow(max(sin(gustPhase), 0.0), 2.0);
+
+    float sway = sin(sharedPhase + phase)
+               + 0.22 * sin((sharedPhase + phase) * 2.17 + 1.1);
+
+    return sway * gust * 0.12;
 }
 
 void main( void )

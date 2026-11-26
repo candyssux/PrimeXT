@@ -1168,6 +1168,7 @@ static void GL_SetDefaultVertexAttribs( glsl_program_t *shader )
 	pglBindAttribLocationARB( shader->handle, ATTR_INDEX_LIGHT_VECS, "attr_LightVecs" );
 	pglBindAttribLocationARB( shader->handle, ATTR_INDEX_LIGHT_NUMS0, "attr_LightNums0" );
 	pglBindAttribLocationARB( shader->handle, ATTR_INDEX_LIGHT_NUMS1, "attr_LightNums1" );
+	pglBindAttribLocationARB(shader->handle, ATTR_INDEX_GRASS_ANIM, "attr_GrassAnim");
 }
 
 static void GL_ParseProgramVertexAttribs( glsl_program_t *shader )
