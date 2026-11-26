@@ -63,6 +63,10 @@ static void CreateBufferBaseGL21( grass_t *pOut, gvert_t *arrayxvert )
 		arraygvert[i].normal[1] = arrayxvert[i].normal[1];
 		arraygvert[i].normal[2] = arrayxvert[i].normal[2];
 		arraygvert[i].normal[3] = arrayxvert[i].normal[3];
+		arraygvert[i].anim[0] = arrayxvert[i].anim[0];
+		arraygvert[i].anim[1] = arrayxvert[i].anim[1];
+		arraygvert[i].anim[2] = arrayxvert[i].anim[2];
+		arraygvert[i].anim[3] = arrayxvert[i].anim[3];
 	}
 
 	pOut->cacheSize = pOut->numVerts * sizeof( gvert_v0_gl21_t );
@@ -73,6 +77,7 @@ static void CreateBufferBaseGL21( grass_t *pOut, gvert_t *arrayxvert )
 	pglBufferDataARB( GL_ARRAY_BUFFER_ARB, pOut->cacheSize, &arraygvert[0], GL_STATIC_DRAW_ARB );
 	pglBindBufferARB( GL_ARRAY_BUFFER_ARB, 0 );
 }
+
 
 static void BindBufferBaseGL21( grass_t *pOut, int attrFlags )
 {
@@ -109,6 +114,10 @@ static void CreateBufferBaseGL30( grass_t *pOut, gvert_t *arrayxvert )
 		arraygvert[i].light[3] = arrayxvert[i].light[3];
 		CompressNormalizedVector( arraygvert[i].normal, arrayxvert[i].normal );
 		arraygvert[i].normal[3] = arrayxvert[i].normal[3];
+		arraygvert[i].anim[0] = arrayxvert[i].anim[0];
+		arraygvert[i].anim[1] = arrayxvert[i].anim[1];
+		arraygvert[i].anim[2] = arrayxvert[i].anim[2];
+		arraygvert[i].anim[3] = arrayxvert[i].anim[3];
 	}
 
 	pOut->cacheSize = pOut->numVerts * sizeof( gvert_v0_gl30_t );
@@ -161,6 +170,10 @@ static void CreateBufferBaseBumpGL21( grass_t *pOut, gvert_t *arrayxvert )
 		arraygvert[i].normal[1] = arrayxvert[i].normal[1];
 		arraygvert[i].normal[2] = arrayxvert[i].normal[2];
 		arraygvert[i].normal[3] = arrayxvert[i].normal[3];
+		arraygvert[i].anim[0] = arrayxvert[i].anim[0];
+		arraygvert[i].anim[1] = arrayxvert[i].anim[1];
+		arraygvert[i].anim[2] = arrayxvert[i].anim[2];
+		arraygvert[i].anim[3] = arrayxvert[i].anim[3];
 	}
 
 	pOut->cacheSize = pOut->numVerts * sizeof( gvert_v1_gl21_t );
@@ -214,6 +227,10 @@ static void CreateBufferBaseBumpGL30( grass_t *pOut, gvert_t *arrayxvert )
 		arraygvert[i].delux[3] = arrayxvert[i].delux[3];
 		CompressNormalizedVector( arraygvert[i].normal, arrayxvert[i].normal );
 		arraygvert[i].normal[3] = arrayxvert[i].normal[3];
+		arraygvert[i].anim[0] = arrayxvert[i].anim[0];
+		arraygvert[i].anim[1] = arrayxvert[i].anim[1];
+		arraygvert[i].anim[2] = arrayxvert[i].anim[2];
+		arraygvert[i].anim[3] = arrayxvert[i].anim[3];
 	}
 
 	pOut->cacheSize = pOut->numVerts * sizeof( gvert_v1_gl30_t );
@@ -613,7 +630,7 @@ bool R_CreateSingleBush(
 			surfaceNormal = -surfaceNormal;
 
 		surfaceNormal = surfaceNormal.Normalize();
-		float randomLift = R_GrassRandomLift(surf, grassEntry, pos);
+		randomLift = R_GrassRandomLift(surf, grassEntry, pos);
 
 		Vector reference = (fabs(surfaceNormal.z) > 0.9f)
 			? Vector(1.0f, 0.0f, 0.0f)
@@ -629,6 +646,8 @@ bool R_CreateSingleBush(
 		planeAxis = rotatedAxis.Normalize();
 		planeUp = CrossProduct(surfaceNormal, planeAxis).Normalize();
 	}
+
+	Vector spriteCenter = pos + surfaceNormal * randomLift;
 
 	for (int plane = 0; plane < numPlanes; plane++)
 	{
@@ -655,7 +674,7 @@ bool R_CreateSingleBush(
 				float side = (corner < 2) ? -width : width;
 				float top = (corner == 1 || corner == 2) ? height : 0.0f;
 
-				vertex = pos + surfaceNormal * randomLift
+				vertex = spriteCenter
 					+ planeAxis * side
 					+ planeUp * top;
 
@@ -704,11 +723,17 @@ bool R_CreateSingleBush(
 
 			if (orientation == 3)
 			{
-				// Y=3 stores the final vertex position and surface normal.
-				vert->center[0] = vertex.x;
-				vert->center[1] = vertex.y;
-				vert->center[2] = vertex.z;
-				vert->center[3] = 0.0f;
+				// Store the common sprite center.
+				vert->center[0] = spriteCenter.x;
+				vert->center[1] = spriteCenter.y;
+				vert->center[2] = spriteCenter.z;
+				vert->center[3] = 1.0f;
+
+				// Store this vertex offset from the sprite center.
+				vert->anim[0] = vertex.x - spriteCenter.x;
+				vert->anim[1] = vertex.y - spriteCenter.y;
+				vert->anim[2] = vertex.z - spriteCenter.z;
+				vert->anim[3] = yaw;
 
 				vert->normal[0] = surfaceNormal.x;
 				vert->normal[1] = surfaceNormal.y;
@@ -727,6 +752,11 @@ bool R_CreateSingleBush(
 				vert->normal[0] = dir.x;
 				vert->normal[1] = dir.y;
 				vert->normal[2] = dir.z;
+
+				vert->anim[0] = 0.0f;
+				vert->anim[1] = 0.0f;
+				vert->anim[2] = 0.0f;
+				vert->anim[3] = 0.0f;
 			}
 
 			vert->normal[3] = vertexID;

@@ -76,43 +76,43 @@ no_align typedef struct
 */
 
 // version 0. no lightvectors
-// 52 bytes
 typedef struct
 {
-	float		center[4];		// used for rescale
-	float		normal[4];		// center + vertex[2] * vertex[3];
-	float		light[MAXLIGHTMAPS];	// packed color + unused entry
-	byte		styles[MAXLIGHTMAPS];	// styles on surface
+	float       center[4];
+	float       normal[4];
+	float       anim[4];
+	float       light[MAXLIGHTMAPS];
+	byte        styles[MAXLIGHTMAPS];
 } gvert_v0_gl21_t;
 
-// 32 bytes
 typedef struct
 {
-	short		center[4];		// used for rescale
-	char		normal[4];		// center + vertex[2] * vertex[3];
-	float		light[MAXLIGHTMAPS];	// packed color + unused entry
-	byte		styles[MAXLIGHTMAPS];	// styles on surface
+	short       center[4];
+	char        normal[4];
+	float       anim[4];
+	float       light[MAXLIGHTMAPS];
+	byte        styles[MAXLIGHTMAPS];
 } gvert_v0_gl30_t;
 
-// version 1. width lightvectors (ugly case)
-// 68 bytes
+// version 1. with lightvectors
 typedef struct
 {
-	float		center[4];		// used for rescale
-	float		normal[4];		// center + vertex[2] * vertex[3];
-	float		light[MAXLIGHTMAPS];	// packed color + unused entry
-	float		delux[MAXLIGHTMAPS];	// packed lightdir + unused entry
-	byte		styles[MAXLIGHTMAPS];	// styles on surface
+	float       center[4];
+	float       normal[4];
+	float       anim[4];
+	float       light[MAXLIGHTMAPS];
+	float       delux[MAXLIGHTMAPS];
+	byte        styles[MAXLIGHTMAPS];
 } gvert_v1_gl21_t;
 
-// 48 bytes
 typedef struct
 {
-	short		center[4];		// used for rescale
-	char		normal[4];		// center + vertex[2] * vertex[3];
-	float		light[MAXLIGHTMAPS];	// packed color + unused entry
-	float		delux[MAXLIGHTMAPS];	// packed lightdir + unused entry
-	byte		styles[MAXLIGHTMAPS];	// styles on surface
+	short       center[4];
+	char        normal[4];
+	float       anim[4];
+	float       light[MAXLIGHTMAPS];
+	float       delux[MAXLIGHTMAPS];
+	byte        styles[MAXLIGHTMAPS];
 } gvert_v1_gl30_t;
 
 /*

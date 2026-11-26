@@ -45,11 +45,12 @@ typedef struct grasstexture_s
 
 typedef struct gvert_s
 {
-	float		center[4];		// used for rescale
-	float		normal[4];		// center + vertex[2] * vertex[3];
-	float		light[MAXLIGHTMAPS];	// packed color + unused entry
-	float		delux[MAXLIGHTMAPS];	// packed lightdir + unused entry
-	byte		styles[MAXLIGHTMAPS];	// styles on surface
+	float       center[4];      // center position
+	float       normal[4];      // normal + vertex ID
+	float       anim[4];        // local vertex offset + wind phase
+	float       light[MAXLIGHTMAPS];    // packed color + unused entry
+	float       delux[MAXLIGHTMAPS];    // packed lightdir + unused entry
+	byte        styles[MAXLIGHTMAPS];   // styles on surface
 } gvert_t;
 
 #define FGRASS_NODRAW	BIT( 0 )		// grass shader is failed to build
