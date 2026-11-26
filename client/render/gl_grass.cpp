@@ -625,11 +625,6 @@ bool R_CreateSingleBush(
 
 	float randomLift = 0.1f;
 
-	if (orientation == 3)
-	{
-		randomLift += (yaw / 6.28318530718f) * 0.4f;
-	}
-
 	Vector surfaceNormal = g_vecZero;
 	Vector planeAxis = g_vecZero;
 	Vector planeUp = g_vecZero;
@@ -640,6 +635,8 @@ bool R_CreateSingleBush(
 
 		if (FBitSet(surf->flags, SURF_PLANEBACK))
 			surfaceNormal = -surfaceNormal;
+
+		surfaceNormal = surfaceNormal.Normalize();
 
 		randomLift = R_GrassRandomLift(surf, grassEntry, pos)
 			+ (yaw / 6.28318530718f) * 0.4f;
