@@ -641,8 +641,8 @@ bool R_CreateSingleBush(
 		if (FBitSet(surf->flags, SURF_PLANEBACK))
 			surfaceNormal = -surfaceNormal;
 
-		surfaceNormal = surfaceNormal.Normalize();
-		randomLift = R_GrassRandomLift(surf, grassEntry, pos);
+		randomLift = R_GrassRandomLift(surf, grassEntry, pos)
+			+ (yaw / 6.28318530718f) * 0.4f;
 
 		Vector reference = (fabs(surfaceNormal.z) > 0.9f)
 			? Vector(1.0f, 0.0f, 0.0f)

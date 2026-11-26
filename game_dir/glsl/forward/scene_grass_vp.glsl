@@ -98,22 +98,52 @@ vec3 localOffset =
 vec4 worldCenter = u_ModelMatrix * vec4( attr_Position.xyz, 1.0 );
 vec4 worldpos;
 
-if( grassVertex >= 52 && grassVertex < 60 )
+if (grassVertex >= 60 && grassVertex < 64)
+{
+    // Flat leaf: rotate its local vertex offset around the surface normal.
+    float angle = 0.0;
+
+    if (dist < GRASS_ANIM_DIST)
+    {
+        angle = GetLeafWindAngle(
+            worldCenter.xyz,
+            u_RealTime,
+            attr_GrassAnim.w
+        );
+    }
+
+    vec3 localNormal = normalize(attr_Normal.xyz);
+
+    vec3 rotatedOffset = RotateAroundAxis(
+        attr_GrassAnim.xyz * scale,
+        localNormal,
+        angle
+    );
+
+    vec4 position = vec4(
+        attr_Position.xyz + rotatedOffset,
+        1.0
+    );
+
+    worldpos = u_ModelMatrix * position;
+}
+else if (grassVertex >= 52 && grassVertex < 60)
 {
     vec3 viewDirection = u_ViewOrigin - worldCenter.xyz;
 
     vec3 billboardOffset = GetGrassBillboardOffset(
-        grassVertex, localOffset, viewDirection );
+        grassVertex, localOffset, viewDirection
+    );
 
-    worldpos = vec4( worldCenter.xyz + billboardOffset, 1.0 );
+    worldpos = vec4(worldCenter.xyz + billboardOffset, 1.0);
 }
 else
 {
-    vec4 position = vec4( attr_Position.xyz + localOffset, 1.0 );
+    vec4 position = vec4(attr_Position.xyz + localOffset, 1.0);
 
-    if( bool( dist < GRASS_ANIM_DIST ) &&
-        bool( vertexID == 1 || vertexID == 2 ) &&
-        grassVertex < 60 )
+    if (bool(dist < GRASS_ANIM_DIST) &&
+        bool(vertexID == 1 || vertexID == 2) &&
+        grassVertex < 60)
     {
         position.xy += GetGrassWindOffset(worldCenter.xyz, u_RealTime);
     }
