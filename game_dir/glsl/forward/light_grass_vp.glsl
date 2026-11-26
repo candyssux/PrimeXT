@@ -42,6 +42,21 @@ varying vec4	var_ProjCoord;
 varying vec4	var_ShadowCoord;
 #endif
 
+float GetLeafWindAngle(vec3 worldPosition, float time, float phase)
+{
+    float spatialPhase = dot(worldPosition.xy, vec2(0.035, 0.027));
+
+    float sharedPhase = time * 3.6 + spatialPhase;
+    float gustPhase = time * 1.25 + spatialPhase * 0.45;
+
+    float gust = 0.18 + 0.82 * pow(max(sin(gustPhase), 0.0), 2.0);
+
+    float sway = sin(sharedPhase + phase)
+               + 0.22 * sin((sharedPhase + phase) * 2.17 + 1.1);
+
+    return sway * gust * 0.12;
+}
+
 void main( void )
 {
 #if defined( APPLY_FADE_DIST )
